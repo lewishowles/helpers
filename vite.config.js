@@ -21,19 +21,19 @@ export default defineConfig({
 /**
  * Get the paths to multiple files from their names.
  *
- * @param  {string[]}  fileNames
- *     The names of the files to retrieve.
+ * @param  {string[]}  folderNames
+ *     The names of the folders to retrieve.
  */
-function getFiles(fileNames) {
-	return fileNames.map(fileName => getFile(fileName));
+function getFiles(folderNames) {
+	return folderNames.map(folderName => getFile(folderName));
 }
 
 /**
- * Get the path to a library file from its name.
+ * Get the path to a group of library helpers from a folder name.
  *
- * @param  {string}  fileName
- *     The name of the file to retrieve.
+ * @param  {string}  folderName
+ *     The name of the folder to retrieve.
  */
-function getFile(fileName) {
-	return fileURLToPath(new URL(`./lib/${fileName}.js`, import.meta.url));
+function getFile(folderName) {
+	return fileURLToPath(new URL(`./lib/${folderName}/${folderName}.js`, import.meta.url));
 }
