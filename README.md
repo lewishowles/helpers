@@ -6,7 +6,7 @@ These helpers are grouped by type, which makes multiple imports a little more ma
 
 ## Array
 
-### `getNextIndex(index, reference, { reverse = false, wrap = false } = {})`
+### `getNextIndex(index, reference, { reverse = false, wrap = false })`
 
 Given a starting `index`, determine the next available index in the `reference` array.
 
