@@ -1,5 +1,6 @@
-# NPM
+# npm
 node_modules
+.npmrc
 
 # Build artifacts
 dist
