@@ -1,5 +1,5 @@
 {
-	"name": "helpers",
+	"name": "@lewishowles/helpers",
 	"version": "0.1.0",
 	"description": "A library of gorgeous Javascript methods to make working with—and validating—data quicker and less error-prone, letting the developer concentrate on the fun stuff.",
 	"author": "Lewis Howles",
@@ -30,6 +30,10 @@
 			"import": "./dist/string.es.js",
 			"require": "./dist/string.umd.js"
 		}
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/lewishowles/helpers.git"
 	},
 	"publishConfig": {
 		"registry": "https://npm.pkg.github.com"
