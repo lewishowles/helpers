@@ -6,23 +6,23 @@
 	"type": "module",
 	"files": ["dist"],
 	"exports": {
-		"array": {
+		"./array": {
 			"import": "./dist/array.js",
 			"require": "./dist/array.cjs"
 		},
-		"general": {
+		"./general": {
 			"import": "./dist/general.js",
 			"require": "./dist/general.cjs"
 		},
-		"number": {
+		"./number": {
 			"import": "./dist/number.js",
 			"require": "./dist/number.cjs"
 		},
-		"object": {
+		"./object": {
 			"import": "./dist/object.js",
 			"require": "./dist/object.cjs"
 		},
-		"string": {
+		"./string": {
 			"import": "./dist/string.js",
 			"require": "./dist/string.cjs"
 		}
