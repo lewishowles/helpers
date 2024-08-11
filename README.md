@@ -2,9 +2,39 @@
 
 A library of gorgeous Javascript methods to make working with—and validating—data quicker and less error-prone, letting the developer concentrate on the fun stuff.
 
-These helpers are grouped by type, which makes multiple imports a little more manageable.
+These helpers are grouped by type, which makes multiple imports a little more manageable. For example:
+
+```
+import { getNextIndex } from "@lewishowles/helpers/array";
+```
 
 ## Array
+
+### `arrayLength(array)`
+
+Determine the number of items in the given `array`.
+
+If the provided input is not an array, returns `0`.
+
+#### Example
+
+```js
+arrayLength(['A', 'B', 'C', 'D']); // 4
+arrayLength([]); // 0
+arrayLength(undefined); // 0
+```
+
+### `firstDefined(array)`
+
+Returns the first non-undefined element in `array`.
+
+#### Example
+
+```js
+firstDefined(["a", "b"]); // "a"
+firstDefined([undefined, undefined "c", "d"]); // "c"
+firstDefined([]); // undefined
+```
 
 ### `getNextIndex(index, reference, { reverse = false, wrap = false })`
 
@@ -23,6 +53,17 @@ getNextIndex(3, ['A', 'B', 'C', 'D'], { wrap: true }); // 0
 getNextIndex(3, ['A', 'B', 'C', 'D'], { reverse: true }); // 2
 ```
 
+### `head(array)`
+
+Returns the first element in `array`.
+
+#### Example
+
+```js
+head(["a", "b"]); // "a"
+head([]); // undefined
+```
+
 ### `isNonEmptyArray(variable)`
 
 Determines whether the given `variable` is both an array and has at least one item.
@@ -33,6 +74,44 @@ Determines whether the given `variable` is both an array and has at least one it
 isNonEmptyArray(['A', 'B', 'C', 'D']); // true
 isNonEmptyArray([]); // false
 isNonEmptyArray("string"); // false
+```
+
+### `lastDefined(array)`
+
+Returns the last non-undefined element in `array`.
+
+#### Example
+
+```js
+lastDefined(["a", "b"]); // "b"
+lastDefined(["a", "b", undefined, undefined]); // "b"
+lastDefined([]); // undefined
+```
+
+### `pluck(array, property)`
+
+Retrieve an array of the `property` value from each of the objects found in `array`.
+
+Any non-objects in `array` are ignored.
+
+#### Example
+
+```js
+pluck({ property: "value" }, "property"); // "value"
+pluck({ nested: { property: { value: "seven" } } }, "nested.property.value"); // "seven"
+pluck({ nested: { property: { value: "seven" } } }, "nested.mistake.value"); // null
+pluck([], "property"); // null
+```
+
+### `tail(array)`
+
+Returns the last element in `array`.
+
+#### Example
+
+```js
+tail(["a", "b"]); // "b"
+tail([]); // undefined
 ```
 
 ## General
@@ -65,6 +144,41 @@ isNumber("string"); // false
 
 ## Object
 
+### `deepCopy(object)`
+
+Returns a recursive copy of `object`.
+
+#### Example
+
+```js
+deepCopy({ key: "value" }); // { key: "value" }
+deepCopy(["a", "b"]); // ["a", "b"]
+```
+
+### `deepMerge(object)`
+
+Recursively merges two or more objects. The values of later objects override those of earlier objects.
+
+#### Example
+
+```js
+deepMerge({ key: "value" }, { value: "key" }); // { key: "value", value: "key" }
+deepMerge({ key: "value", a: { b: 2 }}, { key: "modified", a: { c: 3 }}); // { key: "modified", a { b: 2, c: 3 }}
+```
+
+### `get(object, path)`
+
+Retrieve the `object` property value found at `path`, or null.
+
+#### Example
+
+```js
+get({ property: "value" }, "property"); // "value"
+get({ nested: { property: { value: "seven" } } }, "nested.property.value"); // "seven"
+get({ nested: { property: { value: "seven" } } }, "nested.mistake.value"); // null
+get([], "property"); // null
+```
+
 ### `isNonEmptyObject(variable)`
 
 Determines whether the given `variable` is both an object (and not null, or an array), and has at least one property.
@@ -75,6 +189,34 @@ Determines whether the given `variable` is both an object (and not null, or an a
 isNonEmptyObject({ property: "value" }); // true
 isNonEmptyObject({}); // false
 isNonEmptyObject("string"); // false
+```
+
+### `isObject(variable)`
+
+Determine whether the given `variable` is an object, excluding arrays and null.
+
+#### Example
+
+```js
+isObject({ property: "value" }); // true
+isObject(['A', 'B', 'C', 'D']); // false
+isObject(null); // false
+```
+
+### `pick(object, properties)`
+
+Returns an object containing only `properties` properties from `object`.
+
+Any non-string properties are ignored.
+
+If the object does not have a given property, it is ignored.
+
+#### Example
+
+```js
+pick({ a: "one", b: "two", c: "three" }, ["a", "b"]); // { a: "one", b: "two" }
+pick({ a: "one", b: "two", c: "three" }, ["a"]); // { a: "one" }
+pick({ a: "one", b: "two", c: "three" }, ["a", "d"]); // { a: "one" }
 ```
 
 ## String
