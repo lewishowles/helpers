@@ -5,28 +5,26 @@
 	"author": "Lewis Howles",
 	"type": "module",
 	"files": ["dist"],
-	"main": "./dist/helpers.umd.js",
-	"module": "./dist/helpers.es.js",
 	"exports": {
 		"array": {
-			"import": "./dist/array.es.js",
-			"require": "./dist/array.umd.js"
+			"import": "./dist/array.js",
+			"require": "./dist/array.cjs"
 		},
 		"general": {
-			"import": "./dist/general.es.js",
-			"require": "./dist/general.umd.js"
+			"import": "./dist/general.js",
+			"require": "./dist/general.cjs"
 		},
 		"number": {
-			"import": "./dist/number.es.js",
-			"require": "./dist/number.umd.js"
+			"import": "./dist/number.js",
+			"require": "./dist/number.cjs"
 		},
 		"object": {
-			"import": "./dist/object.es.js",
-			"require": "./dist/object.umd.js"
+			"import": "./dist/object.js",
+			"require": "./dist/object.cjs"
 		},
 		"string": {
-			"import": "./dist/string.es.js",
-			"require": "./dist/string.umd.js"
+			"import": "./dist/string.js",
+			"require": "./dist/string.cjs"
 		}
 	},
 	"repository": {
