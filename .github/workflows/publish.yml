@@ -25,6 +25,19 @@ jobs:
       - name: Build package
         run: npm run build
 
+      - name: Get package name and version
+        id: pkg-info
+        run: |
+          PACKAGE_NAME=$(jq -r .name package.json)
+          VERSION=$(jq -r .version package.json)
+          echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Delete existing package version
+        run: |
+          curl -X DELETE -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          "https://api.github.com/repos/${{ github.repository }}/packages/npm/${{ env.PACKAGE_NAME }}/versions/${{ env.VERSION }}" || echo "Package version not found, continuing..."
+
       - name: Publish to GitHub Packages
         run: npm publish
         env:
