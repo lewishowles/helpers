@@ -31,6 +31,7 @@ export default {
 			{ blankLine: "always", prev: "let", next: "const" },
 			{ blankLine: "always", prev: "*", next: "break" },
 			{ blankLine: "always", prev: ["const", "let"], next: "*" },
+			{ blankLine: "always", prev: "*", next: "return" },
 			{ blankLine: "any", prev: "const", next: "const" },
 			{ blankLine: "any", prev: "let", next: "let" },
 		],
