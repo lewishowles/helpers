@@ -1,8 +1,16 @@
 # Changelog
 
-## 0.2.0
+## 0.3.0
 
-Added 11 new helpers:
+New helpers
+
+### general
+
+- `isFunction` - Determines if the given variable is a function
+
+## 0.2.0 - 2024-08-11
+
+New helpers
 
 ### array
 
@@ -21,7 +29,7 @@ Added 11 new helpers:
 - `isObject` - Determines if the given input is an object, excluding arrays and null
 - `pick` - Returns an object containing only the specified properties
 
-## 0.1.0
+## 0.1.0 - 2024-08-10
 
 The initial version adds six helpers:
 

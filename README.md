@@ -128,6 +128,18 @@ getFriendlyDisplay([]); // <array[0]>
 getFriendlyDisplay("hello"); // hello <string>
 ```
 
+### `isFunction(variable)`
+
+Determines whether the given `variable` is a function.
+
+#### Example
+
+```js
+isFunction(() => "Hello")); // true
+isFunction("function"); // false
+isFunction(5); // false
+```
+
 ## Number
 
 ### `isNumber(variable)`
