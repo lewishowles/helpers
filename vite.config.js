@@ -10,10 +10,19 @@ export default defineConfig({
 				"number",
 				"object",
 				"string",
+				"vue",
 			]),
 			name: "helpers",
 			fileName: "[name]",
 			formats: ["cjs", "es"],
+		},
+		rollupOptions: {
+			external: ["vue"],
+			output: {
+				globals: {
+					vue: "Vue",
+				},
+			},
 		},
 	},
 });

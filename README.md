@@ -244,3 +244,19 @@ isNonEmptyObject("string"); // true
 isNonEmptyObject(""); // false
 isNonEmptyObject(["A", "B"]); // false
 ```
+
+## Vue
+
+### `isNonEmptySlot(slotReference)`
+
+Determines whether the given `slotReference` contains content. `slotReference` is a direct reference to a slot - for example `slots.default`.
+
+#### Example
+
+```js
+// slots.default = () => [{ type: Text, children: "Text content" }]
+isNonEmptySlot(slots.default); // true
+// slots.default = () => [{ type: Comment }]
+isNonEmptySlot(slots.default); // false
+isNonEmptySlot("string"); // false
+```

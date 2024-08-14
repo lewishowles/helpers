@@ -8,6 +8,10 @@ New helpers
 
 - `isFunction` - Determines if the given variable is a function
 
+### vue
+
+- `isNonEmptySlot` - Determine if a slot is empty by checking its content for validity
+
 ## 0.2.0 - 2024-08-11
 
 New helpers
