@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.3.0
+## 0.3.1 - 2024-08-17
+
+- `deepMerge` - Fixes an issue where if objects shared a key, but the types of their values were different, no replacement would be made.
+
+## 0.3.0 - 2024-08-14
 
 New helpers
 
