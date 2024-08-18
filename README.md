@@ -260,3 +260,19 @@ isNonEmptySlot(slots.default); // true
 isNonEmptySlot(slots.default); // false
 isNonEmptySlot("string"); // false
 ```
+
+## Chart
+
+### `chartColours`
+
+Returns a set of six accessible chart colours.
+
+#### Example
+
+```js
+import { chartColours } from "@lewishowles/helpers/chart";
+
+const startIndex = 0;
+const nextIndex = getNextIndex(0, chartColours, { wrap: true });
+const colour = chartColours[nextIndex];
+```

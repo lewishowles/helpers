@@ -11,6 +11,7 @@ export default defineConfig({
 				"object",
 				"string",
 				"vue",
+				"chart",
 			]),
 			name: "helpers",
 			fileName: "[name]",

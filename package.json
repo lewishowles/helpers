@@ -1,6 +1,6 @@
 {
 	"name": "@lewishowles/helpers",
-	"version": "0.3.1",
+	"version": "0.4.0",
 	"description": "A library of gorgeous Javascript methods to make working with—and validating—data quicker and less error-prone, letting the developer concentrate on the fun stuff.",
 	"author": "Lewis Howles",
 	"type": "module",
@@ -29,6 +29,10 @@
 		"./vue": {
 			"import": "./dist/vue.js",
 			"require": "./dist/vue.cjs"
+		},
+		"./chart": {
+			"import": "./dist/chart.js",
+			"require": "./dist/chart.cjs"
 		}
 	},
 	"repository": {
