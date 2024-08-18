@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0 - 2024-08-18
+
+New helpers
+
+### chart
+
+- `chartColours` - An array of six accessible colours for use in charts.
+
 ## 0.3.1 - 2024-08-17
 
 - `deepMerge` - Fixes an issue where if objects shared a key, but the types of their values were different, no replacement would be made.
