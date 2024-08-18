@@ -271,6 +271,7 @@ Returns a set of six accessible chart colours.
 
 ```js
 import { chartColours } from "@lewishowles/helpers/chart";
+import { getNextIndex } from "@lewishowles/helpers/array";
 
 const startIndex = 0;
 const nextIndex = getNextIndex(0, chartColours, { wrap: true });
