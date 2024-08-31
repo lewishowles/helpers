@@ -17,9 +17,14 @@ export default {
 		"@stylistic/object-curly-newline": [
 			"error",
 			{
-				multiline: true,
-				minProperties: 4,
-				consistent: true,
+				ImportDeclaration: "never",
+				ObjectPattern: "never",
+				ExportDeclaration: "always",
+				ObjectExpression: {
+					multiline: true,
+					minProperties: 4,
+					consistent: true,
+				},
 			},
 		],
 		"@stylistic/object-curly-spacing": ["error", "always"],

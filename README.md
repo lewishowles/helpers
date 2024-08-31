@@ -261,6 +261,19 @@ isNonEmptySlot(slots.default); // false
 isNonEmptySlot("string"); // false
 ```
 
+### `runComponentMethod(component, method, ...parameters)`
+
+If the given `component` is an object and contains a function parameter `method`, call that method with any additional `parameters`. This helper allows safe running of a method when an object might not exist.
+
+#### Example
+
+```js
+// component = { method: () => {} }
+runComponentMethod(component, "method", "parameterOne"); // true
+runComponentMethod(component, "undefinedMethod"); // undefined
+runComponentMethod(null); // undefined
+```
+
 ## Chart
 
 ### `chartColours`

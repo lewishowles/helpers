@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.0 - 2024-08-31
+
+New helpers
+
+### vue
+
+- `runComponentMethod` - Run a method from a component (or object) if it exists.
+
 ## 0.4.0 - 2024-08-18
 
 New helpers
