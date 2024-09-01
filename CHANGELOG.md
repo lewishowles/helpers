@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.1 - #
+
+Changes
+
+### vue
+
+- `runComponentMethod` - Updated the code to check for the existence of the method differently, avoiding a Vue warning around enumerating component properties.
+
 ## 0.5.0 - 2024-08-31
 
 New helpers
