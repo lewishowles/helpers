@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.0 - 2024-09-04
+
+New helpers
+
+### chart
+
+- `getNextColour` - Given an index, retrieve the next chart colour in the list of available colours.
+
 ## 0.5.1 - 2024-09-02
 
 Changes

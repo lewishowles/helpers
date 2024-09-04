@@ -290,3 +290,23 @@ const startIndex = 0;
 const nextIndex = getNextIndex(0, chartColours, { wrap: true });
 const colour = chartColours[nextIndex];
 ```
+
+### `getNextColour(index)`
+
+Retrieve the next colour for a chart segment.
+
+#### Example
+
+```js
+import { getNextColour } from "@lewishowles/helpers/chart";
+```
+
+```html
+<path
+	v-for="(figure, index) in figures"
+	:key="figure.id"
+	v-bind="{
+		fill: getNextColour(index)
+	}"
+/>
+```

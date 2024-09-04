@@ -19,7 +19,9 @@ export default {
 			{
 				ImportDeclaration: "never",
 				ObjectPattern: "never",
-				ExportDeclaration: "always",
+				ExportDeclaration: {
+					consistent: true,
+				},
 				ObjectExpression: {
 					multiline: true,
 					minProperties: 4,
