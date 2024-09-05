@@ -276,9 +276,11 @@ runComponentMethod(null); // undefined
 
 ## Chart
 
-### `chartColours`
+### `chartColours`, `extendedColours`, and `brightColours`
 
-Returns a set of six accessible chart colours.
+Each returns a set of accessible chart colours. Colours are provided as Tailwind text colour classes. Full classes are provided to avoid any issues with Tailwind not being able to determine compound classes. Text colours are provided as text colours are more likely to be used elsewhere, as opposed to fill colours, and thus the final CSS bundle is likely to be smaller. To use a colour to fill an SVG shape, combine it with `fill-current`.
+
+Note that when `brightColours` is used in a pie chart, there is a chance that two adjacent colours may not be sufficiently distinct based on the number of slices.
 
 #### Example
 
@@ -291,9 +293,9 @@ const nextIndex = getNextIndex(0, chartColours, { wrap: true });
 const colour = chartColours[nextIndex];
 ```
 
-### `getNextColour(index)`
+### `getNextColour(index, overrideColours)`
 
-Retrieve the next colour for a chart segment.
+Retrieve the next colour for a chart segment based on the current `index`. Optionally provide the colours to choose from with `overrideColours`.
 
 #### Example
 
