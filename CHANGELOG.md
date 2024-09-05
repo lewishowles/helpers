@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.7.0 - 2024-09-05
+
+Updates
+
+### chart
+
+- `getNextColour` - Can now be provided with an alternate set of colours.
+- `extendedColours` and `brightColours` - New options for chart colours.
+
+### array
+
+- `getNextIndex` - Will now handle starting indexes outside of the provided array, if wrap is enabled, by wrapping as necessary.
+
 ## 0.6.0 - 2024-09-04
 
 New helpers
