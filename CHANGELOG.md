@@ -2,46 +2,46 @@
 
 ## 0.7.0 - 2024-09-05
 
-Updates
+### Updates
 
-### chart
+#### chart
 
 - `getNextColour` - Can now be provided with an alternate set of colours.
 - `extendedColours` and `brightColours` - New options for chart colours.
 
-### array
+#### array
 
 - `getNextIndex` - Will now handle starting indexes outside of the provided array, if wrap is enabled, by wrapping as necessary.
 
 ## 0.6.0 - 2024-09-04
 
-New helpers
+### New helpers
 
-### chart
+#### chart
 
 - `getNextColour` - Given an index, retrieve the next chart colour in the list of available colours.
 
 ## 0.5.1 - 2024-09-02
 
-Changes
+### Changes
 
-### vue
+#### vue
 
 - `runComponentMethod` - Updated the code to check for the existence of the method differently, avoiding a Vue warning around enumerating component properties.
 
 ## 0.5.0 - 2024-08-31
 
-New helpers
+### New helpers
 
-### vue
+#### vue
 
 - `runComponentMethod` - Run a method from a component (or object) if it exists.
 
 ## 0.4.0 - 2024-08-18
 
-New helpers
+### New helpers
 
-### chart
+#### chart
 
 - `chartColours` - An array of six accessible colours for use in charts.
 
@@ -51,21 +51,21 @@ New helpers
 
 ## 0.3.0 - 2024-08-14
 
-New helpers
+### New helpers
 
-### general
+#### general
 
 - `isFunction` - Determines if the given variable is a function
 
-### vue
+#### vue
 
 - `isNonEmptySlot` - Determine if a slot is empty by checking its content for validity
 
 ## 0.2.0 - 2024-08-11
 
-New helpers
+### New helpers
 
-### array
+#### array
 
 - `arrayLength` - Determines the number of items in the given array, or 0 if the input is not an array
 - `head` - Get the first element in an array
@@ -74,7 +74,7 @@ New helpers
 - `lastDefined` - Get the last non-undefined element in an array
 - `pluck` - Turn an array of objects into an array of the value of a property from those objects
 
-### object
+#### object
 
 - `deepCopy` - Recursively copy an object or array
 - `deepMerge` - Recursively merge two or more objects
@@ -84,26 +84,26 @@ New helpers
 
 ## 0.1.0 - 2024-08-10
 
-The initial version adds six helpers:
+### New helpers
 
-### array
+#### array
 
 - `getNextIndex` - Given a current index and array, determine the next available index
 - `isNonEmptyArray` - Determines that the given input is both an array and has at least one item
 - `pluck` - Generate an array containing the value of the given property of each of the input objects.
 
-### general
+#### general
 
 - `getFriendlyDisplay` - Convert a given variable into a human-readable representation of its type
 
-### number
+#### number
 
 - `isNumber` - Determines that the given input is a number and not NaN
 
-### object
+#### object
 
 - `isNonEmptyObject` - Determines that the given input is both an object (and not null, or an array), and has at least one property
 
-### string
+#### string
 
 - `isNonEmptyString` - Determines that the given input is both a string and has at least one character
