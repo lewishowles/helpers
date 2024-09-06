@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.1 - 2024-09-06
+
+### Updates
+
+#### chart
+
+- `chartColours`, `extendedColours` and `brightColours` now have dark mode colours.
+
 ## 0.7.0 - 2024-09-05
 
 ### Updates
