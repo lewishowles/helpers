@@ -53,6 +53,7 @@
 		"@stylistic/eslint-plugin": "^2.7.2",
 		"eslint": "^9.9.1",
 		"globals": "^15.9.0",
+		"simple-git-hooks": "^2.11.1",
 		"vite": "^5.4.2",
 		"vitest": "^2.0.5",
 		"vue": "^3.4.38"

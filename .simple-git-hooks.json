@@ -1,0 +1,4 @@
+{
+	"pre-commit": "bun lint",
+	"pre-push": "bun lint; bun test:unit; bun run build"
+}
