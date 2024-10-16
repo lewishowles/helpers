@@ -163,6 +163,20 @@ getFriendlyDisplay(5, "number", 0); // 5
 
 ## Number
 
+### `clamp(number, minimum, maximum)`
+
+Ensure that the provided `number` is between `minimum` and `maximum` (inclusive). If `number` is lower than `minimum`, `minimum` is returned. If `number` is higher than maximum, `maximum` is returned.
+
+If `number` is not a number, `minimum` is returned.
+
+#### Example
+
+```js
+isNumber(4); // true
+isNumber(NaN); // false
+isNumber("string"); // false
+```
+
 ### `isNumber(variable)`
 
 Determines whether the given `variable` is a number and not NaN.
