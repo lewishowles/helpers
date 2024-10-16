@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.8.0 - 2024-10-16
+
+### New helpers
+
+#### general
+
+- `validateOrFallback` - Given a value and validation function, ensure the value matches, or return the provided fallback.
+
+#### number
+
+- `clamp` - Given a value, minimum and maximum, ensure the returned value is between the extremes.
+
 ## 0.7.1 - 2024-09-06
 
 ### Updates
