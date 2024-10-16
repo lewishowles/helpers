@@ -140,6 +140,27 @@ isFunction("function"); // false
 isFunction(5); // false
 ```
 
+### `validateOrFallback(value, comparison, fallback)`
+
+Apply `comparison` to the provided `value`, returning `value` if `true`, and `fallback` if not.
+
+`comparison` can be a function, or one of the keywords:
+
+- `string`: A string, including an empty string
+- `boolean`: Strictly true or false
+- `number`: A number, excluding NaN, based on `isNumber`
+- `function`: A function, based on `isFunction`
+- `array`: An array, including an empty array
+- `object`: An object, including an empty object
+
+#### Example
+
+```js
+validateOrFallback("value", "string", "fallback"); // "value"
+getFriendlyDisplay({}, isNonEmptyObject, null); // null
+getFriendlyDisplay(5, "number", 0); // 5
+```
+
 ## Number
 
 ### `isNumber(variable)`
