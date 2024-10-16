@@ -47,6 +47,7 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"test:unit": "vitest",
+		"test:unit:run": "vitest run",
 		"lint": "eslint --fix"
 	},
 	"devDependencies": {
