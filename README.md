@@ -268,9 +268,9 @@ pick({ a: "one", b: "two", c: "three" }, ["a", "d"]); // { a: "one" }
 
 ## String
 
-### `isNonEmptyString(variable)`
+### `isNonEmptyString(variable, { trim: false })`
 
-Determines whether the given `variable` is both a string and has at least one character.
+Determines whether the given `variable` is both a string and has at least one character. If `trim` is true, the string is trimmed of whitespace before the test is performed.
 
 #### Example
 
@@ -278,6 +278,8 @@ Determines whether the given `variable` is both a string and has at least one ch
 isNonEmptyObject("string"); // true
 isNonEmptyObject(""); // false
 isNonEmptyObject(["A", "B"]); // false
+isNonEmptyObject("  "); // true
+isNonEmptyObject("  ", { trim: true }); // false
 ```
 
 ## Vue

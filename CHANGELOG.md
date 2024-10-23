@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.0 - 2024-10-23
+
+### Updates
+
+#### string
+
+- `isNonEmptyString` - A new `trim` option (default: `false`) can be provided to allow the string to be trimmed before testing.
+
 ## 0.8.0 - 2024-10-16
 
 ### New helpers
