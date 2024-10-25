@@ -266,6 +266,24 @@ pick({ a: "one", b: "two", c: "three" }, ["a"]); // { a: "one" }
 pick({ a: "one", b: "two", c: "three" }, ["a", "d"]); // { a: "one" }
 ```
 
+### `objectContains(object, needle, { caseInsensitive: true, allowPartial: false })`
+
+Returns true if one of the `object`'s values is `needle`. Also works when `object` is an array.
+
+String `needle`s are checked case-insensitively by default, and partial matches can be enabled via option.
+
+#### Example
+
+```js
+objectContains({ name: "Merida" }, "merida"); // true
+objectContains({ name: "Moana" }, "merida"); // false
+objectContains({ name: "Mulan" }, "mulan", { caseInsensitive: false }); // false
+objectContains({ name: { first: "Tiana" } }, "tia"); // false
+objectContains({ name: { first: "Tiana" } }, "tia", { allowPartial: true }); // true
+objectContains({ names: ["Ariel", "Jasmine"] }, "ariel"); // true
+objectContains({ length: 52 }, 5); // false
+```
+
 ## String
 
 ### `isNonEmptyString(variable, { trim: false })`

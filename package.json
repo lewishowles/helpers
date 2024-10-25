@@ -1,6 +1,6 @@
 {
 	"name": "@lewishowles/helpers",
-	"version": "0.9.0",
+	"version": "0.10.0",
 	"description": "A library of gorgeous Javascript methods to make working with—and validating—data quicker and less error-prone, letting the developer concentrate on the fun stuff.",
 	"author": "Lewis Howles",
 	"type": "module",
@@ -51,12 +51,12 @@
 		"lint": "eslint --fix"
 	},
 	"devDependencies": {
-		"@stylistic/eslint-plugin": "^2.7.2",
-		"eslint": "^9.9.1",
-		"globals": "^15.9.0",
+		"@stylistic/eslint-plugin": "^2.9.0",
+		"eslint": "^9.13.0",
+		"globals": "^15.11.0",
 		"simple-git-hooks": "^2.11.1",
-		"vite": "^5.4.2",
-		"vitest": "^2.0.5",
-		"vue": "^3.4.38"
+		"vite": "^5.4.10",
+		"vitest": "^2.1.3",
+		"vue": "^3.5.12"
 	}
 }

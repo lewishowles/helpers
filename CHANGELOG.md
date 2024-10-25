@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.10.0 - 2024-10-25
+
+### New helpers
+
+#### object
+
+- `objectContains` - Given an object (or array) and a needle, search for that needle within the object's values.
+
 ## 0.9.0 - 2024-10-23
 
 ### Updates
