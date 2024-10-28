@@ -266,11 +266,13 @@ pick({ a: "one", b: "two", c: "three" }, ["a"]); // { a: "one" }
 pick({ a: "one", b: "two", c: "three" }, ["a", "d"]); // { a: "one" }
 ```
 
-### `objectContains(object, needle, { caseInsensitive: true, allowPartial: false })`
+### `objectContains(object, needle, { exclude: null, include: null, caseInsensitive: true, allowPartial: false })`
 
 Returns true if one of the `object`'s values is `needle`. Also works when `object` is an array.
 
 String `needle`s are checked case-insensitively by default, and partial matches can be enabled via option.
+
+`exclude` defines an array of properties to exclude from the search, while `include` defines an array of properties which are searched exclusively. If `include` is defined, `exclude` is ignored.
 
 #### Example
 

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.11.0 - 2024-10-28
+
+### Updates
+
+#### object
+
+- `objectContains` - Now provides `include` and `exclude` options to limit the properties that are searched.
+
 ## 0.10.0 - 2024-10-25
 
 ### New helpers
