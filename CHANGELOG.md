@@ -8,6 +8,10 @@
 
 - `isNumeric` - Determine whether a given value is a number, or a string containing a number.
 
+#### form
+
+- `validateField` - Given a field name, validation rules, and form data, validate a field's current value.
+
 ## 0.11.0 - 2024-10-28
 
 ### Updates

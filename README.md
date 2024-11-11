@@ -114,6 +114,55 @@ tail(["a", "b"]); // "b"
 tail([]); // undefined
 ```
 
+## Form
+
+### `validateField(fieldName, validationRules, formData)`
+
+Validate a field given its `fieldName`, the field's `validationRules`, and the sum total `formData`.
+
+Returns a non-empty array of error messages if an error is encountered.
+
+If a `required` rule is encountered, validation bails, as it is unlikely most other rules will pass if no value is provided.
+
+Available rules and properties include:
+
+#### `required`
+
+`[{ rule: "required", message: "Enter your name so we know what to call you" }]`
+
+Requires a value to be set. Adds the `required` attribute to the field automatically.
+
+#### `email`
+
+`[{ rule: "email", message: "We need an email address to set up your account" }]`
+
+Perform a minimal check to see if the value contains an `@` symbol. More complex verification isn't really necessary, and the only true way to test an email address is through verification.
+
+#### `minimum_length`
+
+`[{ rule: "minimum_length", length: 11, message: "Your phone number should be 11 digits long" }]`
+
+Ensure that the provided value is at least `length` characters long.
+
+#### `maximum_length`
+
+`[{ rule: "maximum_length", length: 11, message: "Your phone number should be no more than 11 digits long" }]`
+
+Ensure that the provided value is at most `length` characters long.
+
+#### `regexp`
+
+`[{ rule: "regexp", regexp: /[abc]+/, message: "Your ID should only contain the letters a, b, and c" }]`
+
+Ensure that the provided value matches `regexp`.
+
+#### Example
+
+```js
+validateField("username", [{ rule: "required", message: "Enter a username" }], { username: "" }) // ["Enter a username"]
+validateField("username", [{ rule: "required", message: "Enter a username" }], { username: "jack_skellington" }) // []
+```
+
 ## General
 
 ### `getFriendlyDisplay(variable)`
