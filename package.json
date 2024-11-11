@@ -10,6 +10,10 @@
 			"import": "./dist/array.js",
 			"require": "./dist/array.cjs"
 		},
+		"./form": {
+			"import": "./dist/form.js",
+			"require": "./dist/form.cjs"
+		},
 		"./general": {
 			"import": "./dist/general.js",
 			"require": "./dist/general.cjs"
