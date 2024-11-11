@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.0 - 2024-11-11
+
+### New helpers
+
+#### number
+
+- `isNumeric` - Determine whether a given value is a number, or a string containing a number.
+
 ## 0.11.0 - 2024-10-28
 
 ### Updates

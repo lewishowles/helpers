@@ -189,6 +189,20 @@ isNumber(NaN); // false
 isNumber("string"); // false
 ```
 
+### `isNumeric(variable)`
+
+Determines whether the given `variable` is a number, or a string containing a number.
+
+#### Example
+
+```js
+isNumeric(4); // true
+isNumeric(NaN); // false
+isNumeric("string"); // false
+isNumeric("10e3"); // true
+isNumeric("5.6"); // true
+```
+
 ## Object
 
 ### `deepCopy(object)`
