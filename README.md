@@ -166,6 +166,12 @@ Ensure that the provided value is has between `min` and `max` size. Values are e
 
 Ensure that the given value is included within `options`.
 
+#### `not_in`
+
+`[{ rule: "not_in", options: ["a", "b", "c"], message: "Your choice should not include a, b, or c" }]`
+
+Ensure that the given value is not included within `options`.
+
 #### `regexp`
 
 `[{ rule: "regexp", regexp: /[abc]+/, message: "Your ID should only contain the letters a, b, and c" }]`
