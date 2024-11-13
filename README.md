@@ -136,23 +136,29 @@ Requires a value to be set. Adds the `required` attribute to the field automatic
 
 Perform a minimal check to see if the value contains an `@` symbol. More complex verification isn't really necessary, and the only true way to test an email address is through verification.
 
+#### `size`
+
+`[{ rule: "size", size: 11, message: "Your phone number should be 11 digits long" }]`
+
+Ensure that the provided value is has at least size `size`. For strings, the number of characters is used, for arrays, the length of the array, for objects, the number of properties, for numbers, the number itself is used, and for numeric strings the integer value of the string is used.
+
 #### `min`
 
 `[{ rule: "min", min: 11, message: "Your phone number should be at least 11 digits long" }]`
 
-Ensure that the provided value is has at least size `min`. For strings, the number of characters is used, for arrays, the length of the array, for objects, the number of properties, and for numbers, the number itself is used.
+Ensure that the provided value is has at least size `min`. Values are evaluated as in the `size` rule.
 
 #### `max`
 
 `[{ rule: "max", max: 11, message: "Your phone number should be no more than 11 digits long" }]`
 
-Ensure that the provided value is has at most size `max`. For strings, the number of characters is used, for arrays, the length of the array, for objects, the number of properties, and for numbers, the number itself is used.
+Ensure that the provided value is has at most size `max`. Values are evaluated as in the `size` rule.
 
 #### `between`
 
 `[{ rule: "between", min: 5, max: 8, message: "Your post code should be between 5 and 8 characters" }]`
 
-Ensure that the provided value is has between `min` and `max` size. For strings, the number of characters is used, for arrays, the length of the array, for objects, the number of properties, and for numbers, the number itself is used.
+Ensure that the provided value is has between `min` and `max` size. Values are evaluated as in the `size` rule.
 
 #### `in`
 
