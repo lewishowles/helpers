@@ -2,9 +2,22 @@
 
 ## 0.13.0 - #
 
+### New helpers
+
+#### general
+
+`size` - Determine the size of a variable - characters in a string, items in an array, properties in an object, or the value of a number.
+
+#### object
+
+`objectLength` - The number of (top level) keys in an object.
+
 ### Updates
 
 `validateField` - No longer bails if a `required` rule is reached. We might as well be clear to users what other requirements there are at the same time.
+`validateField` - `minimum_length` has been renamed to `min` and can now apply to numbers, arrays and objects.
+`validateField` - `maximum_length` has been renamed to `max` and can now apply to numbers, arrays and objects.
+`validateField` - Added new `in` validation to determine if the value is in a list of options.
 
 ## 0.12.0 - 2024-11-11
 

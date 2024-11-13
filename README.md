@@ -148,6 +148,12 @@ Ensure that the provided value is has at least size `min`. For strings, the numb
 
 Ensure that the provided value is has at most size `max`. For strings, the number of characters is used, for arrays, the length of the array, for objects, the number of properties, and for numbers, the number itself is used.
 
+#### `in`
+
+`[{ rule: "in", options: ["a", "b", "c"], message: "Your choice should be a, b, or c" }]`
+
+Ensure that the given value is included within `options`.
+
 #### `regexp`
 
 `[{ rule: "regexp", regexp: /[abc]+/, message: "Your ID should only contain the letters a, b, and c" }]`
