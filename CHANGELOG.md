@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.0 - #
+
+### Updates
+
+`validateField` - No longer bails if a `required` rule is reached. We might as well be clear to users what other requirements there are at the same time.
+
 ## 0.12.0 - 2024-11-11
 
 ### New helpers

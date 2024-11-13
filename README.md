@@ -122,8 +122,6 @@ Validate a field given its `fieldName`, the field's `validationRules`, and the s
 
 Returns a non-empty array of error messages if an error is encountered.
 
-If a `required` rule is encountered, validation bails, as it is unlikely most other rules will pass if no value is provided.
-
 Available rules and properties include:
 
 #### `required`
