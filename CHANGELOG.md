@@ -18,6 +18,7 @@
 `validateField` - `minimum_length` has been renamed to `min` and can now apply to numbers, arrays and objects.
 `validateField` - `maximum_length` has been renamed to `max` and can now apply to numbers, arrays and objects.
 `validateField` - Added new `in` validation to determine if the value is in a list of options.
+`validateField` - Added new `between` validation to determine if the value is between a `min` and `max`.
 
 ## 0.12.0 - 2024-11-11
 

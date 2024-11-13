@@ -138,15 +138,21 @@ Perform a minimal check to see if the value contains an `@` symbol. More complex
 
 #### `min`
 
-`[{ rule: "min", size: 11, message: "Your phone number should be at least 11 digits long" }]`
+`[{ rule: "min", min: 11, message: "Your phone number should be at least 11 digits long" }]`
 
 Ensure that the provided value is has at least size `min`. For strings, the number of characters is used, for arrays, the length of the array, for objects, the number of properties, and for numbers, the number itself is used.
 
 #### `max`
 
-`[{ rule: "max", size: 11, message: "Your phone number should be no more than 11 digits long" }]`
+`[{ rule: "max", max: 11, message: "Your phone number should be no more than 11 digits long" }]`
 
 Ensure that the provided value is has at most size `max`. For strings, the number of characters is used, for arrays, the length of the array, for objects, the number of properties, and for numbers, the number itself is used.
+
+#### `between`
+
+`[{ rule: "between", min: 5, max: 8, message: "Your post code should be between 5 and 8 characters" }]`
+
+Ensure that the provided value is has between `min` and `max` size. For strings, the number of characters is used, for arrays, the length of the array, for objects, the number of properties, and for numbers, the number itself is used.
 
 #### `in`
 
