@@ -136,17 +136,17 @@ Requires a value to be set. Adds the `required` attribute to the field automatic
 
 Perform a minimal check to see if the value contains an `@` symbol. More complex verification isn't really necessary, and the only true way to test an email address is through verification.
 
-#### `minimum_length`
+#### `min`
 
-`[{ rule: "minimum_length", length: 11, message: "Your phone number should be 11 digits long" }]`
+`[{ rule: "min", size: 11, message: "Your phone number should be at least 11 digits long" }]`
 
-Ensure that the provided value is at least `length` characters long.
+Ensure that the provided value is has at least size `min`. For strings, the number of characters is used, for arrays, the length of the array, for objects, the number of properties, and for numbers, the number itself is used.
 
-#### `maximum_length`
+#### `max`
 
-`[{ rule: "maximum_length", length: 11, message: "Your phone number should be no more than 11 digits long" }]`
+`[{ rule: "max", size: 11, message: "Your phone number should be no more than 11 digits long" }]`
 
-Ensure that the provided value is at most `length` characters long.
+Ensure that the provided value is has at most size `max`. For strings, the number of characters is used, for arrays, the length of the array, for objects, the number of properties, and for numbers, the number itself is used.
 
 #### `regexp`
 
