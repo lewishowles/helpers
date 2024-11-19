@@ -228,8 +228,8 @@ Apply `comparison` to the provided `value`, returning `value` if `true`, and `fa
 
 ```js
 validateOrFallback("value", "string", "fallback"); // "value"
-getFriendlyDisplay({}, isNonEmptyObject, null); // null
-getFriendlyDisplay(5, "number", 0); // 5
+validateOrFallback({}, isNonEmptyObject, null); // null
+validateOrFallback(5, "number", 0); // 5
 ```
 
 ## Number
@@ -243,9 +243,10 @@ If `number` is not a number, `minimum` is returned.
 #### Example
 
 ```js
-isNumber(4); // true
-isNumber(NaN); // false
-isNumber("string"); // false
+clamp(4); // 4
+clamp(10, 0, 5); // 5
+clamp(-15, 0, 5); // 0
+clamp(NaN); // 0
 ```
 
 ### `isNumber(variable)`
