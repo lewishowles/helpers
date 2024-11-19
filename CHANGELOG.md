@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.14.0 - 2024-11-19
+
+### New helpers
+
+#### string
+
+- `toLowerCase` - A safe wrapper around `toLowerCase`, returning an empty string if the provided variable is not itself a string.
+- `toUpperCase` - A safe wrapper around `toUpperCase`, returning an empty string if the provided variable is not itself a string.
+- `trim` - Trim both sides of a string, trimming whitespace by default.
+- `ltrim` - Trim the left hand side of a string, trimming whitespace by default.
+- `rtrim` - Trim the right hand side of a string, trimming whitespace by default.
+- `truncate` - Truncate a string, with various options for how the truncation is performed—such as preserving words.
+
 ## 0.13.0 - 2024-11-13
 
 ### New helpers

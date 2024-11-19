@@ -373,6 +373,21 @@ objectContains({ length: 52 }, 5); // false
 
 ## String
 
+### `StringManipulator`
+
+`StringManipulator` can be used to chan string methods together safely. A new instance of the class is created, and then any of the string helper methods can be used in any sequence. If the input at any stage is invalid, an empty string is returned.
+
+#### Example
+
+```js
+const userId = "82FAA75F-B47A-43B6-82F6-389C9408BB67";
+
+const userIdPreview = new StringManipulator(userId)
+	.toLowerCase()
+	.truncate(15)
+	.value; // 82faa75f-b47a-…
+```
+
 ### `isNonEmptyString(variable, { trim: false })`
 
 Determines whether the given `variable` is both a string and has at least one character. If `trim` is true, the string is trimmed of whitespace before the test is performed.
@@ -380,11 +395,80 @@ Determines whether the given `variable` is both a string and has at least one ch
 #### Example
 
 ```js
-isNonEmptyObject("string"); // true
-isNonEmptyObject(""); // false
-isNonEmptyObject(["A", "B"]); // false
-isNonEmptyObject("  "); // true
-isNonEmptyObject("  ", { trim: true }); // false
+isNonEmptyString("string"); // true
+isNonEmptyString(""); // false
+isNonEmptyString(["A", "B"]); // false
+isNonEmptyString("  "); // true
+isNonEmptyString("  ", { trim: true }); // false
+```
+
+### `ltrim(string, pattern="\\s")`
+
+Trim the left hand side of `string` using the provided string or RegExp `pattern`. Trims whitespace by default.
+
+#### Example
+
+```js
+ltrim("***string***", "*"); // **string***
+ltrim("***string***", /\*/); // **string***
+ltrim("***string***", /\*+/); // string***
+```
+
+### `rtrim(string, pattern="\\s")`
+
+Trim the right hand side of `string` using the provided string or RegExp `pattern`. Trims whitespace by default.
+
+#### Example
+
+```js
+rtrim("***string***", "*"); // ***string**
+rtrim("***string***", /\*/); // ***string**
+rtrim("***string***", /\*+/); // ***string
+```
+
+### `toLowerCase(variable)`
+
+A safe wrapper around `toLowerCase`, returning an empty string if the provided `variable` is not a string itself.
+
+#### Example
+
+```js
+toLowerCase("String"); // string
+toLowerCase(""); // ""
+toLowerCase(["A", "B"]); // ""
+```
+
+### `trim(string, pattern="\\s")`
+
+Trim both sides of `string` using the provided string or RegExp `pattern`. Trims whitespace by default.
+
+#### Example
+
+```js
+trim("   string   "); // string
+trim("* *string* *", "*"); // *string*
+trim("***string***", /\*/); // **string**
+trim("***string***", /\*+/); // string
+```
+
+### `truncate(string, length = 10, { decoration = "…", preserveWords = false, strict = true, includeDecoration = true })`
+
+Truncate a string to a given length, with various options for how the truncation occurs.
+
+If the provided variable is not a string, returns an empty string.
+
+- `length`: The length to truncate the string to
+- `decoration`: The decoration to append to the string if it is truncated
+- `includeDecoration`: Whether to include the length of the decoration in length calculations
+- `preserveWords`: Whether to avoid breaking a word during truncation
+- `strict`: When preserving words, if strict the resulting length will be less than the desired length
+
+#### Example
+
+```js
+toLowerCase("String"); // string
+toLowerCase(""); // ""
+toLowerCase(["A", "B"]); // ""
 ```
 
 ## Vue
@@ -454,3 +538,9 @@ import { getNextColour } from "@lewishowles/helpers/chart";
 	}"
 />
 ```
+
+## Roadmap
+
+There are a number of improvements and new helpers that could be made to improve flexibility.
+
+- ObjectManipulator - allowing a chain of object helpers to be applied in series.
