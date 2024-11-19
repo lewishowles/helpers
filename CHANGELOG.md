@@ -6,6 +6,7 @@
 
 #### string
 
+- `StringManipulator` - A new class that allows the chaining of string methods.
 - `toLowerCase` - A safe wrapper around `toLowerCase`, returning an empty string if the provided variable is not itself a string.
 - `toUpperCase` - A safe wrapper around `toUpperCase`, returning an empty string if the provided variable is not itself a string.
 - `trim` - Trim both sides of a string, trimming whitespace by default.
