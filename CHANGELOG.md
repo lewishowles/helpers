@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.15.0
+
+### New helpers
+
+#### array
+
+- `sortObjectsByProperty` - Sort a list of objects by a given property.
+
 ## 0.14.0 - 2024-11-19
 
 ### New helpers
