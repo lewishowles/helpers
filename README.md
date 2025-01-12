@@ -299,6 +299,19 @@ isNumeric("10e3"); // true
 isNumeric("5.6"); // true
 ```
 
+### `round(number, precision = 0)`
+
+Rounds the given `number` to the specified `precision`. If `precision` is not provided, it defaults to 0.
+
+#### Example
+
+```js
+round(4.567); // 5
+round(4.567, 2); // 4.57
+round(4.567, 0); // 5
+round(4.567, -1); // 0
+```
+
 ## Object
 
 ### `deepCopy(object)`
