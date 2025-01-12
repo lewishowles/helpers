@@ -126,6 +126,18 @@ tail(["a", "b"]); // "b"
 tail([]); // undefined
 ```
 
+### `unique(array)`
+
+Safely reduce the provided `array` to those entries which are unique.
+
+#### Example
+
+```js
+unique([1, 2, 2, 3, 4, 4, 5]); // [1, 2, 3, 4, 5]
+unique(["a", "b", "a", "c"]); // ["a", "b", "c"]
+unique([]); // []
+```
+
 ## Form
 
 ### `validateField(fieldName, validationRules, formData)`

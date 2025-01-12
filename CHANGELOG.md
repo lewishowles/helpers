@@ -7,6 +7,7 @@
 #### array
 
 - `sortObjectsByProperty` - Sort a list of objects by a given property.
+- `unique` - Return an arary containing only unique entries.
 
 ## 0.14.0 - 2024-11-19
 
