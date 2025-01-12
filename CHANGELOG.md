@@ -17,6 +17,7 @@
 
 - `keys` - Safely retrieve the keys of an object.
 - `values` - Safely retrieve the values of an object.
+- `omit` - Omit the provided properties from a given object.
 
 ## 0.14.0 - 2024-11-19
 

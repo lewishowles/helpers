@@ -421,6 +421,18 @@ objectContains({ names: ["Ariel", "Jasmine"] }, "ariel"); // true
 objectContains({ length: 52 }, 5); // false
 ```
 
+### `omit(object, properties)`
+
+Returns a new object with the specified `properties` omitted from the given `object`.
+
+#### Example
+
+```js
+omit({ a: 1, b: 2, c: 3 }, ["b"]); // { a: 1, c: 3 }
+omit({ a: 1, b: 2, c: 3 }, ["a", "c"]); // { b: 2 }
+omit({ a: 1, b: 2, c: 3 }, []); // { a: 1, b: 2, c: 3 }
+```
+
 ### `values(object)`
 
 Returns an array of the values of the given `object`.
