@@ -16,6 +16,7 @@
 #### object
 
 - `keys` - Safely retrieve the keys of an object.
+- `values` - Safely retrieve the values of an object.
 
 ## 0.14.0 - 2024-11-19
 

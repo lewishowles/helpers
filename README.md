@@ -421,6 +421,18 @@ objectContains({ names: ["Ariel", "Jasmine"] }, "ariel"); // true
 objectContains({ length: 52 }, 5); // false
 ```
 
+### `values(object)`
+
+Returns an array of the values of the given `object`.
+
+#### Example
+
+```js
+values({ a: 1, b: 2, c: 3 }); // [1, 2, 3]
+values({}); // []
+values("string"); // []
+```
+
 ## String
 
 ### `StringManipulator`
