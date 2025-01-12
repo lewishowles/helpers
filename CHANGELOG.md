@@ -13,6 +13,10 @@
 
 - `round` - Round a given number to the specified number of decimal places.
 
+#### object
+
+- `keys` - Safely retrieve the keys of an object.
+
 ## 0.14.0 - 2024-11-19
 
 ### New helpers

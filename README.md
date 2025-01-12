@@ -373,6 +373,18 @@ isObject(['A', 'B', 'C', 'D']); // false
 isObject(null); // false
 ```
 
+### `keys(object)`
+
+Returns an array of the keys of the given `object`.
+
+#### Example
+
+```js
+keys({ a: 1, b: 2, c: 3 }); // ["a", "b", "c"]
+keys({}); // []
+keys("string"); // []
+```
+
 ### `pick(object, properties)`
 
 Returns an object containing only `properties` properties from `object`.
