@@ -97,10 +97,22 @@ Any non-objects in `array` are ignored.
 #### Example
 
 ```js
-pluck({ property: "value" }, "property"); // "value"
-pluck({ nested: { property: { value: "seven" } } }, "nested.property.value"); // "seven"
-pluck({ nested: { property: { value: "seven" } } }, "nested.mistake.value"); // null
+pluck([{ fruit: "apple" }, { fruit: "banana" }], "fruit"); // ["apple", "banana"]
+pluck([{ nested: { property: { value: "seven" } } }, { nested: { property: { value: "eight" } } }], "nested.property.value"); // ["seven", "eight"]
+pluck([{ nested: { property: { value: "seven" } } }], "nested.mistake.value"); // null
 pluck([], "property"); // null
+```
+
+### `sortObjectsByProperty(array, property, { ascending: true })`
+
+Sort the given `array` of objects by the value of property `property`, with optional direction.
+
+#### Example
+
+```js
+sortObjectsByProperty([{ name: "Lewis" }, { name: "Alice" }], "name"); // [{ name: "Alice" }, { name: "Lewis" }]
+sortObjectsByProperty([{ name: "Lewis" }, { name: "Alice" }], "age"); // [{ name: "Lewis" }, { name: "Alice" }]
+sortObjectsByProperty([{ name: "Lewis" }, { name: "Alice" }], "name", { ascending: false }); // [{ name: "Lewis" }, { name: "Alice" }]
 ```
 
 ### `tail(array)`
@@ -544,4 +556,5 @@ import { getNextColour } from "@lewishowles/helpers/chart";
 
 There are a number of improvements and new helpers that could be made to improve flexibility.
 
-- ObjectManipulator - allowing a chain of object helpers to be applied in series.
+- ObjectManipulator - allowing a chain of object helpers to be applied safely in series.
+- ArrayManipulator - allowing a chain of array helpers to be applied safely in series.
