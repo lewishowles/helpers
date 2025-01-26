@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.16.0 - 2025-01-26
+
+### New helpers
+
+#### url
+
+- `updateUrlParameter` - Add, remove or update the value of a URL parameter.
+- `removeUrlParameter` - Remove a given URL parameter if it exists.
+
 ## 0.15.0 - 2025-01-12
 
 ### New helpers
