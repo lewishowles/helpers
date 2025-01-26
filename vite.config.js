@@ -12,6 +12,7 @@ export default defineConfig({
 			"@object": fileURLToPath(new URL("./lib/object/object", import.meta.url)),
 			"@string": fileURLToPath(new URL("./lib/string/string", import.meta.url)),
 			"@vue": fileURLToPath(new URL("./lib/vue/vue", import.meta.url)),
+			"@url": fileURLToPath(new URL("./lib/url/url", import.meta.url)),
 		},
 	},
 	build: {
@@ -25,6 +26,7 @@ export default defineConfig({
 				"object",
 				"string",
 				"vue",
+				"url",
 			]),
 			name: "helpers",
 			fileName: "[name]",

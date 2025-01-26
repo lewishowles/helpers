@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.16.1 - 2025-01-26
+
+### Fixes
+
+- Fixes incorrect URL helper exports
+- Attempts to remove some circular imports
+
 ## 0.16.0 - 2025-01-26
 
 ### New helpers
