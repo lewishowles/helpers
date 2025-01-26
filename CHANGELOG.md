@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.17.0 - 2025-01-26
+
+### New helpers
+
+#### url
+
+- `getUrlParameter` - Retrieve the current value of a given parameter.
+
 ## 0.16.1 - 2025-01-26
 
 ### Fixes

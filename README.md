@@ -615,6 +615,19 @@ import { getNextColour } from "@lewishowles/helpers/chart";
 
 ## URL
 
+### `getUrlParameter(parameter)`
+
+Retrieve the current value of `parameter`, returning `null` if the parameter is not present.
+
+#### Example
+
+```js
+// https://duckduckgo.com?page=2
+getUrlParameter("page") // 2
+// https://duckduckgo.com?page=2
+getUrlParameter("unknown") // null
+```
+
 ### `updateUrlParameter(parameter, value)`
 
 Update the current URL to set `parameter` to `value`, adding `parameter` if it doesn't already exist, or overwriting any current value if it doesn't. If `value` is `null`, the parameter is removed.
