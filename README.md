@@ -468,6 +468,18 @@ values({}); // []
 values("string"); // []
 ```
 
+### `unwrap(object)`
+
+Safely unwrap a single-key object, returning the value of that key. `null` is returned if the object contains more than one key, or the value cannot be retrieved.
+
+#### Example
+
+```js
+unwrap({ key: "value" }) // "value"
+unwrap(null) // null
+unwrap({ key_one: "value", key_two: "value two" }) // null
+```
+
 ## String
 
 ### `StringManipulator`

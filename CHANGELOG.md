@@ -4,6 +4,9 @@
 
 ### New helpers
 
+#### object
+
+- `unwrap` - Retrieve the value from a single-key object
 #### array
 
 - `chunk` - Chunk the given array into arrays of the given size
