@@ -10,6 +10,7 @@
 #### array
 
 - `chunk` - Chunk the given array into arrays of the given size
+- `compact` - Remove any falsy values from an array
 
 ## 0.17.0 - 2025-01-26
 
