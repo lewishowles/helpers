@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.18.0
+
+### New helpers
+
+#### array
+
+- `chunk` - Chunk the given array into arrays of the given size
+
 ## 0.17.0 - 2025-01-26
 
 ### New helpers

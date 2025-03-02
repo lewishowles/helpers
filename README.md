@@ -24,6 +24,29 @@ arrayLength([]); // 0
 arrayLength(undefined); // 0
 ```
 
+### `chunk(array, chunkSize)`
+
+Split an array into chunks of a specified size
+
+#### Example
+
+```js
+chunk([1, 2, 3], 2) // [[1, 2], [3]]
+chunk([1, 2, 3], 1) // [[1], [2], [3]]
+chunk([1, 2, 3], 5) // [[1, 2, 3]]
+```
+
+### `compact(array)`
+
+Remove falsy values from the given array.
+
+#### Example
+
+```js
+compact([0, 1, false, 2, "", 3])) // [1, 2, 3]
+compact([true, true, true])) // [true, true, true]
+```
+
 ### `firstDefined(array)`
 
 Returns the first non-undefined element in `array`.
@@ -660,5 +683,9 @@ updateUrlParameter("page") // https://duckduckgo.com
 
 There are a number of improvements and new helpers that could be made to improve flexibility.
 
+- object/forget - Remove a deeply nested item from an object via "dot notation".
+- object/hasAny - Checks whether any of the given deeply nested items exists in an object via "dot notation".
+- object/keyBy - Convert an array of objects into an object keyed by the value of the given object key.
+- object/set - Set a deeply nested value for the given "dot notation" key.
 - ObjectManipulator - allowing a chain of object helpers to be applied safely in series.
 - ArrayManipulator - allowing a chain of array helpers to be applied safely in series.
