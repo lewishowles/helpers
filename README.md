@@ -337,6 +337,18 @@ round(4.567, -1); // 0
 
 ## Object
 
+### `add`
+
+Add a key / value pair to an object without overwriting any existing value. That is, only if that key isn't already present, or if its value is undefined or null.
+
+#### Example
+
+```js
+add({ one: "One", two: "Two" }, "one", "Two") // { one: "One", two: "Two" }
+add({ one: "One", two: "Two" }, "three", "Three") // { one: "One", two: "Two", three: "Three" }
+add({ one: "One", two: null }, "two", "Two") // { one: "One", two: "Two" }
+```
+
 ### `deepCopy(object)`
 
 Returns a recursive copy of `object`.

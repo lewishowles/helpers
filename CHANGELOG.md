@@ -7,6 +7,8 @@
 #### object
 
 - `unwrap` - Retrieve the value from a single-key object
+- `add` - Add a key/value pair to an object if that key doesn't already have a value
+
 #### array
 
 - `chunk` - Chunk the given array into arrays of the given size
