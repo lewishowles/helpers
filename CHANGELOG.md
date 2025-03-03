@@ -8,6 +8,7 @@
 
 - `unwrap` - Retrieve the value from a single-key object
 - `add` - Add a key/value pair to an object if that key doesn't already have a value
+- `forget` - Remove the given (optionally deeply nested) key from the given object
 
 #### array
 

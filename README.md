@@ -371,6 +371,19 @@ deepMerge({ key: "value" }, { value: "key" }); // { key: "value", value: "key" }
 deepMerge({ key: "value", a: { b: 2 }}, { key: "modified", a: { c: 3 }}); // { key: "modified", a { b: 2, c: 3 }}
 ```
 
+### `forget(object, path)`
+
+Remove an (optionally deeply nested) item from an object. This method makes a copy of the provided object to not modify the original.
+
+#### Example
+
+```js
+forget({ key: "value" }, "key") // {}
+forget({ key: "value" }, "another") // { key: "value" }
+forget({ key: "value", one: { two: { three: "three" } } }, "one.two.three") // { key: "value", one: { two: {} } }
+forget({ key: "value", one: { two "two" } }, "one.two.three") // { key: "value", one: { two: "two" } }
+```
+
 ### `get(object, path)`
 
 Retrieve the `object` property value found at `path`, or null.
@@ -707,8 +720,6 @@ updateUrlParameter("page") // https://duckduckgo.com
 
 There are a number of improvements and new helpers that could be made to improve flexibility.
 
-- object/forget - Remove a deeply nested item from an object via "dot notation".
-- object/hasAny - Checks whether any of the given deeply nested items exists in an object via "dot notation".
 - object/keyBy - Convert an array of objects into an object keyed by the value of the given object key.
 - object/set - Set a deeply nested value for the given "dot notation" key.
 - ObjectManipulator - allowing a chain of object helpers to be applied safely in series.
