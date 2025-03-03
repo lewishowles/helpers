@@ -6,14 +6,19 @@
 
 #### object
 
-- `unwrap` - Retrieve the value from a single-key object
 - `add` - Add a key/value pair to an object if that key doesn't already have a value
 - `forget` - Remove the given (optionally deeply nested) key from the given object
+- `hasAny` - Check whether the given object has any of the (optionally deeply nested) keys
+- `unwrap` - Retrieve the value from a single-key object
 
 #### array
 
 - `chunk` - Chunk the given array into arrays of the given size
 - `compact` - Remove any falsy values from an array
+
+### Updates
+
+- `get` - Now has a new third parameter for the value to return when the path is not found.
 
 ## 0.17.0 - 2025-01-26
 

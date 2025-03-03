@@ -10,7 +10,7 @@ import { getNextIndex } from "@lewishowles/helpers/array";
 
 ## Array
 
-### `arrayLength(array)`
+### `arrayLength(array: any[])`
 
 Determine the number of items in the given `array`.
 
@@ -24,7 +24,7 @@ arrayLength([]); // 0
 arrayLength(undefined); // 0
 ```
 
-### `chunk(array, chunkSize)`
+### `chunk(array: any[], chunkSize: number)`
 
 Split an array into chunks of a specified size
 
@@ -36,7 +36,7 @@ chunk([1, 2, 3], 1) // [[1], [2], [3]]
 chunk([1, 2, 3], 5) // [[1, 2, 3]]
 ```
 
-### `compact(array)`
+### `compact(array: any[])`
 
 Remove falsy values from the given array.
 
@@ -47,7 +47,7 @@ compact([0, 1, false, 2, "", 3])) // [1, 2, 3]
 compact([true, true, true])) // [true, true, true]
 ```
 
-### `firstDefined(array)`
+### `firstDefined(array: any[])`
 
 Returns the first non-undefined element in `array`.
 
@@ -59,7 +59,7 @@ firstDefined([undefined, undefined "c", "d"]); // "c"
 firstDefined([]); // undefined
 ```
 
-### `getNextIndex(index, reference, { reverse = false, wrap = false })`
+### `getNextIndex(index: number, reference: any[], { reverse: boolean = false, wrap: boolean = false })`
 
 Given a starting `index`, determine the next available index in the `reference` array.
 
@@ -76,7 +76,7 @@ getNextIndex(3, ['A', 'B', 'C', 'D'], { wrap: true }); // 0
 getNextIndex(3, ['A', 'B', 'C', 'D'], { reverse: true }); // 2
 ```
 
-### `head(array)`
+### `head(array: any[])`
 
 Returns the first element in `array`.
 
@@ -87,7 +87,7 @@ head(["a", "b"]); // "a"
 head([]); // undefined
 ```
 
-### `isNonEmptyArray(variable)`
+### `isNonEmptyArray(variable: any[])`
 
 Determines whether the given `variable` is both an array and has at least one item.
 
@@ -99,7 +99,7 @@ isNonEmptyArray([]); // false
 isNonEmptyArray("string"); // false
 ```
 
-### `lastDefined(array)`
+### `lastDefined(array: any[])`
 
 Returns the last non-undefined element in `array`.
 
@@ -111,7 +111,7 @@ lastDefined(["a", "b", undefined, undefined]); // "b"
 lastDefined([]); // undefined
 ```
 
-### `pluck(array, property)`
+### `pluck(array: any[], property: string)`
 
 Retrieve an array of the `property` value from each of the objects found in `array`.
 
@@ -126,7 +126,7 @@ pluck([{ nested: { property: { value: "seven" } } }], "nested.mistake.value"); /
 pluck([], "property"); // null
 ```
 
-### `sortObjectsByProperty(array, property, { ascending: true })`
+### `sortObjectsByProperty(array: any[], property: string, { ascending: boolean: true })`
 
 Sort the given `array` of objects by the value of property `property`, with optional direction.
 
@@ -138,7 +138,7 @@ sortObjectsByProperty([{ name: "Lewis" }, { name: "Alice" }], "age"); // [{ name
 sortObjectsByProperty([{ name: "Lewis" }, { name: "Alice" }], "name", { ascending: false }); // [{ name: "Lewis" }, { name: "Alice" }]
 ```
 
-### `tail(array)`
+### `tail(array: any[])`
 
 Returns the last element in `array`.
 
@@ -149,7 +149,7 @@ tail(["a", "b"]); // "b"
 tail([]); // undefined
 ```
 
-### `unique(array)`
+### `unique(array: any[])`
 
 Safely reduce the provided `array` to those entries which are unique.
 
@@ -163,7 +163,7 @@ unique([]); // []
 
 ## Form
 
-### `validateField(fieldName, validationRules, formData)`
+### `validateField(fieldName: string, validationRules: object[], formData: object)`
 
 Validate a field given its `fieldName`, the field's `validationRules`, and the sum total `formData`.
 
@@ -234,7 +234,7 @@ validateField("username", [{ rule: "required", message: "Enter a username" }], {
 
 ## General
 
-### `getFriendlyDisplay(variable)`
+### `getFriendlyDisplay(variable: any)`
 
 Convert a given `variable` into a human-readable representation of its type.
 
@@ -246,7 +246,7 @@ getFriendlyDisplay([]); // <array[0]>
 getFriendlyDisplay("hello"); // hello <string>
 ```
 
-### `isFunction(variable)`
+### `isFunction(variable: any)`
 
 Determines whether the given `variable` is a function.
 
@@ -258,7 +258,7 @@ isFunction("function"); // false
 isFunction(5); // false
 ```
 
-### `validateOrFallback(value, comparison, fallback)`
+### `validateOrFallback(value: any, comparison: function | string, fallback: any)`
 
 Apply `comparison` to the provided `value`, returning `value` if `true`, and `fallback` if not.
 
@@ -281,7 +281,7 @@ validateOrFallback(5, "number", 0); // 5
 
 ## Number
 
-### `clamp(number, minimum, maximum)`
+### `clamp(number: number, minimum: number, maximum: number)`
 
 Ensure that the provided `number` is between `minimum` and `maximum` (inclusive). If `number` is lower than `minimum`, `minimum` is returned. If `number` is higher than maximum, `maximum` is returned.
 
@@ -296,7 +296,7 @@ clamp(-15, 0, 5); // 0
 clamp(NaN); // 0
 ```
 
-### `isNumber(variable)`
+### `isNumber(variable: any)`
 
 Determines whether the given `variable` is a number and not NaN.
 
@@ -308,7 +308,7 @@ isNumber(NaN); // false
 isNumber("string"); // false
 ```
 
-### `isNumeric(variable)`
+### `isNumeric(variable: any)`
 
 Determines whether the given `variable` is a number, or a string containing a number.
 
@@ -322,7 +322,7 @@ isNumeric("10e3"); // true
 isNumeric("5.6"); // true
 ```
 
-### `round(number, precision = 0)`
+### `round(number: number, precision: number = 0)`
 
 Rounds the given `number` to the specified `precision`. If `precision` is not provided, it defaults to 0.
 
@@ -337,7 +337,7 @@ round(4.567, -1); // 0
 
 ## Object
 
-### `add`
+### `add(object: object, key: string, value: any)`
 
 Add a key / value pair to an object without overwriting any existing value. That is, only if that key isn't already present, or if its value is undefined or null.
 
@@ -349,7 +349,7 @@ add({ one: "One", two: "Two" }, "three", "Three") // { one: "One", two: "Two", t
 add({ one: "One", two: null }, "two", "Two") // { one: "One", two: "Two" }
 ```
 
-### `deepCopy(object)`
+### `deepCopy(object: object)`
 
 Returns a recursive copy of `object`.
 
@@ -360,7 +360,7 @@ deepCopy({ key: "value" }); // { key: "value" }
 deepCopy(["a", "b"]); // ["a", "b"]
 ```
 
-### `deepMerge(object)`
+### `deepMerge(object: object)`
 
 Recursively merges two or more objects. The values of later objects override those of earlier objects.
 
@@ -371,7 +371,7 @@ deepMerge({ key: "value" }, { value: "key" }); // { key: "value", value: "key" }
 deepMerge({ key: "value", a: { b: 2 }}, { key: "modified", a: { c: 3 }}); // { key: "modified", a { b: 2, c: 3 }}
 ```
 
-### `forget(object, path)`
+### `forget(object: object, path: string)`
 
 Remove an (optionally deeply nested) item from an object. This method makes a copy of the provided object to not modify the original.
 
@@ -384,20 +384,34 @@ forget({ key: "value", one: { two: { three: "three" } } }, "one.two.three") // {
 forget({ key: "value", one: { two "two" } }, "one.two.three") // { key: "value", one: { two: "two" } }
 ```
 
-### `get(object, path)`
+### `get(object: object, path: string, returnValue: any = null)`
 
-Retrieve the `object` property value found at `path`, or null.
+Retrieve the `object` property value found at `path`, or `returnValue`.
 
 #### Example
 
 ```js
 get({ property: "value" }, "property"); // "value"
+get({ property: "value" }, "another", undefined); // undefined
 get({ nested: { property: { value: "seven" } } }, "nested.property.value"); // "seven"
 get({ nested: { property: { value: "seven" } } }, "nested.mistake.value"); // null
 get([], "property"); // null
 ```
 
-### `isNonEmptyObject(variable)`
+### `hasAny(object: object, paths: string[])`
+
+Determine if the given object has any of the (optionally deeply nested) properties.
+
+#### Example
+
+```js
+hasAny({ a: { b: { c: 1 } } }, ["a.b.c"]) // true
+hasAny({ a: { b: { c: 1 } } }, ["a.b.d", "a.b.c"]) // true
+hasAny({ a: { b: { c: 1 } } }, ["a.b.d"]) // false
+hasAny({ a: { b: { c: 1 } } }, ["a.b.e", "a.b.f"]) // false
+```
+
+### `isNonEmptyObject(variable: any)`
 
 Determines whether the given `variable` is both an object (and not null, or an array), and has at least one property.
 
@@ -409,7 +423,7 @@ isNonEmptyObject({}); // false
 isNonEmptyObject("string"); // false
 ```
 
-### `isObject(variable)`
+### `isObject(variable: any)`
 
 Determine whether the given `variable` is an object, excluding arrays and null.
 
@@ -421,7 +435,7 @@ isObject(['A', 'B', 'C', 'D']); // false
 isObject(null); // false
 ```
 
-### `keys(object)`
+### `keys(object: object)`
 
 Returns an array of the keys of the given `object`.
 
@@ -433,7 +447,7 @@ keys({}); // []
 keys("string"); // []
 ```
 
-### `pick(object, properties)`
+### `pick(object: object, properties: string[])`
 
 Returns an object containing only `properties` properties from `object`.
 
@@ -449,7 +463,7 @@ pick({ a: "one", b: "two", c: "three" }, ["a"]); // { a: "one" }
 pick({ a: "one", b: "two", c: "three" }, ["a", "d"]); // { a: "one" }
 ```
 
-### `objectContains(object, needle, { exclude: null, include: null, caseInsensitive: true, allowPartial: false })`
+### `objectContains(object: object, needle: any, { exclude: string[] = null, include: string[] = null, caseInsensitive: boolean = true, allowPartial: boolean = false })`
 
 Returns true if one of the `object`'s values is `needle`. Also works when `object` is an array.
 
@@ -469,7 +483,7 @@ objectContains({ names: ["Ariel", "Jasmine"] }, "ariel"); // true
 objectContains({ length: 52 }, 5); // false
 ```
 
-### `omit(object, properties)`
+### `omit(object: object, properties: string[])`
 
 Returns a new object with the specified `properties` omitted from the given `object`.
 
@@ -481,7 +495,7 @@ omit({ a: 1, b: 2, c: 3 }, ["a", "c"]); // { b: 2 }
 omit({ a: 1, b: 2, c: 3 }, []); // { a: 1, b: 2, c: 3 }
 ```
 
-### `values(object)`
+### `values(object: object)`
 
 Returns an array of the values of the given `object`.
 
@@ -493,7 +507,7 @@ values({}); // []
 values("string"); // []
 ```
 
-### `unwrap(object)`
+### `unwrap(object: object)`
 
 Safely unwrap a single-key object, returning the value of that key. `null` is returned if the object contains more than one key, or the value cannot be retrieved.
 
@@ -522,7 +536,7 @@ const userIdPreview = new StringManipulator(userId)
 	.value; // 82faa75f-b47a-…
 ```
 
-### `isNonEmptyString(variable, { trim: false })`
+### `isNonEmptyString(variable: any, { trim: boolean = false })`
 
 Determines whether the given `variable` is both a string and has at least one character. If `trim` is true, the string is trimmed of whitespace before the test is performed.
 
@@ -536,7 +550,7 @@ isNonEmptyString("  "); // true
 isNonEmptyString("  ", { trim: true }); // false
 ```
 
-### `ltrim(string, pattern="\\s")`
+### `ltrim(string: string, pattern: string | RegExp = "\\s")`
 
 Trim the left hand side of `string` using the provided string or RegExp `pattern`. Trims whitespace by default.
 
@@ -548,7 +562,7 @@ ltrim("***string***", /\*/); // **string***
 ltrim("***string***", /\*+/); // string***
 ```
 
-### `rtrim(string, pattern="\\s")`
+### `rtrim(string: string, pattern: string | RegExp = "\\s")`
 
 Trim the right hand side of `string` using the provided string or RegExp `pattern`. Trims whitespace by default.
 
@@ -560,7 +574,7 @@ rtrim("***string***", /\*/); // ***string**
 rtrim("***string***", /\*+/); // ***string
 ```
 
-### `toLowerCase(variable)`
+### `toLowerCase(variable: string)`
 
 A safe wrapper around `toLowerCase`, returning an empty string if the provided `variable` is not a string itself.
 
@@ -572,7 +586,7 @@ toLowerCase(""); // ""
 toLowerCase(["A", "B"]); // ""
 ```
 
-### `trim(string, pattern="\\s")`
+### `trim(string, pattern: string | RegExp = "\\s")`
 
 Trim both sides of `string` using the provided string or RegExp `pattern`. Trims whitespace by default.
 
@@ -585,7 +599,7 @@ trim("***string***", /\*/); // **string**
 trim("***string***", /\*+/); // string
 ```
 
-### `truncate(string, length = 10, { decoration = "…", preserveWords = false, strict = true, includeDecoration = true })`
+### `truncate(string: string, length: number = 10, { decoration: string = "…", preserveWords: boolean = false, strict: boolean = true, includeDecoration: boolean = true })`
 
 Truncate a string to a given length, with various options for how the truncation occurs.
 
@@ -621,7 +635,7 @@ isNonEmptySlot(slots.default); // false
 isNonEmptySlot("string"); // false
 ```
 
-### `runComponentMethod(component, method, ...parameters)`
+### `runComponentMethod(component, method: string, ...parameters: any)`
 
 If the given `component` is an object and contains a function parameter `method`, call that method with any additional `parameters`. This helper allows safe running of a method when an object might not exist.
 
@@ -675,7 +689,7 @@ import { getNextColour } from "@lewishowles/helpers/chart";
 
 ## URL
 
-### `getUrlParameter(parameter)`
+### `getUrlParameter(parameter: string)`
 
 Retrieve the current value of `parameter`, returning `null` if the parameter is not present.
 
@@ -688,7 +702,7 @@ getUrlParameter("page") // 2
 getUrlParameter("unknown") // null
 ```
 
-### `updateUrlParameter(parameter, value)`
+### `updateUrlParameter(parameter: string, value: string)`
 
 Update the current URL to set `parameter` to `value`, adding `parameter` if it doesn't already exist, or overwriting any current value if it doesn't. If `value` is `null`, the parameter is removed.
 
@@ -703,7 +717,7 @@ updateUrlParameter("page", "3") // https://duckduckgo.com?page=3
 updateUrlParameter("page", null) // https://duckduckgo.com
 ```
 
-### `removeUrlParameter(parameter)`
+### `removeUrlParameter(parameter: string)`
 
 Remove `parameter` from the current URL if it exists.
 
