@@ -1,6 +1,6 @@
 /**
  *
  */
-export function {{HELPER_NAME}}() {
+export function {{CAMEL_CASE_NAME}}() {
 
 }

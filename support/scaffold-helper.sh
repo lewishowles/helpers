@@ -38,6 +38,9 @@ fi
 
 # Determine the passed parameters
 HELPER_NAME="$1"
+# Generate a cameCase version of our name, used within templates templates.
+CAMEL_CASE_NAME=$(echo "$HELPER_NAME" | awk -F- '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) tolower(substr($i,2))}1' OFS='' | awk '{print tolower(substr($0,1,1)) substr($0,2)}')
+
 shift
 
 FOLDER_PATH=""
@@ -77,7 +80,7 @@ for i in "${!templates[@]}"; do
 	TEMPLATE_FILE="$SCRIPT_DIR/templates/${templates[$i]}"
 	OUTPUT_FILE="${output_files[$i]}"
 
-	sed "s/{{HELPER_NAME}}/$HELPER_NAME/g" "$TEMPLATE_FILE" > "$OUTPUT_FILE"
+	sed "s/{{HELPER_NAME}}/$HELPER_NAME/g; s/{{CAMEL_CASE_NAME}}/$CAMEL_CASE_NAME/g" "$TEMPLATE_FILE" > "$OUTPUT_FILE"
 
 	code -r $OUTPUT_FILE
 done
