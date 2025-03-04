@@ -435,6 +435,18 @@ isObject(['A', 'B', 'C', 'D']); // false
 isObject(null); // false
 ```
 
+### `keyBy(array: object[], key: string)`
+
+Convert the given `array` of objects into a single object, where each object in the original array is placed under the value of its given `key`.
+
+Objects without the given `key` are discarded. If an object has the same value `key` as a previous object, the previous object will be overwritten.
+
+#### Example
+
+```js
+keyBy([{ a: 1 }, { a: 2 }], "a") // { 1: { a: 1 }, 2: { a: 2 } }
+```
+
 ### `keys(object: object)`
 
 Returns an array of the keys of the given `object`.
@@ -752,6 +764,5 @@ updateUrlParameter("page") // https://duckduckgo.com
 
 There are a number of improvements and new helpers that could be made to improve flexibility.
 
-- object/keyBy - Convert an array of objects into an object keyed by the value of the given object key.
 - ObjectManipulator - allowing a chain of object helpers to be applied safely in series.
 - ArrayManipulator - allowing a chain of array helpers to be applied safely in series.

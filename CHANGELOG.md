@@ -9,6 +9,7 @@
 - `add` - Add a key/value pair to an object if that key doesn't already have a value
 - `forget` - Remove the given (optionally deeply nested) key from the given object
 - `hasAny` - Check whether the given object has any of the (optionally deeply nested) keys
+- `keyBy` - Convert an array of objects into a single object keyed by the value of the given property
 - `set` - Set the value of an (optionally deeply nested) key.
 - `unwrap` - Retrieve the value from a single-key object
 
