@@ -495,6 +495,24 @@ omit({ a: 1, b: 2, c: 3 }, ["a", "c"]); // { b: 2 }
 omit({ a: 1, b: 2, c: 3 }, []); // { a: 1, b: 2, c: 3 }
 ```
 
+### `set(object: object, path: string, value: any)`
+
+Set an (optionally deeply nested) object property.
+
+If any part of the path dot notation chain results in a non-object, no modifications are made.
+
+Objects will be created as necessary to reach the path specified.
+
+This method returns a copy of the object so as to not modify the original.
+
+#### Example
+
+```js
+set({ a: 1 }, "b", 2) // { a: 1, b: 2 }
+set({ a: 1 }, "b.c.d", 2) // { a: 1, b: { c: { d: 2 } } }
+set({ a: 1, b: 2 }, "b.c.d", 4) // { a: 1, b: 2 }
+```
+
 ### `values(object: object)`
 
 Returns an array of the values of the given `object`.
@@ -735,6 +753,5 @@ updateUrlParameter("page") // https://duckduckgo.com
 There are a number of improvements and new helpers that could be made to improve flexibility.
 
 - object/keyBy - Convert an array of objects into an object keyed by the value of the given object key.
-- object/set - Set a deeply nested value for the given "dot notation" key.
 - ObjectManipulator - allowing a chain of object helpers to be applied safely in series.
 - ArrayManipulator - allowing a chain of array helpers to be applied safely in series.
