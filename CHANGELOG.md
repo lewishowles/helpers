@@ -1,6 +1,14 @@
 # Changelog
 
-## 0.18.0
+## 0.19.0 - 2024-05-07
+
+### New helpers
+
+#### vue
+
+- `getSlotText` - Retrieve the text from the given Vue slot.
+
+## 0.18.0 - 2024-03-04
 
 ### New helpers
 

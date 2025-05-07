@@ -651,6 +651,22 @@ toLowerCase(["A", "B"]); // ""
 
 ## Vue
 
+### `getSlotText(slotReference)`
+
+Retrieve the text from the given `slotReference`. `slotReference` is a direct reference to a slot - for example `slots.default`. Text is concatenated when multiple children exist.
+
+#### Example
+
+```js
+// slots.default = () => [{ type: Text, children: "Text content" }]
+getSlotText(slots.default); // "Text content"
+// slots.default = () => [{ type: Text, children: [{ type: Text, children: "First text" }, { type: Text, children: "Second text" }] }]
+getSlotText(slots.default); // "First textSecond text"
+// slots.default = () => [{ type: Comment }]
+getSlotText(slots.default); // ""
+getSlotText("string"); // ""
+```
+
 ### `isNonEmptySlot(slotReference)`
 
 Determines whether the given `slotReference` contains content. `slotReference` is a direct reference to a slot - for example `slots.default`.
