@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.20.0
+
+### Updates
+
+#### vue
+
+- `runComponentMethod` - Now runs `unref`, allowing a component reference to be provided directly.
+
 ## 0.19.0 - 2024-05-07
 
 ### New helpers

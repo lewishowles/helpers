@@ -19,7 +19,7 @@ If the provided input is not an array, returns `0`.
 #### Example
 
 ```js
-arrayLength(['A', 'B', 'C', 'D']); // 4
+arrayLength(["A", "B", "C", "D"]); // 4
 arrayLength([]); // 0
 arrayLength(undefined); // 0
 ```
@@ -31,9 +31,9 @@ Split an array into chunks of a specified size
 #### Example
 
 ```js
-chunk([1, 2, 3], 2) // [[1, 2], [3]]
-chunk([1, 2, 3], 1) // [[1], [2], [3]]
-chunk([1, 2, 3], 5) // [[1, 2, 3]]
+chunk([1, 2, 3], 2); // [[1, 2], [3]]
+chunk([1, 2, 3], 1); // [[1], [2], [3]]
+chunk([1, 2, 3], 5); // [[1, 2, 3]]
 ```
 
 ### `compact(array: any[])`
@@ -71,9 +71,9 @@ If the provided index is outside of the reference array, or the provided index o
 #### Example
 
 ```js
-getNextIndex(3, ['A', 'B', 'C', 'D']); // 3
-getNextIndex(3, ['A', 'B', 'C', 'D'], { wrap: true }); // 0
-getNextIndex(3, ['A', 'B', 'C', 'D'], { reverse: true }); // 2
+getNextIndex(3, ["A", "B", "C", "D"]); // 3
+getNextIndex(3, ["A", "B", "C", "D"], { wrap: true }); // 0
+getNextIndex(3, ["A", "B", "C", "D"], { reverse: true }); // 2
 ```
 
 ### `head(array: any[])`
@@ -94,7 +94,7 @@ Determines whether the given `variable` is both an array and has at least one it
 #### Example
 
 ```js
-isNonEmptyArray(['A', 'B', 'C', 'D']); // true
+isNonEmptyArray(["A", "B", "C", "D"]); // true
 isNonEmptyArray([]); // false
 isNonEmptyArray("string"); // false
 ```
@@ -121,7 +121,10 @@ Any non-objects in `array` are ignored.
 
 ```js
 pluck([{ fruit: "apple" }, { fruit: "banana" }], "fruit"); // ["apple", "banana"]
-pluck([{ nested: { property: { value: "seven" } } }, { nested: { property: { value: "eight" } } }], "nested.property.value"); // ["seven", "eight"]
+pluck(
+	[{ nested: { property: { value: "seven" } } }, { nested: { property: { value: "eight" } } }],
+	"nested.property.value",
+); // ["seven", "eight"]
 pluck([{ nested: { property: { value: "seven" } } }], "nested.mistake.value"); // null
 pluck([], "property"); // null
 ```
@@ -228,8 +231,10 @@ Ensure that the provided value matches `regexp`.
 #### Example
 
 ```js
-validateField("username", [{ rule: "required", message: "Enter a username" }], { username: "" }) // ["Enter a username"]
-validateField("username", [{ rule: "required", message: "Enter a username" }], { username: "jack_skellington" }) // []
+validateField("username", [{ rule: "required", message: "Enter a username" }], { username: "" }); // ["Enter a username"]
+validateField("username", [{ rule: "required", message: "Enter a username" }], {
+	username: "jack_skellington",
+}); // []
 ```
 
 ## General
@@ -241,7 +246,7 @@ Convert a given `variable` into a human-readable representation of its type.
 #### Example
 
 ```js
-getFriendlyDisplay(['A', 'B', 'C', 'D']); // <array[4]>
+getFriendlyDisplay(["A", "B", "C", "D"]); // <array[4]>
 getFriendlyDisplay([]); // <array[0]>
 getFriendlyDisplay("hello"); // hello <string>
 ```
@@ -344,9 +349,9 @@ Add a key / value pair to an object without overwriting any existing value. That
 #### Example
 
 ```js
-add({ one: "One", two: "Two" }, "one", "Two") // { one: "One", two: "Two" }
-add({ one: "One", two: "Two" }, "three", "Three") // { one: "One", two: "Two", three: "Three" }
-add({ one: "One", two: null }, "two", "Two") // { one: "One", two: "Two" }
+add({ one: "One", two: "Two" }, "one", "Two"); // { one: "One", two: "Two" }
+add({ one: "One", two: "Two" }, "three", "Three"); // { one: "One", two: "Two", three: "Three" }
+add({ one: "One", two: null }, "two", "Two"); // { one: "One", two: "Two" }
 ```
 
 ### `deepCopy(object: object)`
@@ -368,7 +373,7 @@ Recursively merges two or more objects. The values of later objects override tho
 
 ```js
 deepMerge({ key: "value" }, { value: "key" }); // { key: "value", value: "key" }
-deepMerge({ key: "value", a: { b: 2 }}, { key: "modified", a: { c: 3 }}); // { key: "modified", a { b: 2, c: 3 }}
+deepMerge({ key: "value", a: { b: 2 } }, { key: "modified", a: { c: 3 } }); // { key: "modified", a { b: 2, c: 3 }}
 ```
 
 ### `forget(object: object, path: string)`
@@ -405,10 +410,10 @@ Determine if the given object has any of the (optionally deeply nested) properti
 #### Example
 
 ```js
-hasAny({ a: { b: { c: 1 } } }, ["a.b.c"]) // true
-hasAny({ a: { b: { c: 1 } } }, ["a.b.d", "a.b.c"]) // true
-hasAny({ a: { b: { c: 1 } } }, ["a.b.d"]) // false
-hasAny({ a: { b: { c: 1 } } }, ["a.b.e", "a.b.f"]) // false
+hasAny({ a: { b: { c: 1 } } }, ["a.b.c"]); // true
+hasAny({ a: { b: { c: 1 } } }, ["a.b.d", "a.b.c"]); // true
+hasAny({ a: { b: { c: 1 } } }, ["a.b.d"]); // false
+hasAny({ a: { b: { c: 1 } } }, ["a.b.e", "a.b.f"]); // false
 ```
 
 ### `isNonEmptyObject(variable: any)`
@@ -431,7 +436,7 @@ Determine whether the given `variable` is an object, excluding arrays and null.
 
 ```js
 isObject({ property: "value" }); // true
-isObject(['A', 'B', 'C', 'D']); // false
+isObject(["A", "B", "C", "D"]); // false
 isObject(null); // false
 ```
 
@@ -444,7 +449,7 @@ Objects without the given `key` are discarded. If an object has the same value `
 #### Example
 
 ```js
-keyBy([{ a: 1 }, { a: 2 }], "a") // { 1: { a: 1 }, 2: { a: 2 } }
+keyBy([{ a: 1 }, { a: 2 }], "a"); // { 1: { a: 1 }, 2: { a: 2 } }
 ```
 
 ### `keys(object: object)`
@@ -520,9 +525,9 @@ This method returns a copy of the object so as to not modify the original.
 #### Example
 
 ```js
-set({ a: 1 }, "b", 2) // { a: 1, b: 2 }
-set({ a: 1 }, "b.c.d", 2) // { a: 1, b: { c: { d: 2 } } }
-set({ a: 1, b: 2 }, "b.c.d", 4) // { a: 1, b: 2 }
+set({ a: 1 }, "b", 2); // { a: 1, b: 2 }
+set({ a: 1 }, "b.c.d", 2); // { a: 1, b: { c: { d: 2 } } }
+set({ a: 1, b: 2 }, "b.c.d", 4); // { a: 1, b: 2 }
 ```
 
 ### `values(object: object)`
@@ -544,9 +549,9 @@ Safely unwrap a single-key object, returning the value of that key. `null` is re
 #### Example
 
 ```js
-unwrap({ key: "value" }) // "value"
-unwrap(null) // null
-unwrap({ key_one: "value", key_two: "value two" }) // null
+unwrap({ key: "value" }); // "value"
+unwrap(null); // null
+unwrap({ key_one: "value", key_two: "value two" }); // null
 ```
 
 ## String
@@ -560,10 +565,7 @@ unwrap({ key_one: "value", key_two: "value two" }) // null
 ```js
 const userId = "82FAA75F-B47A-43B6-82F6-389C9408BB67";
 
-const userIdPreview = new StringManipulator(userId)
-	.toLowerCase()
-	.truncate(15)
-	.value; // 82faa75f-b47a-…
+const userIdPreview = new StringManipulator(userId).toLowerCase().truncate(15).value; // 82faa75f-b47a-…
 ```
 
 ### `isNonEmptyString(variable: any, { trim: boolean = false })`
@@ -743,9 +745,9 @@ Retrieve the current value of `parameter`, returning `null` if the parameter is 
 
 ```js
 // https://duckduckgo.com?page=2
-getUrlParameter("page") // 2
+getUrlParameter("page"); // 2
 // https://duckduckgo.com?page=2
-getUrlParameter("unknown") // null
+getUrlParameter("unknown"); // null
 ```
 
 ### `updateUrlParameter(parameter: string, value: string)`
@@ -756,11 +758,11 @@ Update the current URL to set `parameter` to `value`, adding `parameter` if it d
 
 ```js
 // https://duckduckgo.com
-updateUrlParameter("page", "2") // https://duckduckgo.com?page=2
+updateUrlParameter("page", "2"); // https://duckduckgo.com?page=2
 // https://duckduckgo.com?page=2
-updateUrlParameter("page", "3") // https://duckduckgo.com?page=3
+updateUrlParameter("page", "3"); // https://duckduckgo.com?page=3
 // https://duckduckgo.com?page=3
-updateUrlParameter("page", null) // https://duckduckgo.com
+updateUrlParameter("page", null); // https://duckduckgo.com
 ```
 
 ### `removeUrlParameter(parameter: string)`
@@ -771,9 +773,9 @@ Remove `parameter` from the current URL if it exists.
 
 ```js
 // https://duckduckgo.com?page=2
-updateUrlParameter("unknown") // https://duckduckgo.com?page=2
+updateUrlParameter("unknown"); // https://duckduckgo.com?page=2
 // https://duckduckgo.com?page=2
-updateUrlParameter("page") // https://duckduckgo.com
+updateUrlParameter("page"); // https://duckduckgo.com
 ```
 
 ## Roadmap

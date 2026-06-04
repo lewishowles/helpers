@@ -1,7 +1,14 @@
-import { defineConfig } from "vite";
+import { defineConfig } from "vite-plus";
 import { fileURLToPath, URL } from "node:url";
+import fmt from "./support/oxfmt.config.js";
+import lint from "./support/oxlint.config.js";
 
 export default defineConfig({
+	staged: {
+		"*": "vp check --fix",
+	},
+	fmt,
+	lint,
 	resolve: {
 		alias: {
 			"@array": fileURLToPath(new URL("./lib/array/array", import.meta.url)),
@@ -50,7 +57,7 @@ export default defineConfig({
  *     The names of the folders to retrieve.
  */
 function getFiles(folderNames) {
-	return folderNames.map(folderName => getFile(folderName));
+	return folderNames.map((folderName) => getFile(folderName));
 }
 
 /**

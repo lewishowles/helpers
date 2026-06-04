@@ -5,9 +5,13 @@ node_modules
 # Build artifacts
 dist
 
+# Tool caches (regenerated on demand)
+.vite
+
 # macOS files
 .DS_Store
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json

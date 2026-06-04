@@ -1,0 +1,17 @@
+{
+	"editor.codeActionsOnSave": {
+		"source.fixAll": "explicit",
+		"source.fixAll.oxc": "explicit"
+	},
+	"oxc.fixKind": "safe_fix",
+	"oxc.lint.run": "onSave",
+	"editor.formatOnSave": true,
+	"editor.formatOnSaveMode": "file",
+
+	"editor.defaultFormatter": "oxc.oxc-vscode",
+
+	"oxc.configPath": "./support/oxlint.config.js",
+	"oxc.fmt.configPath": "./support/oxfmt.config.js",
+
+	"npm.scriptRunner": "vp"
+}

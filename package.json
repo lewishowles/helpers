@@ -3,8 +3,14 @@
 	"version": "0.19.0",
 	"description": "A library of gorgeous Javascript methods to make working with—and validating—data quicker and less error-prone, letting the developer concentrate on the fun stuff.",
 	"author": "Lewis Howles",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/lewishowles/helpers.git"
+	},
+	"files": [
+		"dist"
+	],
 	"type": "module",
-	"files": ["dist"],
 	"exports": {
 		"./array": {
 			"import": "./dist/array.js",
@@ -43,29 +49,25 @@
 			"require": "./dist/url.cjs"
 		}
 	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/lewishowles/helpers.git"
-	},
 	"publishConfig": {
 		"registry": "https://npm.pkg.github.com"
 	},
 	"scripts": {
-		"dev": "vite",
-		"build": "vite build",
-		"preview": "vite preview",
-		"test:unit": "vitest",
-		"test:unit:run": "vitest run",
-		"lint": "eslint --fix"
+		"dev": "vp dev",
+		"build": "vp build",
+		"preview": "vp preview",
+		"test:unit": "vp test",
+		"test:unit:run": "vp test run",
+		"lint": "vp lint . --fix",
+		"prepare": "vp config"
 	},
 	"devDependencies": {
-		"@stylistic/eslint-plugin": "^2.9.0",
-		"eslint": "^9.13.0",
-		"globals": "^15.11.0",
-		"happy-dom": "^16.7.2",
-		"simple-git-hooks": "^2.11.1",
-		"vite": "^5.4.10",
-		"vitest": "^2.1.3",
+		"@stylistic/eslint-plugin": "^5.10.0",
+		"globals": "^17.6.0",
+		"happy-dom": "^20.9.0",
+		"vite": "8.0.14",
+		"vite-plus": "^0.1.22",
+		"vitest": "npm:@voidzero-dev/vite-plus-test@latest",
 		"vue": "^3.5.12"
 	}
 }
