@@ -47,6 +47,24 @@ compact([0, 1, false, 2, "", 3])) // [1, 2, 3]
 compact([true, true, true])) // [true, true, true]
 ```
 
+### `ensureArray(variable: any)`
+
+Ensure that the given variable is an array.
+
+Arrays are returned unchanged. Any non-array value is returned as a single-item array.
+
+Note that `null` and `undefined` are preserved as values, returning `[null]` and `[undefined]`. Combine with `compact` when falsy values should be removed.
+
+#### Example
+
+```js
+ensureArray(["one", "two"]); // ["one", "two"]
+ensureArray("one"); // ["one"]
+ensureArray({ key: "value" }); // [{ key: "value" }]
+ensureArray(null); // [null]
+ensureArray(undefined); // [undefined]
+```
+
 ### `firstDefined(array: any[])`
 
 Returns the first non-undefined element in `array`.
