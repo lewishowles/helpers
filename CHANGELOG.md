@@ -2,6 +2,10 @@
 
 ## 0.20.0
 
+### New helpers
+
+- `ensureArray` - Ensures the input is an array by converting any non-array values to a single-item array.
+
 ### Updates
 
 #### vue
