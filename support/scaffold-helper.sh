@@ -1,92 +1,150 @@
-#!/bin/bash
-
-#
+#!/usr/bin/env bash
 # Scaffold helper
 #
-# Scaffold a new helper for the helper library, creating basic versions of
-# the files required to get up and running quickly.
+# Scaffold a new helper for the helper library, creating the implementation
+# file, test file, and matching category barrel export.
 #
-# Usage: ./support/scaffold-helper.sh <helper-name> --folder [folder-name]
+# Usage:
+#   ./support/scaffold-helper.sh <helper-name> --folder <folder-name>
 #
 # Parameters:
 #   <helper-name>  (required)
-#     The name of the helper in kebab-case.
-#   --folder [folder-name]  (required)
-#     The name of the folder where the helper will reside (e.g. array)
+#     The helper name in kebab-case.
+#   --folder <folder-name>  (required)
+#     The category folder where the helper will live, such as `array`.
 #
 # Example:
 #   ./support/scaffold-helper.sh round --folder number
 #
 # Recommended alias:
 #   scaffold:helper
-#
+
+set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/colours.sh"
 
-if [ -z "$1" ]; then
-	echo -e "\nPlease provide a ${BLUE}helper-name${RESET_COLOUR} for the helper."
-	echo -e "Usage: ${PURPLE}./support/scaffold-helper.sh${RESET_COLOUR} ${BLUE}<helper-name>${RESET_COLOUR} --folder <folder-name>"
+# Prints usage guidance for invalid input.
+print_usage() {
+	printf '\nUsage: %s./support/scaffold-helper.sh%s %s<helper-name>%s --folder <folder-name>\n' "$PURPLE" "$RESET_COLOUR" "$BLUE" "$RESET_COLOUR"
+}
+
+# Converts kebab-case text to camelCase.
+#
+# @param  {string}  value
+#     The kebab-case value to convert.
+to_camel_case() {
+	local value="$1"
+
+	awk -F- '{
+		for (i = 1; i <= NF; i++) {
+			$i = toupper(substr($i, 1, 1)) tolower(substr($i, 2))
+		}
+	}1' OFS='' <<< "$value" | awk '{ print tolower(substr($0, 1, 1)) substr($0, 2) }'
+}
+
+# Adds a helper export to the category barrel if it is not present.
+#
+# @param  {string}  barrel_file
+#     The barrel file to update.
+# @param  {string}  helper_name
+#     The helper file name in kebab-case.
+# @param  {string}  camel_case_name
+#     The helper export name in camelCase.
+update_barrel_export() {
+	local barrel_file="$1"
+	local helper_name="$2"
+	local camel_case_name="$3"
+	local export_line="export { ${camel_case_name} } from \"./${helper_name}.js\";"
+
+	if [[ ! -f "$barrel_file" ]]; then
+		printf 'Category barrel not found: %s\n' "$barrel_file" >&2
+		exit 1
+	fi
+
+	if grep -Fxq "$export_line" "$barrel_file"; then
+		return
+	fi
+
+	printf '%s\n' "$export_line" >> "$barrel_file"
+	sort -o "$barrel_file" "$barrel_file"
+}
+
+if [[ "${1:-}" == "" ]]; then
+	printf '\nPlease provide a %shelper-name%s for the helper.\n' "$BLUE" "$RESET_COLOUR"
+	print_usage
 	exit 1
 fi
 
-if [ -z "$2" ]; then
-	echo -e "\nPlease provide a ${BLUE}folder-name${RESET_COLOUR} for the type of helper this is."
-	echo -e "Usage: ${PURPLE}./support/scaffold-helper.sh${RESET_COLOUR} <helper-name> ${BLUE}--folder <folder-name>${RESET_COLOUR}"
-	exit 1
-fi
-
-# Determine the passed parameters
 HELPER_NAME="$1"
-# Generate a cameCase version of our name, used within templates templates.
-CAMEL_CASE_NAME=$(echo "$HELPER_NAME" | awk -F- '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) tolower(substr($i,2))}1' OFS='' | awk '{print tolower(substr($0,1,1)) substr($0,2)}')
+CAMEL_CASE_NAME="$(to_camel_case "$HELPER_NAME")"
+FOLDER_PATH=""
 
 shift
 
-FOLDER_PATH=""
-
 while [[ "$#" -gt 0 ]]; do
-	case $1 in
+	case "$1" in
 		--folder)
-			FOLDER_PATH="$2"
+			FOLDER_PATH="${2:-}"
 			shift
 			;;
 		*)
-			echo -e "\nUnknown parameter passed: $1"
-			echo -e "Usage: ${PURPLE}./support/scaffold-helper.sh${RESET_COLOUR} ${BLUE}<helper-name>${RESET_COLOUR} --folder <folder-name>"
+			printf '\nUnknown parameter passed: %s\n' "$1" >&2
+			print_usage
 			exit 1
 			;;
 	esac
-    shift
+
+	shift
 done
 
-# The base path is where the helper will be created.
+if [[ "$FOLDER_PATH" == "" ]]; then
+	printf '\nPlease provide a %sfolder-name%s for the type of helper this is.\n' "$BLUE" "$RESET_COLOUR"
+	print_usage
+	exit 1
+fi
+
 BASE_PATH="lib/$FOLDER_PATH"
+HELPER_FILE="$BASE_PATH/$HELPER_NAME.js"
+TEST_FILE="$BASE_PATH/$HELPER_NAME.test.js"
+BARREL_FILE="$BASE_PATH/$FOLDER_PATH.js"
 
-cd "$BASE_PATH"
+if [[ ! -d "$BASE_PATH" ]]; then
+	printf 'Helper category not found: %s\n' "$BASE_PATH" >&2
+	exit 1
+fi
 
-# Generate our scaffold files from templates.
+if [[ -e "$HELPER_FILE" || -e "$TEST_FILE" ]]; then
+	printf 'Helper already exists: %s\n' "$HELPER_NAME" >&2
+	exit 1
+fi
+
 templates=(
 	"helper.js"
 	"helper.test.js"
 )
 
 output_files=(
-	"${HELPER_NAME}.js"
-	"${HELPER_NAME}.test.js"
+	"$HELPER_FILE"
+	"$TEST_FILE"
 )
 
 for i in "${!templates[@]}"; do
-	TEMPLATE_FILE="$SCRIPT_DIR/templates/${templates[$i]}"
-	OUTPUT_FILE="${output_files[$i]}"
+	template_file="$SCRIPT_DIR/templates/${templates[$i]}"
+	output_file="${output_files[$i]}"
 
-	sed "s/{{HELPER_NAME}}/$HELPER_NAME/g; s/{{CAMEL_CASE_NAME}}/$CAMEL_CASE_NAME/g" "$TEMPLATE_FILE" > "$OUTPUT_FILE"
+	sed "s/{{HELPER_NAME}}/$HELPER_NAME/g; s/{{CAMEL_CASE_NAME}}/$CAMEL_CASE_NAME/g" "$template_file" > "$output_file"
 
-	code -r $OUTPUT_FILE
+	if command -v code &>/dev/null; then
+		code -r "$output_file"
+	fi
 done
 
-# Print the success message
-echo -e "\nHelper ${PURPLE}$HELPER_NAME${RESET_COLOUR} scaffolded successfully in ${BLUE}$BASE_PATH/$HELPER_NAME${RESET_COLOUR}.\n"
-echo -e "${PURPLE}$HELPER_NAME${RESET_COLOUR}"
-echo "  ↳ $HELPER_NAME.js"
-echo "  ↳ $HELPER_NAME.test.js"
+update_barrel_export "$BARREL_FILE" "$HELPER_NAME" "$CAMEL_CASE_NAME"
+
+printf '\nHelper %s%s%s scaffolded successfully in %s%s/%s%s.\n\n' "$PURPLE" "$HELPER_NAME" "$RESET_COLOUR" "$BLUE" "$BASE_PATH" "$HELPER_NAME" "$RESET_COLOUR"
+printf '%s%s%s\n' "$PURPLE" "$HELPER_NAME" "$RESET_COLOUR"
+printf '  ↳ %s.js\n' "$HELPER_NAME"
+printf '  ↳ %s.test.js\n' "$HELPER_NAME"
+printf '  ↳ %s.js export updated\n' "$FOLDER_PATH"
+printf '\nRemember to add a changelog entry before release.\n'
