@@ -1,1 +1,2 @@
 vp staged
+./support/check-type-declarations.sh
