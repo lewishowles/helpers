@@ -63,11 +63,6 @@
 			"import": "./dist/vue.js",
 			"require": "./dist/vue.cjs"
 		},
-		"./chart": {
-			"types": "./types/chart.d.ts",
-			"import": "./dist/chart.js",
-			"require": "./dist/chart.cjs"
-		},
 		"./url": {
 			"types": "./types/url.d.ts",
 			"import": "./dist/url.js",
