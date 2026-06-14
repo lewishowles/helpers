@@ -1,7 +1,7 @@
 import { defineConfig } from "vite-plus";
 import { fileURLToPath, URL } from "node:url";
-import fmt from "./support/oxfmt.config.js";
-import lint from "./support/oxlint.config.js";
+import fmt from "./.oxfmtrc.json" with { type: "json" };
+import lint from "./.oxlintrc.json" with { type: "json" };
 
 export default defineConfig({
 	staged: {
