@@ -10,8 +10,8 @@
 
 	"editor.defaultFormatter": "oxc.oxc-vscode",
 
-	"oxc.configPath": "./support/oxlint.config.js",
-	"oxc.fmt.configPath": "./support/oxfmt.config.js",
+	"oxc.configPath": "./.oxlintrc.json",
+	"oxc.fmt.configPath": "./.oxfmtrc.json",
 
 	"npm.scriptRunner": "vp"
 }
