@@ -1,0 +1,25 @@
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"checkJs": false,
+		"noEmit": true,
+		"rootDir": "./lib",
+		"moduleResolution": "bundler",
+		"target": "ES2022",
+		"module": "ESNext",
+		"baseUrl": "./lib",
+		"paths": {
+			"@array": ["./array/array.js"],
+			"@chart": ["./chart/chart.js"],
+			"@form": ["./form/form.js"],
+			"@general": ["./general/general.js"],
+			"@number": ["./number/number.js"],
+			"@object": ["./object/object.js"],
+			"@string": ["./string/string.js"],
+			"@vue": ["./vue/vue.js"],
+			"@url": ["./url/url.js"]
+		}
+	},
+	"include": ["lib/**/*.js"],
+	"exclude": ["lib/**/*.test.js", "dist/**", "support/**"]
+}
