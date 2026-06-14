@@ -43,8 +43,8 @@ Remove falsy values from the given array.
 #### Example
 
 ```js
-compact([0, 1, false, 2, "", 3])) // [1, 2, 3]
-compact([true, true, true])) // [true, true, true]
+compact([0, 1, false, 2, "", 3]); // [1, 2, 3]
+compact([true, true, true]); // [true, true, true]
 ```
 
 ### `ensureArray(variable: any)`
@@ -73,7 +73,7 @@ Returns the first non-undefined element in `array`.
 
 ```js
 firstDefined(["a", "b"]); // "a"
-firstDefined([undefined, undefined "c", "d"]); // "c"
+firstDefined([undefined, undefined, "c", "d"]); // "c"
 firstDefined([]); // undefined
 ```
 
@@ -133,18 +133,17 @@ lastDefined([]); // undefined
 
 Retrieve an array of the `property` value from each of the objects found in `array`.
 
-Any non-objects in `array` are ignored.
+Any non-objects in `array` are ignored. Objects that don't have the given property yield `undefined` in the result. Empty or invalid input returns `[]`.
+
+Note: `property` is a direct key only, and dot-path notation is not yet supported. Use `get` for nested access.
 
 #### Example
 
 ```js
 pluck([{ fruit: "apple" }, { fruit: "banana" }], "fruit"); // ["apple", "banana"]
-pluck(
-	[{ nested: { property: { value: "seven" } } }, { nested: { property: { value: "eight" } } }],
-	"nested.property.value",
-); // ["seven", "eight"]
-pluck([{ nested: { property: { value: "seven" } } }], "nested.mistake.value"); // null
-pluck([], "property"); // null
+pluck([{ fruit: "apple" }, { fruit: "banana" }], "colour"); // [undefined, undefined]
+pluck([{ fruit: "apple" }, "not an object"], "fruit"); // ["apple"]
+pluck([], "property"); // []
 ```
 
 ### `sortObjectsByProperty(array: any[], property: string, { ascending: boolean: true })`
@@ -188,7 +187,7 @@ unique([]); // []
 
 Validate a field given its `fieldName`, the field's `validationRules`, and the sum total `formData`.
 
-Returns a non-empty array of error messages if an error is encountered.
+Returns `true` if input is invalid (missing field name, rules, or form data). Otherwise returns a `string[]` of error messages — empty when the field is valid, non-empty when it isn't.
 
 Available rules and properties include:
 
@@ -196,7 +195,7 @@ Available rules and properties include:
 
 `[{ rule: "required", message: "Enter your name so we know what to call you" }]`
 
-Requires a value to be set. Adds the `required` attribute to the field automatically.
+Requires a value to be set.
 
 #### `email`
 
@@ -276,9 +275,23 @@ Determines whether the given `variable` is a function.
 #### Example
 
 ```js
-isFunction(() => "Hello")); // true
+isFunction(() => "Hello"); // true
 isFunction("function"); // false
 isFunction(5); // false
+```
+
+### `size(variable: any)`
+
+Determine the size of the given `variable`. For strings, the number of characters is used; for numbers, the value itself; for arrays, the length; for objects, the number of top-level properties. Returns `0` if no reasonable size can be determined.
+
+#### Example
+
+```js
+size("hello"); // 5
+size(42); // 42
+size([1, 2, 3]); // 3
+size({ a: 1, b: 2 }); // 2
+size(null); // 0
 ```
 
 ### `validateOrFallback(value: any, comparison: function | string, fallback: any)`
@@ -518,6 +531,18 @@ objectContains({ names: ["Ariel", "Jasmine"] }, "ariel"); // true
 objectContains({ length: 52 }, 5); // false
 ```
 
+### `objectLength(object: object)`
+
+Return the number of top-level keys in `object`. Returns `0` for empty or non-objects.
+
+#### Example
+
+```js
+objectLength({ a: 1, b: 2 }); // 2
+objectLength({}); // 0
+objectLength("string"); // 0
+```
+
 ### `omit(object: object, properties: string[])`
 
 Returns a new object with the specified `properties` omitted from the given `object`.
@@ -636,6 +661,18 @@ toLowerCase(""); // ""
 toLowerCase(["A", "B"]); // ""
 ```
 
+### `toUpperCase(variable: string)`
+
+A safe wrapper around `toUpperCase`, returning an empty string if the provided `variable` is not a string itself.
+
+#### Example
+
+```js
+toUpperCase("string"); // "STRING"
+toUpperCase(""); // ""
+toUpperCase(["A", "B"]); // ""
+```
+
 ### `trim(string, pattern: string | RegExp = "\\s")`
 
 Trim both sides of `string` using the provided string or RegExp `pattern`. Trims whitespace by default.
@@ -664,9 +701,11 @@ If the provided variable is not a string, returns an empty string.
 #### Example
 
 ```js
-toLowerCase("String"); // string
-toLowerCase(""); // ""
-toLowerCase(["A", "B"]); // ""
+truncate("Hello, world!"); // "Hello, wo…"
+truncate("Hello, world!", 15); // "Hello, world!"
+truncate("Hello, world!", 8); // "Hello, …"
+truncate("Hello, world!", 8, { preserveWords: true }); // "Hello,…"
+truncate(["A", "B"]); // ""
 ```
 
 ## Vue
@@ -791,14 +830,7 @@ Remove `parameter` from the current URL if it exists.
 
 ```js
 // https://duckduckgo.com?page=2
-updateUrlParameter("unknown"); // https://duckduckgo.com?page=2
+removeUrlParameter("unknown"); // https://duckduckgo.com?page=2
 // https://duckduckgo.com?page=2
-updateUrlParameter("page"); // https://duckduckgo.com
+removeUrlParameter("page"); // https://duckduckgo.com
 ```
-
-## Roadmap
-
-There are a number of improvements and new helpers that could be made to improve flexibility.
-
-- ObjectManipulator - allowing a chain of object helpers to be applied safely in series.
-- ArrayManipulator - allowing a chain of array helpers to be applied safely in series.
