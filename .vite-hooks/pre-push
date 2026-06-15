@@ -1,0 +1,2 @@
+bun test:unit:run
+bun run build
