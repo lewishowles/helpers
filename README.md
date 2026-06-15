@@ -148,7 +148,7 @@ pluck([], "property"); // []
 
 ### `sortObjectsByProperty(array: any[], property: string, { ascending: boolean: true })`
 
-Sort the given `array` of objects by the value of property `property`, with optional direction.
+Returns a new array containing the `array` of objects, sorted by the value of property `property`, with optional direction.
 
 #### Example
 
