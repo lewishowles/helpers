@@ -1,2 +1,3 @@
 bun test:unit:run
 bun run build
+./support/check-test-coverage.sh
