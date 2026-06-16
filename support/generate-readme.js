@@ -14,17 +14,52 @@ const readmeEndMarker = "<!-- helpers:end -->";
 const categoryTitles = { url: "URL" };
 // The repository root is the parent folder of this support script.
 const repoRoot = path.resolve(import.meta.dirname, "..");
+// The command mode decides whether to write README.md or only check it.
+const shouldCheckReadme = process.argv.includes("--check");
 
 /**
  * Generate the helper reference in README.md from structured helper JSDoc.
  */
 function generateReadme() {
+	const { nextReadme, readme, readmePath } = getGeneratedReadme();
+
+	if (shouldCheckReadme) {
+		checkReadme(readme, nextReadme);
+		return;
+	}
+
+	fs.writeFileSync(readmePath, nextReadme);
+}
+
+/**
+ * Get the current and generated README content.
+ */
+function getGeneratedReadme() {
 	const readmePath = path.join(repoRoot, "README.md");
 	const readme = fs.readFileSync(readmePath, "utf8");
 	const reference = renderHelperReference(loadHelperDocs());
 	const nextReadme = replaceGeneratedReference(readme, reference);
 
-	fs.writeFileSync(readmePath, nextReadme);
+	return { nextReadme, readme, readmePath };
+}
+
+/**
+ * Fail when the README helper reference is out of date.
+ *
+ * @param  {string}  readme
+ *     The current README content.
+ * @param  {string}  nextReadme
+ *     The generated README content.
+ */
+function checkReadme(readme, nextReadme) {
+	if (readme === nextReadme) {
+		console.log("README helper reference is current.");
+		return;
+	}
+
+	console.error("Generated README check failed.");
+	console.error("Run npm run docs:readme and commit the updated README.");
+	process.exit(1);
 }
 
 /**
