@@ -75,6 +75,7 @@
 	"scripts": {
 		"dev": "vp dev",
 		"build": "vp build",
+		"docs:readme": "node support/generate-readme.js",
 		"preview": "vp preview",
 		"test:unit": "vp test",
 		"test:unit:run": "vp test run",

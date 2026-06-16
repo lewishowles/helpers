@@ -8,6 +8,8 @@ These helpers are grouped by type, which makes multiple imports a little more ma
 import { getNextIndex } from "@lewishowles/helpers/array";
 ```
 
+<!-- helpers:start -->
+
 ## Array
 
 ### `arrayLength(array: any[])`
@@ -495,22 +497,6 @@ keys({}); // []
 keys("string"); // []
 ```
 
-### `pick(object: object, properties: string[])`
-
-Returns an object containing only `properties` properties from `object`.
-
-Any non-string properties are ignored.
-
-If the object does not have a given property, it is ignored.
-
-#### Example
-
-```js
-pick({ a: "one", b: "two", c: "three" }, ["a", "b"]); // { a: "one", b: "two" }
-pick({ a: "one", b: "two", c: "three" }, ["a"]); // { a: "one" }
-pick({ a: "one", b: "two", c: "three" }, ["a", "d"]); // { a: "one" }
-```
-
 ### `objectContains(object: object, needle: any, { exclude: string[] = null, include: string[] = null, caseInsensitive: boolean = true, allowPartial: boolean = false })`
 
 Returns true if one of the `object`'s values is `needle`. Also works when `object` is an array.
@@ -555,6 +541,22 @@ omit({ a: 1, b: 2, c: 3 }, ["a", "c"]); // { b: 2 }
 omit({ a: 1, b: 2, c: 3 }, []); // { a: 1, b: 2, c: 3 }
 ```
 
+### `pick(object: object, properties: string[])`
+
+Returns an object containing only `properties` properties from `object`.
+
+Any non-string properties are ignored.
+
+If the object does not have a given property, it is ignored.
+
+#### Example
+
+```js
+pick({ a: "one", b: "two", c: "three" }, ["a", "b"]); // { a: "one", b: "two" }
+pick({ a: "one", b: "two", c: "three" }, ["a"]); // { a: "one" }
+pick({ a: "one", b: "two", c: "three" }, ["a", "d"]); // { a: "one" }
+```
+
 ### `set(object: object, path: string, value: any)`
 
 Set an (optionally deeply nested) object property.
@@ -573,18 +575,6 @@ set({ a: 1 }, "b.c.d", 2); // { a: 1, b: { c: { d: 2 } } }
 set({ a: 1, b: 2 }, "b.c.d", 4); // { a: 1, b: 2 }
 ```
 
-### `values(object: object)`
-
-Returns an array of the values of the given `object`.
-
-#### Example
-
-```js
-values({ a: 1, b: 2, c: 3 }); // [1, 2, 3]
-values({}); // []
-values("string"); // []
-```
-
 ### `unwrap(object: object)`
 
 Safely unwrap a single-key object, returning the value of that key. `null` is returned if the object contains more than one key, or the value cannot be retrieved.
@@ -597,19 +587,19 @@ unwrap(null); // null
 unwrap({ key_one: "value", key_two: "value two" }); // null
 ```
 
-## String
+### `values(object: object)`
 
-### `StringManipulator`
-
-`StringManipulator` can be used to chan string methods together safely. A new instance of the class is created, and then any of the string helper methods can be used in any sequence. If the input at any stage is invalid, an empty string is returned.
+Returns an array of the values of the given `object`.
 
 #### Example
 
 ```js
-const userId = "82FAA75F-B47A-43B6-82F6-389C9408BB67";
-
-const userIdPreview = new StringManipulator(userId).toLowerCase().truncate(15).value; // 82faa75f-b47a-…
+values({ a: 1, b: 2, c: 3 }); // [1, 2, 3]
+values({}); // []
+values("string"); // []
 ```
+
+## String
 
 ### `isNonEmptyString(variable: any, { trim: boolean = false })`
 
@@ -633,8 +623,8 @@ Trim the left hand side of `string` using the provided string or RegExp `pattern
 
 ```js
 ltrim("***string***", "*"); // **string***
-ltrim("***string***", /\*/); // **string***
-ltrim("***string***", /\*+/); // string***
+ltrim("***string***", new RegExp("\\*")); // **string***
+ltrim("***string***", new RegExp("\\*+")); // string***
 ```
 
 ### `rtrim(string: string, pattern: string | RegExp = "\\s")`
@@ -645,8 +635,20 @@ Trim the right hand side of `string` using the provided string or RegExp `patter
 
 ```js
 rtrim("***string***", "*"); // ***string**
-rtrim("***string***", /\*/); // ***string**
-rtrim("***string***", /\*+/); // ***string
+rtrim("***string***", new RegExp("\\*")); // ***string**
+rtrim("***string***", new RegExp("\\*+")); // ***string
+```
+
+### `StringManipulator`
+
+`StringManipulator` can be used to chain string methods together safely. A new instance of the class is created, and then any of the string helper methods can be used in any sequence. If the input at any stage is invalid, an empty string is returned.
+
+#### Example
+
+```js
+const userId = "82FAA75F-B47A-43B6-82F6-389C9408BB67";
+
+const userIdPreview = new StringManipulator(userId).toLowerCase().truncate(15).value; // 82faa75f-b47a-…
 ```
 
 ### `toLowerCase(variable: string)`
@@ -682,8 +684,8 @@ Trim both sides of `string` using the provided string or RegExp `pattern`. Trims
 ```js
 trim("   string   "); // string
 trim("* *string* *", "*"); // *string*
-trim("***string***", /\*/); // **string**
-trim("***string***", /\*+/); // string
+trim("***string***", new RegExp("\\*")); // **string**
+trim("***string***", new RegExp("\\*+")); // string
 ```
 
 ### `truncate(string: string, length: number = 10, { decoration: string = "…", preserveWords: boolean = false, strict: boolean = true, includeDecoration: boolean = true })`
@@ -706,6 +708,49 @@ truncate("Hello, world!", 15); // "Hello, world!"
 truncate("Hello, world!", 8); // "Hello, …"
 truncate("Hello, world!", 8, { preserveWords: true }); // "Hello,…"
 truncate(["A", "B"]); // ""
+```
+
+## URL
+
+### `getUrlParameter(parameter: string)`
+
+Retrieve the current value of `parameter`, returning `null` if the parameter is not present.
+
+#### Example
+
+```js
+// https://duckduckgo.com?page=2
+getUrlParameter("page"); // 2
+// https://duckduckgo.com?page=2
+getUrlParameter("unknown"); // null
+```
+
+### `removeUrlParameter(parameter: string)`
+
+Remove `parameter` from the current URL if it exists.
+
+#### Example
+
+```js
+// https://duckduckgo.com?page=2
+removeUrlParameter("unknown"); // https://duckduckgo.com?page=2
+// https://duckduckgo.com?page=2
+removeUrlParameter("page"); // https://duckduckgo.com
+```
+
+### `updateUrlParameter(parameter: string, value: string)`
+
+Update the current URL to set `parameter` to `value`, adding `parameter` if it doesn't already exist, or overwriting any current value if it doesn't. If `value` is `null`, the parameter is removed.
+
+#### Example
+
+```js
+// https://duckduckgo.com
+updateUrlParameter("page", "2"); // https://duckduckgo.com?page=2
+// https://duckduckgo.com?page=2
+updateUrlParameter("page", "3"); // https://duckduckgo.com?page=3
+// https://duckduckgo.com?page=3
+updateUrlParameter("page", null); // https://duckduckgo.com
 ```
 
 ## Vue
@@ -753,84 +798,4 @@ runComponentMethod(component, "undefinedMethod"); // undefined
 runComponentMethod(null); // undefined
 ```
 
-## Chart
-
-### `chartColours`, `extendedColours`, and `brightColours`
-
-Each returns a set of accessible chart colours. Colours are provided as Tailwind text colour classes. Full classes are provided to avoid any issues with Tailwind not being able to determine compound classes. Text colours are provided as text colours are more likely to be used elsewhere, as opposed to fill colours, and thus the final CSS bundle is likely to be smaller. To use a colour to fill an SVG shape, combine it with `fill-current`.
-
-Note that when `brightColours` is used in a pie chart, there is a chance that two adjacent colours may not be sufficiently distinct based on the number of slices.
-
-#### Example
-
-```js
-import { chartColours } from "@lewishowles/helpers/chart";
-import { getNextIndex } from "@lewishowles/helpers/array";
-
-const startIndex = 0;
-const nextIndex = getNextIndex(0, chartColours, { wrap: true });
-const colour = chartColours[nextIndex];
-```
-
-### `getNextColour(index, overrideColours)`
-
-Retrieve the next colour for a chart segment based on the current `index`. Optionally provide the colours to choose from with `overrideColours`.
-
-#### Example
-
-```js
-import { getNextColour } from "@lewishowles/helpers/chart";
-```
-
-```html
-<path
-	v-for="(figure, index) in figures"
-	:key="figure.id"
-	v-bind="{
-		fill: getNextColour(index)
-	}"
-/>
-```
-
-## URL
-
-### `getUrlParameter(parameter: string)`
-
-Retrieve the current value of `parameter`, returning `null` if the parameter is not present.
-
-#### Example
-
-```js
-// https://duckduckgo.com?page=2
-getUrlParameter("page"); // 2
-// https://duckduckgo.com?page=2
-getUrlParameter("unknown"); // null
-```
-
-### `updateUrlParameter(parameter: string, value: string)`
-
-Update the current URL to set `parameter` to `value`, adding `parameter` if it doesn't already exist, or overwriting any current value if it doesn't. If `value` is `null`, the parameter is removed.
-
-#### Example
-
-```js
-// https://duckduckgo.com
-updateUrlParameter("page", "2"); // https://duckduckgo.com?page=2
-// https://duckduckgo.com?page=2
-updateUrlParameter("page", "3"); // https://duckduckgo.com?page=3
-// https://duckduckgo.com?page=3
-updateUrlParameter("page", null); // https://duckduckgo.com
-```
-
-### `removeUrlParameter(parameter: string)`
-
-Remove `parameter` from the current URL if it exists.
-
-#### Example
-
-```js
-// https://duckduckgo.com?page=2
-removeUrlParameter("unknown"); // https://duckduckgo.com?page=2
-// https://duckduckgo.com?page=2
-removeUrlParameter("page"); // https://duckduckgo.com
-```
+<!-- helpers:end -->
