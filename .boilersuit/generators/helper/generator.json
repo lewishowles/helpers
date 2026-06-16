@@ -1,0 +1,47 @@
+{
+	"schema_version": 1,
+	"id": "helper",
+	"display_name": "Helper",
+	"description": "Creates a helper implementation and test file. After generation, add the export to the category barrel manually.",
+	"default_path": "lib/{{CATEGORY}}",
+	"fields": [
+		{
+			"token": "NAME",
+			"label": "Helper name",
+			"placeholder": "format-date",
+			"hint": "kebab-case",
+			"validation": {
+				"pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+				"message": "Use kebab-case (e.g. format-date)"
+			}
+		},
+		{
+			"token": "CATEGORY",
+			"label": "Category",
+			"type": "select",
+			"options": [
+				{ "label": "Array", "value": "array" },
+				{ "label": "Form", "value": "form" },
+				{ "label": "General", "value": "general" },
+				{ "label": "Number", "value": "number" },
+				{ "label": "Object", "value": "object" },
+				{ "label": "String", "value": "string" },
+				{ "label": "URL", "value": "url" },
+				{ "label": "Vue", "value": "vue" }
+			]
+		}
+	],
+	"files": [
+		{
+			"template": "helper.js",
+			"output_path": "{{ NAME | kebab }}.js",
+			"required": true
+		},
+		{
+			"template": "helper.test.js",
+			"output_path": "{{ NAME | kebab }}.test.js",
+			"label": "Test file",
+			"required": false
+		}
+	]
+}
