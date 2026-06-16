@@ -6,7 +6,7 @@ import lint from "./.oxlintrc.json" with { type: "json" };
 export default defineConfig({
 	staged: {
 		"*": "vp check --fix",
-		"{README.md,lib/**/*.js,support/generate-readme.js}": "npm run check:readme",
+		"{README.md,lib/**/*.js,support/generate-readme.js}": "bun run check:readme",
 	},
 	fmt,
 	lint,
