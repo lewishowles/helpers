@@ -81,6 +81,9 @@
 		"preview": "vp preview",
 		"docs:readme": "node support/generate-readme.js",
 		"check:readme": "support/check-readme.sh",
+		"check:runtime-deps": "support/check-runtime-deps.sh",
+		"check:test-coverage": "support/check-test-coverage.sh",
+		"check:type-declarations": "support/check-type-declarations.sh",
 		"publint": "publint",
 		"attw": "attw --pack",
 		"prepare": "vp config"

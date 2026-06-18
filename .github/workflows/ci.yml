@@ -22,6 +22,18 @@ jobs:
       - name: Run tests
         run: bun run test:unit:run
 
+      - name: Check README is current
+        run: bun run check:readme
+
+      - name: Check helpers have tests
+        run: bun run check:test-coverage
+
+      - name: Check helpers have type declarations
+        run: bun run check:type-declarations
+
+      - name: Check runtime dependencies
+        run: bun run check:runtime-deps
+
       - name: Build package
         run: bun run build
 
