@@ -6,6 +6,12 @@
 
 - `ensureArray` - Ensures the input is an array by converting any non-array values to a single-item array.
 
+#### url
+
+- `getSearchParameter` - Retrieve a parameter from a search string or `URLSearchParams`.
+- `removeSearchParameter` - Remove a parameter from a search string or `URLSearchParams`.
+- `updateSearchParameter` - Add, remove, or update a parameter in a search string or `URLSearchParams`.
+
 ### Updates
 
 #### vue

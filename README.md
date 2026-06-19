@@ -712,9 +712,20 @@ truncate(["A", "B"]); // ""
 
 ## URL
 
+### `getSearchParameter(search: string | URLSearchParams, parameter: string)`
+
+Retrieve `parameter` from a URL search string or `URLSearchParams` instance, returning `null` when the parameter is not present.
+
+#### Example
+
+```js
+getSearchParameter("?page=2", "page"); // 2
+getSearchParameter("?page=2", "unknown"); // null
+```
+
 ### `getUrlParameter(parameter: string)`
 
-Retrieve the current value of `parameter`, returning `null` if the parameter is not present.
+Retrieve `parameter` from the current browser URL, returning `null` if the parameter is not present.
 
 #### Example
 
@@ -725,9 +736,20 @@ getUrlParameter("page"); // 2
 getUrlParameter("unknown"); // null
 ```
 
+### `removeSearchParameter(search: string | URLSearchParams, parameter: string)`
+
+Return a search string with `parameter` removed.
+
+#### Example
+
+```js
+removeSearchParameter("?page=2", "unknown"); // ?page=2
+removeSearchParameter("?page=2", "page"); // ""
+```
+
 ### `removeUrlParameter(parameter: string)`
 
-Remove `parameter` from the current URL if it exists.
+Remove `parameter` from the current browser URL if it exists.
 
 #### Example
 
@@ -738,9 +760,21 @@ removeUrlParameter("unknown"); // https://duckduckgo.com?page=2
 removeUrlParameter("page"); // https://duckduckgo.com
 ```
 
-### `updateUrlParameter(parameter: string, value: string)`
+### `updateSearchParameter(search: string | URLSearchParams, parameter: string, value: string | null)`
 
-Update the current URL to set `parameter` to `value`, adding `parameter` if it doesn't already exist, or overwriting any current value if it doesn't. If `value` is `null`, the parameter is removed.
+Return a search string with `parameter` set to `value`. If `value` is `null`, the parameter is removed.
+
+#### Example
+
+```js
+updateSearchParameter("", "page", "2"); // ?page=2
+updateSearchParameter("?page=2", "page", "3"); // ?page=3
+updateSearchParameter("?page=3", "page", null); // ""
+```
+
+### `updateUrlParameter(parameter: string, value: string | null)`
+
+Update the current browser URL to set `parameter` to `value`, adding `parameter` if it doesn't already exist, or overwriting any current value if it doesn't. If `value` is `null`, the parameter is removed.
 
 #### Example
 
