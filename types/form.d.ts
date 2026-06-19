@@ -9,8 +9,14 @@ type ValidationRule =
 	| { rule: "not_in"; options: any[]; message: string }
 	| { rule: "regexp"; regexp: RegExp; message: string };
 
+interface ValidationResult {
+	errors: string[];
+	valid: boolean;
+	validated: boolean;
+}
+
 export declare function validateField(
 	fieldName: string,
 	validationRules: ValidationRule[],
 	formData: Record<string, any>,
-): true | string[];
+): ValidationResult;

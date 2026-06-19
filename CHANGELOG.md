@@ -14,6 +14,10 @@
 
 ### Updates
 
+#### form
+
+- `validateField` - Now returns a structured `{ valid, errors, validated }` result instead of `true | string[]`.
+
 #### vue
 
 - `runComponentMethod` - Now runs `unref`, allowing a component reference to be provided directly.

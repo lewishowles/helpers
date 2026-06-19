@@ -189,7 +189,7 @@ unique([]); // []
 
 Validate a field given its `fieldName`, the field's `validationRules`, and the sum total `formData`.
 
-Returns `true` if input is invalid (missing field name, rules, or form data). Otherwise returns a `string[]` of error messages — empty when the field is valid, non-empty when it isn't.
+Returns `{ valid, errors, validated }`. If input is invalid (missing field name, rules, or form data), `validated` is false and the field is treated as valid.
 
 Available rules and properties include:
 
@@ -250,10 +250,10 @@ Ensure that the provided value matches `regexp`.
 #### Example
 
 ```js
-validateField("username", [{ rule: "required", message: "Enter a username" }], { username: "" }); // ["Enter a username"]
+validateField("username", [{ rule: "required", message: "Enter a username" }], { username: "" }); // { valid: false, errors: ["Enter a username"], validated: true }
 validateField("username", [{ rule: "required", message: "Enter a username" }], {
 	username: "jack_skellington",
-}); // []
+}); // { valid: true, errors: [], validated: true }
 ```
 
 ## General
