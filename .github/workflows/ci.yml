@@ -25,6 +25,9 @@ jobs:
       - name: Check README is current
         run: bun run check:readme
 
+      - name: Check exports
+        run: bun run check:exports
+
       - name: Check helpers have tests
         run: bun run check:test-coverage
 
