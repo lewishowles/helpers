@@ -3,7 +3,7 @@
 	"id": "helper",
 	"display_name": "Helper",
 	"description": "Creates a helper implementation and test file. After generation, add the export to the category barrel manually.",
-	"default_path": "lib/{{CATEGORY}}",
+	"default_path": "",
 	"fields": [
 		{
 			"token": "NAME",
@@ -34,12 +34,12 @@
 	"files": [
 		{
 			"template": "helper.js",
-			"output_path": "{{ NAME | kebab }}.js",
+			"output_path": "lib/{{ CATEGORY }}/{{ NAME | kebab }}.js",
 			"required": true
 		},
 		{
 			"template": "helper.test.js",
-			"output_path": "{{ NAME | kebab }}.test.js",
+			"output_path": "lib/{{ CATEGORY }}/{{ NAME | kebab }}.test.js",
 			"label": "Test file",
 			"required": false
 		}
