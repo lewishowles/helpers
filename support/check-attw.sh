@@ -35,4 +35,4 @@ if [[ -z "$PACK_FILE" ]]; then
 	exit 1
 fi
 
-attw "$PACK_FILE" --profile node16
+attw "$PACK_FILE" --profile esm-only

@@ -60,7 +60,7 @@ if [[ ! -d "$DIST_DIR" ]]; then
 	exit 1
 fi
 
-built_js_files=("$DIST_DIR"/*.js "$DIST_DIR"/*.cjs)
+built_js_files=("$DIST_DIR"/*.js)
 
 if [[ ${#built_js_files[@]} -eq 0 ]]; then
 	output_failure "Package size check failed"

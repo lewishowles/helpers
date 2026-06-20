@@ -88,6 +88,14 @@ Use the URL helpers when you want browser URL behaviour:
 - `updateUrlParameter`
 - `removeUrlParameter`
 
+#### Package format
+
+The package is now ESM-only. Use `import` instead of `require`.
+
+```js
+import { getPathValue } from "@lewishowles/helpers";
+```
+
 ## 0.19.0 - 2024-05-07
 
 ### New helpers

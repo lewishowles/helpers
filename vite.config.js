@@ -13,10 +13,20 @@ export default defineConfig({
 	lint,
 	build: {
 		lib: {
-			entry: getFiles(["array", "form", "general", "number", "object", "string", "vue", "url"]),
+			entry: getFiles([
+				"index",
+				"array",
+				"form",
+				"general",
+				"number",
+				"object",
+				"string",
+				"vue",
+				"url",
+			]),
 			name: "helpers",
 			fileName: "[name]",
-			formats: ["cjs", "es"],
+			formats: ["es"],
 		},
 		rollupOptions: {
 			external: ["vue"],
@@ -46,5 +56,9 @@ function getFiles(folderNames) {
  *     The name of the folder to retrieve.
  */
 function getFile(folderName) {
+	if (folderName === "index") {
+		return fileURLToPath(new URL("./lib/index.js", import.meta.url));
+	}
+
 	return fileURLToPath(new URL(`./lib/${folderName}/${folderName}.js`, import.meta.url));
 }

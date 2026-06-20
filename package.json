@@ -28,85 +28,41 @@
 	"type": "module",
 	"sideEffects": false,
 	"exports": {
+		".": {
+			"types": "./types/index.d.ts",
+			"import": "./dist/index.js"
+		},
 		"./array": {
-			"import": {
-				"types": "./types/array.d.ts",
-				"default": "./dist/array.js"
-			},
-			"require": {
-				"types": "./types/array.d.cts",
-				"default": "./dist/array.cjs"
-			}
+			"types": "./types/array.d.ts",
+			"import": "./dist/array.js"
 		},
 		"./form": {
-			"import": {
-				"types": "./types/form.d.ts",
-				"default": "./dist/form.js"
-			},
-			"require": {
-				"types": "./types/form.d.cts",
-				"default": "./dist/form.cjs"
-			}
+			"types": "./types/form.d.ts",
+			"import": "./dist/form.js"
 		},
 		"./general": {
-			"import": {
-				"types": "./types/general.d.ts",
-				"default": "./dist/general.js"
-			},
-			"require": {
-				"types": "./types/general.d.cts",
-				"default": "./dist/general.cjs"
-			}
+			"types": "./types/general.d.ts",
+			"import": "./dist/general.js"
 		},
 		"./number": {
-			"import": {
-				"types": "./types/number.d.ts",
-				"default": "./dist/number.js"
-			},
-			"require": {
-				"types": "./types/number.d.cts",
-				"default": "./dist/number.cjs"
-			}
+			"types": "./types/number.d.ts",
+			"import": "./dist/number.js"
 		},
 		"./object": {
-			"import": {
-				"types": "./types/object.d.ts",
-				"default": "./dist/object.js"
-			},
-			"require": {
-				"types": "./types/object.d.cts",
-				"default": "./dist/object.cjs"
-			}
+			"types": "./types/object.d.ts",
+			"import": "./dist/object.js"
 		},
 		"./string": {
-			"import": {
-				"types": "./types/string.d.ts",
-				"default": "./dist/string.js"
-			},
-			"require": {
-				"types": "./types/string.d.cts",
-				"default": "./dist/string.cjs"
-			}
+			"types": "./types/string.d.ts",
+			"import": "./dist/string.js"
 		},
 		"./vue": {
-			"import": {
-				"types": "./types/vue.d.ts",
-				"default": "./dist/vue.js"
-			},
-			"require": {
-				"types": "./types/vue.d.cts",
-				"default": "./dist/vue.cjs"
-			}
+			"types": "./types/vue.d.ts",
+			"import": "./dist/vue.js"
 		},
 		"./url": {
-			"import": {
-				"types": "./types/url.d.ts",
-				"default": "./dist/url.js"
-			},
-			"require": {
-				"types": "./types/url.d.cts",
-				"default": "./dist/url.cjs"
-			}
+			"types": "./types/url.d.ts",
+			"import": "./dist/url.js"
 		}
 	},
 	"publishConfig": {
@@ -126,6 +82,7 @@
 		"check:runtime-deps": "support/check-runtime-deps.sh",
 		"check:test-coverage": "support/check-test-coverage.sh",
 		"check:type-declarations": "support/check-type-declarations.sh",
+		"helpers:search": "support/search-helpers.js",
 		"publint": "publint",
 		"attw": "support/check-attw.sh",
 		"prepare": "vp config"
