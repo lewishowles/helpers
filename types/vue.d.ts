@@ -1,9 +1,9 @@
 import type { Slot } from "vue";
 
-export declare function getSlotText(slotReference: Slot | undefined): string;
-export declare function isNonEmptySlot(slotReference: Slot | undefined): boolean;
-export declare function runComponentMethod(
+export declare function callComponentMethod<T = unknown>(
 	component: object | null | undefined,
 	method: string,
 	...params: any[]
-): boolean | undefined;
+): T | undefined;
+export declare function getSlotText(slotReference: Slot | undefined): string;
+export declare function isNonEmptySlot(slotReference: Slot | undefined): boolean;

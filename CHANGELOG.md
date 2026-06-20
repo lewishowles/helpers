@@ -20,7 +20,7 @@
 
 #### vue
 
-- `runComponentMethod` - Now runs `unref`, allowing a component reference to be provided directly.
+- `callComponentMethod` - Replaces `runComponentMethod`, runs `unref`, and returns the called method's result.
 
 ## 0.19.0 - 2024-05-07
 

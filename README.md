@@ -789,6 +789,19 @@ updateUrlParameter("page", null); // https://duckduckgo.com
 
 ## Vue
 
+### `callComponentMethod(component, method: string, ...parameters: any)`
+
+If the given `component` is an object and contains a function parameter `method`, call that method with any additional `parameters` and return its result. This helper allows safe calling of a method when an object might not exist.
+
+#### Example
+
+```js
+// component = { method: () => "result" }
+callComponentMethod(component, "method", "parameterOne"); // result
+callComponentMethod(component, "undefinedMethod"); // undefined
+callComponentMethod(null); // undefined
+```
+
 ### `getSlotText(slotReference)`
 
 Retrieve the text from the given `slotReference`. `slotReference` is a direct reference to a slot - for example `slots.default`. Text is concatenated when multiple children exist.
@@ -817,19 +830,6 @@ isNonEmptySlot(slots.default); // true
 // slots.default = () => [{ type: Comment }]
 isNonEmptySlot(slots.default); // false
 isNonEmptySlot("string"); // false
-```
-
-### `runComponentMethod(component, method: string, ...parameters: any)`
-
-If the given `component` is an object and contains a function parameter `method`, call that method with any additional `parameters`. This helper allows safe running of a method when an object might not exist.
-
-#### Example
-
-```js
-// component = { method: () => {} }
-runComponentMethod(component, "method", "parameterOne"); // true
-runComponentMethod(component, "undefinedMethod"); // undefined
-runComponentMethod(null); // undefined
 ```
 
 <!-- helpers:end -->
