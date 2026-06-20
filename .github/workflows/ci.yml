@@ -40,6 +40,9 @@ jobs:
       - name: Build package
         run: bun run build
 
+      - name: Check package size
+        run: bun run check:package-size
+
       - name: Check package exports
         run: bun run publint
 
