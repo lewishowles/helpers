@@ -97,6 +97,10 @@ The package is now ESM-only. Use `import` instead of `require`.
 import { getPathValue } from "@lewishowles/helpers";
 ```
 
+#### Safer invalid input
+
+`sortByProperty` now returns `[]` when the first argument is not an array.
+
 ## 0.19.0 - 2024-05-07
 
 ### New helpers
