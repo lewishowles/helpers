@@ -85,9 +85,17 @@ Use these for pure search-string or `URLSearchParams` work:
 
 Use the URL helpers when you want browser URL behaviour:
 
-- `getUrlParameter`
-- `updateUrlParameter`
-- `removeUrlParameter`
+- `getCurrentUrlParameter`
+- `updateCurrentUrlParameter`
+- `removeCurrentUrlParameter`
+
+The browser URL helpers have been renamed to make their `window` usage clear.
+
+| Before               | After                       |
+| -------------------- | --------------------------- |
+| `getUrlParameter`    | `getCurrentUrlParameter`    |
+| `removeUrlParameter` | `removeCurrentUrlParameter` |
+| `updateUrlParameter` | `updateCurrentUrlParameter` |
 
 #### Package format
 

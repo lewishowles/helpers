@@ -2,7 +2,13 @@
 
 A library of gorgeous Javascript methods to make working with—and validating—data quicker and less error-prone, letting the developer concentrate on the fun stuff.
 
-These helpers are grouped by type, which makes multiple imports a little more manageable. For example:
+Import helpers from the root package:
+
+```
+import { getNextIndex } from "@lewishowles/helpers";
+```
+
+Helpers are also grouped by type when you want narrower imports:
 
 ```
 import { getNextIndex } from "@lewishowles/helpers/array";
@@ -729,6 +735,19 @@ truncate(["A", "B"]); // ""
 
 ## URL
 
+### `getCurrentUrlParameter(parameter: string)`
+
+Retrieve `parameter` from the current browser URL, returning `null` if the parameter is not present.
+
+#### Example
+
+```js
+// https://duckduckgo.com?page=2
+getCurrentUrlParameter("page"); // 2
+// https://duckduckgo.com?page=2
+getCurrentUrlParameter("unknown"); // null
+```
+
 ### `getSearchParameter(search: string | URLSearchParams, parameter: string)`
 
 Retrieve `parameter` from a URL search string or `URLSearchParams` instance, returning `null` when the parameter is not present.
@@ -740,17 +759,17 @@ getSearchParameter("?page=2", "page"); // 2
 getSearchParameter("?page=2", "unknown"); // null
 ```
 
-### `getUrlParameter(parameter: string)`
+### `removeCurrentUrlParameter(parameter: string)`
 
-Retrieve `parameter` from the current browser URL, returning `null` if the parameter is not present.
+Remove `parameter` from the current browser URL if it exists.
 
 #### Example
 
 ```js
 // https://duckduckgo.com?page=2
-getUrlParameter("page"); // 2
+removeCurrentUrlParameter("unknown"); // https://duckduckgo.com?page=2
 // https://duckduckgo.com?page=2
-getUrlParameter("unknown"); // null
+removeCurrentUrlParameter("page"); // https://duckduckgo.com
 ```
 
 ### `removeSearchParameter(search: string | URLSearchParams, parameter: string)`
@@ -764,17 +783,19 @@ removeSearchParameter("?page=2", "unknown"); // ?page=2
 removeSearchParameter("?page=2", "page"); // ""
 ```
 
-### `removeUrlParameter(parameter: string)`
+### `updateCurrentUrlParameter(parameter: string, value: string | null)`
 
-Remove `parameter` from the current browser URL if it exists.
+Update the current browser URL to set `parameter` to `value`, adding `parameter` if it doesn't already exist, or overwriting any current value if it doesn't. If `value` is `null`, the parameter is removed.
 
 #### Example
 
 ```js
+// https://duckduckgo.com
+updateCurrentUrlParameter("page", "2"); // https://duckduckgo.com?page=2
 // https://duckduckgo.com?page=2
-removeUrlParameter("unknown"); // https://duckduckgo.com?page=2
-// https://duckduckgo.com?page=2
-removeUrlParameter("page"); // https://duckduckgo.com
+updateCurrentUrlParameter("page", "3"); // https://duckduckgo.com?page=3
+// https://duckduckgo.com?page=3
+updateCurrentUrlParameter("page", null); // https://duckduckgo.com
 ```
 
 ### `updateSearchParameter(search: string | URLSearchParams, parameter: string, value: string | null)`
@@ -787,21 +808,6 @@ Return a search string with `parameter` set to `value`. If `value` is `null`, th
 updateSearchParameter("", "page", "2"); // ?page=2
 updateSearchParameter("?page=2", "page", "3"); // ?page=3
 updateSearchParameter("?page=3", "page", null); // ""
-```
-
-### `updateUrlParameter(parameter: string, value: string | null)`
-
-Update the current browser URL to set `parameter` to `value`, adding `parameter` if it doesn't already exist, or overwriting any current value if it doesn't. If `value` is `null`, the parameter is removed.
-
-#### Example
-
-```js
-// https://duckduckgo.com
-updateUrlParameter("page", "2"); // https://duckduckgo.com?page=2
-// https://duckduckgo.com?page=2
-updateUrlParameter("page", "3"); // https://duckduckgo.com?page=3
-// https://duckduckgo.com?page=3
-updateUrlParameter("page", null); // https://duckduckgo.com
 ```
 
 ## Vue
