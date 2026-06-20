@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.20.0
+## 1.0.0
 
 ### New helpers
 
@@ -18,28 +18,75 @@
 
 ### Breaking changes
 
-#### array
+#### Object and array helper names
 
-- `sortObjectsByProperty` has been renamed to `sortByProperty`.
+Several helpers have been renamed so their names describe what they do more clearly.
 
-#### object
+| Before                  | After             |
+| ----------------------- | ----------------- |
+| `add`                   | `addProperty`     |
+| `forget`                | `removePathValue` |
+| `get`                   | `getPathValue`    |
+| `hasAny`                | `hasAnyPath`      |
+| `set`                   | `setPathValue`    |
+| `sortObjectsByProperty` | `sortByProperty`  |
 
-- `add` has been renamed to `addProperty`.
-- `forget` has been renamed to `removePathValue`.
-- `get` has been renamed to `getPathValue`.
-- `getPathValue` now returns `undefined` by default when a path is missing.
-- `hasAny` has been renamed to `hasAnyPath`.
-- `set` has been renamed to `setPathValue`.
+`getPathValue` now returns `undefined` when a path is missing unless you pass a fallback value.
 
-### Updates
+```js
+getPathValue(object, "user.name");
+getPathValue(object, "user.name", "Unknown");
+```
 
-#### form
+Use `pluckPathValues` when you need the same nested path from every object in an array.
 
-- `validateField` - Now returns a structured `{ valid, errors, validated }` result instead of `true | string[]`.
+```js
+pluckPathValues(users, "profile.name");
+```
 
-#### vue
+#### Form validation
 
-- `callComponentMethod` - Replaces `runComponentMethod`, runs `unref`, and returns the called method's result.
+`validateField` now returns a structured result instead of `true` or an array of errors.
+
+```js
+const result = validateField(value, rules);
+
+if (!result.valid) {
+	console.log(result.errors);
+}
+```
+
+The result shape is:
+
+```js
+{
+	valid: boolean,
+	errors: string[],
+	validated: boolean,
+}
+```
+
+#### Vue helpers
+
+`runComponentMethod` has been replaced by `callComponentMethod`.
+
+`callComponentMethod` returns the method's result, including promises, while keeping the same safe handling for missing methods.
+
+#### URL helpers
+
+Search-parameter helpers are now available for code that should not read or write `window`.
+
+Use these for pure search-string or `URLSearchParams` work:
+
+- `getSearchParameter`
+- `updateSearchParameter`
+- `removeSearchParameter`
+
+Use the URL helpers when you want browser URL behaviour:
+
+- `getUrlParameter`
+- `updateUrlParameter`
+- `removeUrlParameter`
 
 ## 0.19.0 - 2024-05-07
 
