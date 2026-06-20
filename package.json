@@ -19,7 +19,7 @@
 	"author": "Lewis Howles",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/lewishowles/helpers.git"
+		"url": "git+https://github.com/lewishowles/helpers.git"
 	},
 	"files": [
 		"dist",
@@ -29,44 +29,84 @@
 	"sideEffects": false,
 	"exports": {
 		"./array": {
-			"types": "./types/array.d.ts",
-			"import": "./dist/array.js",
-			"require": "./dist/array.cjs"
+			"import": {
+				"types": "./types/array.d.ts",
+				"default": "./dist/array.js"
+			},
+			"require": {
+				"types": "./types/array.d.cts",
+				"default": "./dist/array.cjs"
+			}
 		},
 		"./form": {
-			"types": "./types/form.d.ts",
-			"import": "./dist/form.js",
-			"require": "./dist/form.cjs"
+			"import": {
+				"types": "./types/form.d.ts",
+				"default": "./dist/form.js"
+			},
+			"require": {
+				"types": "./types/form.d.cts",
+				"default": "./dist/form.cjs"
+			}
 		},
 		"./general": {
-			"types": "./types/general.d.ts",
-			"import": "./dist/general.js",
-			"require": "./dist/general.cjs"
+			"import": {
+				"types": "./types/general.d.ts",
+				"default": "./dist/general.js"
+			},
+			"require": {
+				"types": "./types/general.d.cts",
+				"default": "./dist/general.cjs"
+			}
 		},
 		"./number": {
-			"types": "./types/number.d.ts",
-			"import": "./dist/number.js",
-			"require": "./dist/number.cjs"
+			"import": {
+				"types": "./types/number.d.ts",
+				"default": "./dist/number.js"
+			},
+			"require": {
+				"types": "./types/number.d.cts",
+				"default": "./dist/number.cjs"
+			}
 		},
 		"./object": {
-			"types": "./types/object.d.ts",
-			"import": "./dist/object.js",
-			"require": "./dist/object.cjs"
+			"import": {
+				"types": "./types/object.d.ts",
+				"default": "./dist/object.js"
+			},
+			"require": {
+				"types": "./types/object.d.cts",
+				"default": "./dist/object.cjs"
+			}
 		},
 		"./string": {
-			"types": "./types/string.d.ts",
-			"import": "./dist/string.js",
-			"require": "./dist/string.cjs"
+			"import": {
+				"types": "./types/string.d.ts",
+				"default": "./dist/string.js"
+			},
+			"require": {
+				"types": "./types/string.d.cts",
+				"default": "./dist/string.cjs"
+			}
 		},
 		"./vue": {
-			"types": "./types/vue.d.ts",
-			"import": "./dist/vue.js",
-			"require": "./dist/vue.cjs"
+			"import": {
+				"types": "./types/vue.d.ts",
+				"default": "./dist/vue.js"
+			},
+			"require": {
+				"types": "./types/vue.d.cts",
+				"default": "./dist/vue.cjs"
+			}
 		},
 		"./url": {
-			"types": "./types/url.d.ts",
-			"import": "./dist/url.js",
-			"require": "./dist/url.cjs"
+			"import": {
+				"types": "./types/url.d.ts",
+				"default": "./dist/url.js"
+			},
+			"require": {
+				"types": "./types/url.d.cts",
+				"default": "./dist/url.cjs"
+			}
 		}
 	},
 	"publishConfig": {
@@ -87,7 +127,7 @@
 		"check:test-coverage": "support/check-test-coverage.sh",
 		"check:type-declarations": "support/check-type-declarations.sh",
 		"publint": "publint",
-		"attw": "attw --pack",
+		"attw": "support/check-attw.sh",
 		"prepare": "vp config"
 	},
 	"devDependencies": {
