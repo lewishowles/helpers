@@ -34,6 +34,7 @@ export declare function pick<T extends object, K extends keyof T>(
 	object: T,
 	properties: K[],
 ): Pick<T, K>;
+export declare function pluckPathValues<T = any>(array: object[], path: string): T[];
 export declare function removePathValue<T extends object>(object: T, path: string): Partial<T>;
 export declare function setPathValue<T extends object>(object: T, path: string, value: any): T;
 export declare function unwrap(object: object): any | null;

@@ -6,6 +6,10 @@
 
 - `ensureArray` - Ensures the input is an array by converting any non-array values to a single-item array.
 
+#### object
+
+- `pluckPathValues` - Retrieve nested path values from each object in an array.
+
 #### url
 
 - `getSearchParameter` - Retrieve a parameter from a search string or `URLSearchParams`.

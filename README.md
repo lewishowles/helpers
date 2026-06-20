@@ -546,6 +546,21 @@ pick({ a: "one", b: "two", c: "three" }, ["a"]); // { a: "one" }
 pick({ a: "one", b: "two", c: "three" }, ["a", "d"]); // { a: "one" }
 ```
 
+### `pluckPathValues(array: object[], path: string)`
+
+Retrieve an array of the `path` value from each of the objects found in `array`.
+
+Any non-objects in `array` are ignored. Objects that don't have the given path yield `undefined` in the result. Empty or invalid input returns `[]`.
+
+#### Example
+
+```js
+pluckPathValues([{ user: { name: "Sophie" } }, { user: { name: "Hannah" } }], "user.name"); // ["Sophie", "Hannah"]
+pluckPathValues([{ user: { name: "Sophie" } }, { user: {} }], "user.name"); // ["Sophie", undefined]
+pluckPathValues([{ user: { name: "Sophie" } }, "not an object"], "user.name"); // ["Sophie"]
+pluckPathValues([], "user.name"); // []
+```
+
 ### `removePathValue(object: object, path: string)`
 
 Remove an object property at `path`. This method makes a copy of the provided object to not modify the original.
