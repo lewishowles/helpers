@@ -137,7 +137,7 @@ Retrieve an array of the `property` value from each of the objects found in `arr
 
 Any non-objects in `array` are ignored. Objects that don't have the given property yield `undefined` in the result. Empty or invalid input returns `[]`.
 
-Note: `property` is a direct key only, and dot-path notation is not yet supported. Use `get` for nested access.
+Note: `property` is a direct key only, and dot-path notation is not yet supported. Use `getPathValue` for nested access.
 
 #### Example
 
@@ -148,16 +148,16 @@ pluck([{ fruit: "apple" }, "not an object"], "fruit"); // ["apple"]
 pluck([], "property"); // []
 ```
 
-### `sortObjectsByProperty(array: any[], property: string, { ascending: boolean: true })`
+### `sortByProperty(array: any[], property: string, { ascending: boolean: true })`
 
-Returns a new array containing the `array` of objects, sorted by the value of property `property`, with optional direction.
+Returns a new array containing the `array` of objects, sorted by the value at `property`, with optional direction.
 
 #### Example
 
 ```js
-sortObjectsByProperty([{ name: "Lewis" }, { name: "Alice" }], "name"); // [{ name: "Alice" }, { name: "Lewis" }]
-sortObjectsByProperty([{ name: "Lewis" }, { name: "Alice" }], "age"); // [{ name: "Lewis" }, { name: "Alice" }]
-sortObjectsByProperty([{ name: "Lewis" }, { name: "Alice" }], "name", { ascending: false }); // [{ name: "Lewis" }, { name: "Alice" }]
+sortByProperty([{ name: "Lewis" }, { name: "Alice" }], "name"); // [{ name: "Alice" }, { name: "Lewis" }]
+sortByProperty([{ name: "Lewis" }, { name: "Alice" }], "age"); // [{ name: "Lewis" }, { name: "Alice" }]
+sortByProperty([{ name: "Lewis" }, { name: "Alice" }], "name", { ascending: false }); // [{ name: "Lewis" }, { name: "Alice" }]
 ```
 
 ### `tail(array: any[])`
@@ -375,16 +375,18 @@ round(4.567, -1); // 0
 
 ## Object
 
-### `add(object: object, key: string, value: any)`
+### `addProperty(object: object, key: string, value: any)`
 
-Add a key / value pair to an object without overwriting any existing value. That is, only if that key isn't already present, or if its value is undefined or null.
+Add a shallow key / value pair to an object without overwriting any existing value.
+That is, only if that key isn't already present, or if its value is undefined
+or null.
 
 #### Example
 
 ```js
-add({ one: "One", two: "Two" }, "one", "Two"); // { one: "One", two: "Two" }
-add({ one: "One", two: "Two" }, "three", "Three"); // { one: "One", two: "Two", three: "Three" }
-add({ one: "One", two: null }, "two", "Two"); // { one: "One", two: "Two" }
+addProperty({ one: "One", two: "Two" }, "one", "Two"); // { one: "One", two: "Two" }
+addProperty({ one: "One", two: "Two" }, "three", "Three"); // { one: "One", two: "Two", three: "Three" }
+addProperty({ one: "One", two: null }, "two", "Two"); // { one: "One", two: "Two" }
 ```
 
 ### `deepCopy(object: object)`
@@ -409,44 +411,31 @@ deepMerge({ key: "value" }, { value: "key" }); // { key: "value", value: "key" }
 deepMerge({ key: "value", a: { b: 2 } }, { key: "modified", a: { c: 3 } }); // { key: "modified", a { b: 2, c: 3 }}
 ```
 
-### `forget(object: object, path: string)`
-
-Remove an (optionally deeply nested) item from an object. This method makes a copy of the provided object to not modify the original.
-
-#### Example
-
-```js
-forget({ key: "value" }, "key") // {}
-forget({ key: "value" }, "another") // { key: "value" }
-forget({ key: "value", one: { two: { three: "three" } } }, "one.two.three") // { key: "value", one: { two: {} } }
-forget({ key: "value", one: { two "two" } }, "one.two.three") // { key: "value", one: { two: "two" } }
-```
-
-### `get(object: object, path: string, returnValue: any = null)`
+### `getPathValue(object: object, path: string, returnValue: any = undefined)`
 
 Retrieve the `object` property value found at `path`, or `returnValue`.
 
 #### Example
 
 ```js
-get({ property: "value" }, "property"); // "value"
-get({ property: "value" }, "another", undefined); // undefined
-get({ nested: { property: { value: "seven" } } }, "nested.property.value"); // "seven"
-get({ nested: { property: { value: "seven" } } }, "nested.mistake.value"); // null
-get([], "property"); // null
+getPathValue({ property: "value" }, "property"); // "value"
+getPathValue({ property: "value" }, "another"); // undefined
+getPathValue({ nested: { property: { value: "seven" } } }, "nested.property.value"); // "seven"
+getPathValue({ nested: { property: { value: "seven" } } }, "nested.mistake.value", null); // null
+getPathValue([], "property"); // undefined
 ```
 
-### `hasAny(object: object, paths: string[])`
+### `hasAnyPath(object: object, paths: string[])`
 
-Determine if the given object has any of the (optionally deeply nested) properties.
+Determine if the given object has any of the properties at `paths`.
 
 #### Example
 
 ```js
-hasAny({ a: { b: { c: 1 } } }, ["a.b.c"]); // true
-hasAny({ a: { b: { c: 1 } } }, ["a.b.d", "a.b.c"]); // true
-hasAny({ a: { b: { c: 1 } } }, ["a.b.d"]); // false
-hasAny({ a: { b: { c: 1 } } }, ["a.b.e", "a.b.f"]); // false
+hasAnyPath({ a: { b: { c: 1 } } }, ["a.b.c"]); // true
+hasAnyPath({ a: { b: { c: 1 } } }, ["a.b.d", "a.b.c"]); // true
+hasAnyPath({ a: { b: { c: 1 } } }, ["a.b.d"]); // false
+hasAnyPath({ a: { b: { c: 1 } } }, ["a.b.e", "a.b.f"]); // false
 ```
 
 ### `isNonEmptyObject(variable: any)`
@@ -557,9 +546,22 @@ pick({ a: "one", b: "two", c: "three" }, ["a"]); // { a: "one" }
 pick({ a: "one", b: "two", c: "three" }, ["a", "d"]); // { a: "one" }
 ```
 
-### `set(object: object, path: string, value: any)`
+### `removePathValue(object: object, path: string)`
 
-Set an (optionally deeply nested) object property.
+Remove an object property at `path`. This method makes a copy of the provided object to not modify the original.
+
+#### Example
+
+```js
+removePathValue({ key: "value" }, "key"); // {}
+removePathValue({ key: "value" }, "another"); // { key: "value" }
+removePathValue({ key: "value", one: { two: { three: "three" } } }, "one.two.three"); // { key: "value", one: { two: {} } }
+removePathValue({ key: "value", one: { two: "two" } }, "one.two.three"); // { key: "value", one: { two: "two" } }
+```
+
+### `setPathValue(object: object, path: string, value: any)`
+
+Set an object property at `path`.
 
 If any part of the path dot notation chain results in a non-object, no modifications are made.
 
@@ -570,9 +572,9 @@ This method returns a copy of the object so as to not modify the original.
 #### Example
 
 ```js
-set({ a: 1 }, "b", 2); // { a: 1, b: 2 }
-set({ a: 1 }, "b.c.d", 2); // { a: 1, b: { c: { d: 2 } } }
-set({ a: 1, b: 2 }, "b.c.d", 4); // { a: 1, b: 2 }
+setPathValue({ a: 1 }, "b", 2); // { a: 1, b: 2 }
+setPathValue({ a: 1 }, "b.c.d", 2); // { a: 1, b: { c: { d: 2 } } }
+setPathValue({ a: 1, b: 2 }, "b.c.d", 4); // { a: 1, b: 2 }
 ```
 
 ### `unwrap(object: object)`

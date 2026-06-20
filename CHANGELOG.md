@@ -12,6 +12,21 @@
 - `removeSearchParameter` - Remove a parameter from a search string or `URLSearchParams`.
 - `updateSearchParameter` - Add, remove, or update a parameter in a search string or `URLSearchParams`.
 
+### Breaking changes
+
+#### array
+
+- `sortObjectsByProperty` has been renamed to `sortByProperty`.
+
+#### object
+
+- `add` has been renamed to `addProperty`.
+- `forget` has been renamed to `removePathValue`.
+- `get` has been renamed to `getPathValue`.
+- `getPathValue` now returns `undefined` by default when a path is missing.
+- `hasAny` has been renamed to `hasAnyPath`.
+- `set` has been renamed to `setPathValue`.
+
 ### Updates
 
 #### form

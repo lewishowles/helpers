@@ -15,7 +15,7 @@ export declare function pluck<T extends object, K extends keyof T>(
 	array: T[],
 	property: K,
 ): (T[K] | undefined)[];
-export declare function sortObjectsByProperty<T extends object>(
+export declare function sortByProperty<T extends object>(
 	array: T[],
 	property: keyof T,
 	options?: { ascending?: boolean },
