@@ -11,7 +11,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "$SCRIPT_DIR/colours.sh"
+source "$SCRIPT_DIR/output.sh"
 
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
@@ -26,15 +26,15 @@ EOF
 )
 
 if [[ ${#DEPS[@]} -eq 0 ]]; then
-	printf '%sNo runtime dependencies found.%s\n' "$PURPLE" "$RESET_COLOUR"
+	output_success "No runtime dependencies found."
 	exit 0
 fi
 
-printf '\n%sRuntime dependency check failed%s\n' "$PURPLE" "$RESET_COLOUR"
+output_failure "Runtime dependency check failed"
 
 for dep in "${DEPS[@]}"; do
-	printf '\n  %s%s%s is listed in dependencies\n' "$BLUE" "$dep" "$RESET_COLOUR"
+	output_item "$dep" "is listed in dependencies"
 done
 
-printf '\nMove runtime dependencies to devDependencies, or document the exception.\n\n'
+output_hint "Move runtime dependencies to devDependencies, or document the exception."
 exit 1

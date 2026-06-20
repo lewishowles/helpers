@@ -10,15 +10,15 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "$SCRIPT_DIR/colours.sh"
+source "$SCRIPT_DIR/output.sh"
 
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 if ! output="$(node "$REPO_ROOT/support/generate-readme.js" --check 2>&1)"; then
-	printf '\n%sGenerated README check failed%s\n' "$PURPLE" "$RESET_COLOUR"
+	output_failure "Generated README check failed"
 	printf '\n%s\n' "$output"
-	printf '\nRun %snpm run docs:readme%s and commit the updated README.\n\n' "$BLUE" "$RESET_COLOUR"
+	output_hint "Run $(output_value "npm run docs:readme") and commit the updated README."
 	exit 1
 fi
 
-printf '%sREADME helper reference is current.%s\n' "$PURPLE" "$RESET_COLOUR"
+output_success "README helper reference is current."

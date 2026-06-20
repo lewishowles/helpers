@@ -10,7 +10,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "$SCRIPT_DIR/colours.sh"
+source "$SCRIPT_DIR/output.sh"
 
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
@@ -40,11 +40,10 @@ for category in "${CATEGORIES[@]}"; do
 
 		if [[ ! -f "$test_path" ]]; then
 			if [[ $missing -eq 0 ]]; then
-				printf '\n%sTest coverage check failed%s\n' "$PURPLE" "$RESET_COLOUR"
+				output_failure "Test coverage check failed"
 			fi
 
-			printf '\n  %s%s%s has no test file\n' \
-				"$BLUE" "lib/$category/$source_file" "$RESET_COLOUR"
+			output_item "lib/$category/$source_file" "has no test file"
 
 			missing=1
 		fi
@@ -54,8 +53,8 @@ for category in "${CATEGORIES[@]}"; do
 done
 
 if [[ $missing -ne 0 ]]; then
-	printf '\nAdd a test file for each helper before pushing.\n\n'
+	output_hint "Add a test file for each helper before pushing."
 	exit 1
 fi
 
-printf '%sAll helpers have tests.%s\n' "$PURPLE" "$RESET_COLOUR"
+output_success "All helpers have tests."

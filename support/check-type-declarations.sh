@@ -10,7 +10,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "$SCRIPT_DIR/colours.sh"
+source "$SCRIPT_DIR/output.sh"
 
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
@@ -33,7 +33,8 @@ for category in "${CATEGORIES[@]}"; do
 	fi
 
 	if [[ ! -f "$types_file" ]]; then
-		printf '\n%sMissing types file%s: types/%s.d.ts\n' "$PURPLE" "$RESET_COLOUR" "$category"
+		output_failure "Missing types file"
+		output_item "types/$category.d.ts" "does not exist"
 		missing=1
 		continue
 	fi
@@ -57,12 +58,10 @@ for category in "${CATEGORIES[@]}"; do
 
 		if ! echo "$types_exports" | grep -qx "$name"; then
 			if [[ $missing -eq 0 ]]; then
-				printf '\n%sType declaration check failed%s\n' "$PURPLE" "$RESET_COLOUR"
+				output_failure "Type declaration check failed"
 			fi
 
-			printf '\n  %s%s%s is exported from lib/%s/%s.js but has no declaration in types/%s.d.ts\n' \
-				"$BLUE" "$name" "$RESET_COLOUR" \
-				"$category" "$category" "$category"
+			output_item "$name" "is exported from lib/$category/$category.js but has no declaration in types/$category.d.ts"
 
 			missing=1
 		fi
@@ -70,8 +69,8 @@ for category in "${CATEGORIES[@]}"; do
 done
 
 if [[ $missing -ne 0 ]]; then
-	printf '\nAdd the missing declarations to the types file before committing.\n\n'
+	output_hint "Add the missing declarations to the types file before committing."
 	exit 1
 fi
 
-printf '%sAll helpers have type declarations.%s\n' "$PURPLE" "$RESET_COLOUR"
+output_success "All helpers have type declarations."

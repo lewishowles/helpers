@@ -11,7 +11,7 @@ set -euo pipefail
 shopt -s nullglob
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "$SCRIPT_DIR/colours.sh"
+source "$SCRIPT_DIR/output.sh"
 
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
@@ -95,12 +95,10 @@ for category in "${CATEGORIES[@]}"; do
 
 		if ! is_exported_helper "$helper_path" "${exported_helpers[@]}"; then
 			if [[ $missing -eq 0 ]]; then
-				printf '\n%sHelper export check failed%s\n' "$PURPLE" "$RESET_COLOUR"
+				output_failure "Helper export check failed"
 			fi
 
-			printf '\n  %s%s%s is not exported from lib/%s/%s.js\n' \
-				"$BLUE" "$helper_path" "$RESET_COLOUR" \
-				"$category" "$category"
+			output_item "$helper_path" "is not exported from lib/$category/$category.js"
 
 			missing=1
 		fi
@@ -108,8 +106,8 @@ for category in "${CATEGORIES[@]}"; do
 done
 
 if [[ $missing -ne 0 ]]; then
-	printf '\nExport each public helper from its category barrel, or add intentional internals to INTERNAL_HELPERS.\n\n'
+	output_hint "Export each public helper from its category barrel, or add intentional internals to INTERNAL_HELPERS."
 	exit 1
 fi
 
-printf '%sAll public helpers are exported.%s\n' "$PURPLE" "$RESET_COLOUR"
+output_success "All public helpers are exported."
