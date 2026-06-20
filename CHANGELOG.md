@@ -5,6 +5,7 @@
 ### New helpers
 
 - `ensureArray` - Ensures the input is an array by converting any non-array values to a single-item array.
+- The package now has a root export, so helpers can be imported from `@lewishowles/helpers`.
 
 #### object
 
