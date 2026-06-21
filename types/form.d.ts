@@ -7,7 +7,15 @@ type ValidationRule =
 	| { rule: "between"; min: number; max: number; message: string }
 	| { rule: "in"; options: any[]; message: string }
 	| { rule: "not_in"; options: any[]; message: string }
-	| { rule: "regexp"; regexp: RegExp; message: string };
+	| { rule: "regexp"; regexp: RegExp; message: string }
+	| {
+			rule: "custom";
+			validate: (value: any, formData: Record<string, any>) => boolean;
+			message: string;
+	  }
+	| { rule: "required_if"; field: string; value?: any; message: string }
+	| { rule: "same"; field: string; message: string }
+	| { rule: "different"; field: string; message: string };
 
 interface ValidationResult {
 	errors: string[];

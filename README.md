@@ -253,6 +253,30 @@ Ensure that the given value is not included within `options`.
 
 Ensure that the provided value matches `regexp`.
 
+#### `custom`
+
+`[{ rule: "custom", validate: (value, formData) => value > formData.startDate, message: "Your end date should be after your start date" }]`
+
+The escape hatch for any rule the declarative rules can't express, including cross-field validation. `validate` receives the field's own `value` and the complete `formData`, and should return a truthy value to pass. A `custom` rule without a `validate` function always fails.
+
+#### `required_if`
+
+`[{ rule: "required_if", field: "wantsNewsletter", value: true, message: "Enter an email address to receive the newsletter" }]`
+
+Requires a value to be set, but only when another field's value meets a condition. When `value` is provided, the condition is met when `formData[field]` strictly equals it. When `value` is omitted, the condition is met when `formData[field]` has a value.
+
+#### `same`
+
+`[{ rule: "same", field: "password", message: "Your passwords should match" }]`
+
+Ensure that the value matches the value of another field.
+
+#### `different`
+
+`[{ rule: "different", field: "currentPassword", message: "Your new password should differ from your current one" }]`
+
+Ensure that the value differs from the value of another field.
+
 #### Example
 
 ```js

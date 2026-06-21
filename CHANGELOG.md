@@ -17,6 +17,14 @@
 - `removeSearchParameter` - Remove a parameter from a search string or `URLSearchParams`.
 - `updateSearchParameter` - Add, remove, or update a parameter in a search string or `URLSearchParams`.
 
+#### form
+
+- `validateField` now has four cross-field rules. Each can read the whole `formData`, not just its own field's value:
+  - `custom` - An escape hatch that runs your `validate(value, formData)` and passes when it returns a truthy value.
+  - `required_if` - Requires a value only when another field meets a condition (`field` strictly equals `value`, or `field` has a value when `value` is omitted).
+  - `same` - Requires the value to match another field's value.
+  - `different` - Requires the value to differ from another field's value.
+
 ### Breaking changes
 
 #### Object and array helper names
