@@ -84,8 +84,7 @@
 		"check:type-declarations": "support/check-type-declarations.sh",
 		"helpers:search": "support/search-helpers.js",
 		"publint": "publint",
-		"attw": "support/check-attw.sh",
-		"prepare": "vp config"
+		"attw": "support/check-attw.sh"
 	},
 	"devDependencies": {
 		"@arethetypeswrong/cli": "^0.18.3",
