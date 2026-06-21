@@ -40,6 +40,8 @@ Several helpers have been renamed so their names describe what they do more clea
 | `set`                   | `setPathValue`    |
 | `sortObjectsByProperty` | `sortByProperty`  |
 
+The old helper names are no longer exported.
+
 `getPathValue` now returns `undefined` when a path is missing unless you pass a fallback value.
 
 ```js
