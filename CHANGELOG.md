@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.1
+
+### Fixes
+
+- `callComponentMethod` now calls the method with its component bound as `this`. Detached calls broke native DOM methods such as `focus` and `showModal`, which throw when invoked without their owning element.
+
 ## 1.0.0
 
 ### New helpers
