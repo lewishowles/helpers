@@ -6,6 +6,7 @@
 
 #### array
 
+- Added `toggleItem` to add an item to an array if absent, or remove all occurrences if present. Supports an optional comparator — either a function `(a, b) => boolean` or a string key for object matching. Always returns a new array.
 - Added `range` to generate a numeric array between two values, inclusive of both ends. Supports single-argument shorthand (`range(5)` → `[0..5]`), explicit start and end, and an optional step. Direction is inferred automatically when `start > end`; a negative step can also be passed explicitly.
 
 #### form

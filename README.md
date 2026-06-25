@@ -194,6 +194,23 @@ tail(["a", "b"]); // "b"
 tail([]); // undefined
 ```
 
+### `toggleItem(array: any[], item: any, comparator?: ((a: any, b: any) => boolean) | string)`
+
+Add an item to an array if it is not present, or remove all occurrences of it
+if it is. Returns a new array and does not mutate the original.
+
+An optional `comparator` controls how items are matched. Pass a function
+`(a, b) => boolean` for custom logic, or a string key to compare objects by
+a specific property. Without a comparator, strict equality (`===`) is used.
+
+#### Example
+
+```js
+toggleItem([1, 2, 3], 2);                             // [1, 3]
+toggleItem([1, 2, 3], 4);                             // [1, 2, 3, 4]
+toggleItem([{ id: 1 }, { id: 2 }], { id: 1 }, 'id');  // [{ id: 2 }]
+```
+
 ### `unique(array: any[])`
 
 Safely reduce the provided `array` to those entries which are unique.

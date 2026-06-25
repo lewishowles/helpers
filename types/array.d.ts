@@ -22,4 +22,9 @@ export declare function sortByProperty<T extends object>(
 ): T[];
 export declare function range(start: number, end?: number, step?: number): number[];
 export declare function tail<T>(array: T[]): T | undefined;
+export declare function toggleItem<T>(
+	array: T[],
+	item: T,
+	comparator?: ((a: T, b: T) => boolean) | string,
+): T[];
 export declare function unique<T>(array: T[]): T[];
