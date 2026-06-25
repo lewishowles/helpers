@@ -22,7 +22,7 @@ type ValidationRule =
 	| { rule: "same"; field: string; message: string }
 	| { rule: "different"; field: string; message: string };
 
-interface ValidationResult {
+export interface ValidationResult {
 	errors: string[];
 	valid: boolean;
 	validated: boolean;
@@ -33,3 +33,12 @@ export declare function validateField(
 	validationRules: (ValidationRule | ValidationFunction)[],
 	formData: Record<string, any>,
 ): ValidationResult;
+
+export declare function validateForm(
+	fields: Record<string, (ValidationRule | ValidationFunction)[]>,
+	formData: Record<string, any>,
+): {
+	valid: boolean;
+	validated: boolean;
+	results: Record<string, ValidationResult>;
+};

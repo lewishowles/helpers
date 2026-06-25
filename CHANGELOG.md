@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### New helpers
+
+#### form
+
+- Added `validateForm` to validate multiple fields at once, delegating to `validateField` for each field's rules. Returns `{ valid, validated, results }` where `results` maps each field name to its `validateField` result. Cross-field rules work naturally because the full `formData` is passed through.
+
 ## 1.1.0 — 2026-06-25
 
 ### Fixes

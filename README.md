@@ -397,6 +397,43 @@ validateField("email", [
 ], { email: "not-an-email" }); // { valid: false, errors: ["Enter a valid email address"], validated: true }
 ```
 
+### `validateForm(fields: object, formData: object)`
+
+Validate multiple fields at once, delegating to `validateField` for each
+field's rules. Cross-field rules (`same`, `different`, `required_if`,
+`custom`) work naturally because the full `formData` is passed through to
+each field.
+
+Returns `{ valid, validated, results }`. If input is invalid (non-object
+`fields` or `formData`), `validated` is `false` and the form is treated as
+valid — the same convention as `validateField`.
+
+`results` contains a `validateField` result for each field that had a
+non-empty rules array. Fields with empty or non-array rules are skipped and
+omitted from `results`. The overall `valid` is `false` only when a field has
+`valid: false`. Fields with `validated: false` (skipped) don't make the form
+invalid.
+
+#### Example
+
+```js
+validateForm({
+	username: [{ rule: "required", message: "Enter a username" }],
+	email: [
+		{ rule: "required", message: "Enter your email" },
+		(value) => value.includes("@") || "Enter a valid email address",
+	],
+}, { username: "jack", email: "not-an-email" });
+// {
+//   valid: false,
+//   validated: true,
+//   results: {
+//     username: { valid: true, errors: [], validated: true },
+//     email: { valid: false, errors: ["Enter a valid email address"], validated: true },
+//   },
+// }
+```
+
 ## General
 
 ### `getFriendlyDisplay(variable: any)`
