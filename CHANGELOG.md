@@ -14,6 +14,7 @@
 - Added `parseDate` to convert `Date`, timestamps, Temporal types, ISO/RFC 9557 strings, and configured token-format strings into Temporal date values. Invalid or empty input returns `null`.
 - Added `toEpochMilliseconds` to convert supported date input into epoch milliseconds. Plain dates and plain date-times are anchored to the configured timezone before conversion.
 - Added `formatDate` to format supported date input using a named configured format, a Day.js-style token string, or `Intl.DateTimeFormat` options. Uses the configured locale, timezone, and default format.
+- Added `getRelativeDateParts` to compute the relative value and unit between two dates, returning parts suitable for `Intl.RelativeTimeFormat` or custom UI rendering.
 
 ## 1.0.1
 

@@ -230,6 +230,18 @@ formatDate("22/06/2026", "shortDate");
 formatDate("2026-06-22", { year: "numeric", month: "long", day: "2-digit" });
 ```
 
+### `getRelativeDateParts(value: any, relativeTo?: any, options?: object)`
+
+Convert two supported dates into relative date parts for use with
+`Intl.RelativeTimeFormat` or custom UI rendering.
+
+#### Example
+
+```js
+getRelativeDateParts("2026-06-22T10:00:00", "2026-06-22T10:01:00");
+// { value: -1, unit: "minute" }
+```
+
 ### `parseDate(value: any, options?: object)`
 
 Convert `Date`, timestamp, Temporal, ISO/RFC 9557 string, or configured

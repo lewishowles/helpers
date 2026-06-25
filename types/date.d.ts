@@ -45,3 +45,8 @@ export declare function formatDate(
 	format?: DateHelperFormat,
 	options?: DateHelperOptions,
 ): string | null;
+export declare function getRelativeDateParts(
+	value: MaybeDateHelperInput,
+	relativeTo?: MaybeDateHelperInput,
+	options?: DateHelperOptions,
+): RelativeDateParts | null;
