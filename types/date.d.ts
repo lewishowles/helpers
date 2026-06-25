@@ -1,3 +1,22 @@
+import type { Temporal } from "temporal-polyfill";
+
+export type DateHelperInput =
+	| Date
+	| number
+	| string
+	| Temporal.Instant
+	| Temporal.PlainDate
+	| Temporal.PlainDateTime
+	| Temporal.ZonedDateTime;
+
+export type MaybeDateHelperInput = DateHelperInput | null | undefined;
+
+export type DateHelperValue =
+	| Temporal.Instant
+	| Temporal.PlainDate
+	| Temporal.PlainDateTime
+	| Temporal.ZonedDateTime;
+
 export type DateHelperFormat = Intl.DateTimeFormatOptions | string;
 
 export interface DateHelperConfig {
@@ -13,3 +32,7 @@ export type DateHelperOptions = Partial<Omit<DateHelperConfig, "formats">> & {
 };
 
 export declare function configureDateHelpers(config?: DateHelperOptions): DateHelperConfig;
+export declare function parseDate(
+	value: MaybeDateHelperInput,
+	options?: DateHelperOptions,
+): DateHelperValue | null;

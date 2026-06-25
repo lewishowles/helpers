@@ -217,6 +217,22 @@ The `defaultFormat` option determines which named format is used when
 // formatDate("22/06/2026", "shortDate") uses the named format → "06/22/2026"
 ```
 
+### `parseDate(value: any, options?: object)`
+
+Convert `Date`, timestamp, Temporal, ISO/RFC 9557 string, or configured
+token-format string input into a Temporal date value.
+
+Token strings use Day.js-style tokens such as `DD/MM/YYYY`. Invalid or empty
+values return `null`.
+
+#### Example
+
+```js
+parseDate("2026-06-22"); // Temporal.PlainDate
+parseDate("2026-06-22T10:15:30Z"); // Temporal.Instant
+parseDate("22/06/2026 10:15", { inputFormat: "DD/MM/YYYY HH:mm" }); // Temporal.PlainDateTime
+```
+
 ## Form
 
 ### `validateField(fieldName: string, validationRules: object[], formData: object)`
