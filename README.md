@@ -217,6 +217,19 @@ The `defaultFormat` option determines which named format is used when
 // formatDate("22/06/2026", "shortDate") uses the named format → "06/22/2026"
 ```
 
+### `formatDate(value: any, format?: string|object, options?: object)`
+
+Format supported date input using a named configured format, a Day.js-style
+token string, or `Intl.DateTimeFormat` options.
+
+#### Example
+
+```js
+formatDate("22/06/2026");
+formatDate("22/06/2026", "shortDate");
+formatDate("2026-06-22", { year: "numeric", month: "long", day: "2-digit" });
+```
+
 ### `parseDate(value: any, options?: object)`
 
 Convert `Date`, timestamp, Temporal, ISO/RFC 9557 string, or configured

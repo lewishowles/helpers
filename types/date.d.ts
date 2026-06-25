@@ -40,3 +40,8 @@ export declare function toEpochMilliseconds(
 	value: MaybeDateHelperInput,
 	options?: DateHelperOptions,
 ): number | null;
+export declare function formatDate(
+	value: MaybeDateHelperInput,
+	format?: DateHelperFormat,
+	options?: DateHelperOptions,
+): string | null;
