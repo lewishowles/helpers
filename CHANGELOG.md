@@ -12,6 +12,7 @@
 
 - Added `configureDateHelpers` to set project-wide locale, timezone, input format, default format, and named output formats. Defaults are `en-GB`, `Europe/London`, and Day.js-style `DD/MM/YYYY` token parsing.
 - Added `parseDate` to convert `Date`, timestamps, Temporal types, ISO/RFC 9557 strings, and configured token-format strings into Temporal date values. Invalid or empty input returns `null`.
+- Added `toEpochMilliseconds` to convert supported date input into epoch milliseconds. Plain dates and plain date-times are anchored to the configured timezone before conversion.
 
 ## 1.0.1
 

@@ -233,6 +233,18 @@ parseDate("2026-06-22T10:15:30Z"); // Temporal.Instant
 parseDate("22/06/2026 10:15", { inputFormat: "DD/MM/YYYY HH:mm" }); // Temporal.PlainDateTime
 ```
 
+### `toEpochMilliseconds(value: any, options?: object)`
+
+Convert a supported date input into epoch milliseconds. Plain dates and
+plain date-times use the configured timezone.
+
+#### Example
+
+```js
+toEpochMilliseconds("22/06/2026");
+toEpochMilliseconds("06/22/2026", { inputFormat: "MM/DD/YYYY", timeZone: "America/New_York" });
+```
+
 ## Form
 
 ### `validateField(fieldName: string, validationRules: object[], formData: object)`

@@ -36,3 +36,7 @@ export declare function parseDate(
 	value: MaybeDateHelperInput,
 	options?: DateHelperOptions,
 ): DateHelperValue | null;
+export declare function toEpochMilliseconds(
+	value: MaybeDateHelperInput,
+	options?: DateHelperOptions,
+): number | null;
