@@ -4,6 +4,7 @@
 	"description": "A library of gorgeous Javascript methods to make working with—and validating—data quicker and less error-prone, letting the developer concentrate on the fun stuff.",
 	"keywords": [
 		"array",
+		"date",
 		"form",
 		"helpers",
 		"javascript",
@@ -35,6 +36,10 @@
 		"./array": {
 			"types": "./types/array.d.ts",
 			"import": "./dist/array.js"
+		},
+		"./date": {
+			"types": "./types/date.d.ts",
+			"import": "./dist/date.js"
 		},
 		"./form": {
 			"types": "./types/form.d.ts",
@@ -85,6 +90,10 @@
 		"helpers:search": "support/search-helpers.js",
 		"publint": "publint",
 		"attw": "support/check-attw.sh"
+	},
+	"dependencies": {
+		"dayjs": "^1.11.21",
+		"temporal-polyfill": "^1.0.1"
 	},
 	"devDependencies": {
 		"@arethetypeswrong/cli": "^0.18.3",

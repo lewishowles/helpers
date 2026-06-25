@@ -189,6 +189,34 @@ unique(["a", "b", "a", "c"]); // ["a", "b", "c"]
 unique([]); // []
 ```
 
+## Date
+
+### `configureDateHelpers(config?: object)`
+
+Set project-wide defaults for date parsing and formatting.
+
+Calling this helper with no arguments returns the current configuration.
+
+Projects can override these defaults per helper call. The default locale is
+`en-GB`, the default timezone is `Europe/London`, and token formats use
+Day.js-style tokens such as `DD/MM/YYYY`.
+
+The `formats` option is a map of named output formats. Each key is a name
+that can be passed to `formatDate` as the format argument, and each value is
+either a Day.js-style token string (e.g. `"DD/MM/YYYY"`) or an
+`Intl.DateTimeFormatOptions` object (e.g. `{ dateStyle: "medium" }`). The
+built-in named formats are `date`, `dateTime`, and `shortDate`. Projects can
+override these or add their own — `formatDate` resolves the key at call time.
+The `defaultFormat` option determines which named format is used when
+`formatDate` is called with no format argument.
+
+#### Example
+
+```js
+// formatDate("22/06/2026") uses defaultFormat → "fullDate"
+// formatDate("22/06/2026", "shortDate") uses the named format → "06/22/2026"
+```
+
 ## Form
 
 ### `validateField(fieldName: string, validationRules: object[], formData: object)`

@@ -16,6 +16,7 @@ export default defineConfig({
 			entry: getFiles([
 				"index",
 				"array",
+				"date",
 				"form",
 				"general",
 				"number",
@@ -29,7 +30,14 @@ export default defineConfig({
 			formats: ["es"],
 		},
 		rollupOptions: {
-			external: ["vue"],
+			external: [
+				"dayjs",
+				"dayjs/plugin/customParseFormat.js",
+				"dayjs/plugin/timezone.js",
+				"dayjs/plugin/utc.js",
+				"temporal-polyfill",
+				"vue",
+			],
 			output: {
 				globals: {
 					vue: "Vue",

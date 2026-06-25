@@ -6,6 +6,12 @@
 
 - `updateCurrentUrlParameter` now preserves existing `window.history.state` when updating the URL, instead of replacing it with `null`. Passing `null` cleared any state set by the SPA or other callers, which could break navigation or component state restoration.
 
+### New helpers
+
+#### date
+
+- Added `configureDateHelpers` to set project-wide locale, timezone, input format, default format, and named output formats. Defaults are `en-GB`, `Europe/London`, and Day.js-style `DD/MM/YYYY` token parsing.
+
 ## 1.0.1
 
 ### Fixes

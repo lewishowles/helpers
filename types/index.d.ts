@@ -1,4 +1,5 @@
 export * from "./array.d.ts";
+export * from "./date.d.ts";
 export * from "./form.d.ts";
 export * from "./general.d.ts";
 export * from "./number.d.ts";
