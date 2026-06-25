@@ -154,6 +154,23 @@ pluck([{ fruit: "apple" }, "not an object"], "fruit"); // ["apple"]
 pluck([], "property"); // []
 ```
 
+### `range(start: number, end?: number, step?: number)`
+
+Generate a numeric array from `start` to `end`, both inclusive. When called
+with a single argument, `start` is treated as `end` and the range begins at
+`0`. Direction is inferred automatically when `start > end` and no `step` is
+given; an explicit `step` overrides it. A zero `step` returns an empty array.
+
+#### Example
+
+```js
+range(5);        // [0, 1, 2, 3, 4, 5]
+range(1, 5);     // [1, 2, 3, 4, 5]
+range(0, 10, 2); // [0, 2, 4, 6, 8, 10]
+range(5, 0);     // [5, 4, 3, 2, 1, 0]
+range(5, 0, -1); // [5, 4, 3, 2, 1, 0]
+```
+
 ### `sortByProperty(array: any[], property: string, { ascending: boolean: true })`
 
 Returns a new array containing the `array` of objects, sorted by the value at `property`, with optional direction.

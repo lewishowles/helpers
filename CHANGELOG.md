@@ -4,6 +4,10 @@
 
 ### New helpers
 
+#### array
+
+- Added `range` to generate a numeric array between two values, inclusive of both ends. Supports single-argument shorthand (`range(5)` → `[0..5]`), explicit start and end, and an optional step. Direction is inferred automatically when `start > end`; a negative step can also be passed explicitly.
+
 #### form
 
 - Added `validateForm` to validate multiple fields at once, delegating to `validateField` for each field's rules. Returns `{ valid, validated, results }` where `results` maps each field name to its `validateField` result. Cross-field rules work naturally because the full `formData` is passed through.

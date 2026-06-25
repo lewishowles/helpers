@@ -20,5 +20,6 @@ export declare function sortByProperty<T extends object>(
 	property: keyof T,
 	options?: { ascending?: boolean },
 ): T[];
+export declare function range(start: number, end?: number, step?: number): number[];
 export declare function tail<T>(array: T[]): T | undefined;
 export declare function unique<T>(array: T[]): T[];
