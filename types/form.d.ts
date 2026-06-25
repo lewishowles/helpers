@@ -1,3 +1,8 @@
+type ValidationFunction = (
+	value: any,
+	formData: Record<string, any>,
+) => boolean | string | string[];
+
 type ValidationRule =
 	| { rule: "required"; message: string }
 	| { rule: "email"; message: string }
@@ -25,6 +30,6 @@ interface ValidationResult {
 
 export declare function validateField(
 	fieldName: string,
-	validationRules: ValidationRule[],
+	validationRules: (ValidationRule | ValidationFunction)[],
 	formData: Record<string, any>,
 ): ValidationResult;

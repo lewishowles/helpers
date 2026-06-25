@@ -6,6 +6,8 @@
 
 - `updateCurrentUrlParameter` now preserves existing `window.history.state` when updating the URL, instead of replacing it with `null`. Passing `null` cleared any state set by the SPA or other callers, which could break navigation or component state restoration.
 
+- `validateField` now accepts bare functions in the rules array as a shorthand for custom validation. Each function receives `(value, formData)` and returns an error message string (single error), a string array (multiple errors), or any other value (valid). Object rules continue to work unchanged.
+
 ### New helpers
 
 #### date

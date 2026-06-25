@@ -352,6 +352,20 @@ Ensure that the provided value matches `regexp`.
 
 The escape hatch for any rule the declarative rules can't express, including cross-field validation. `validate` receives the field's own `value` and the complete `formData`, and should return a truthy value to pass. A `custom` rule without a `validate` function always fails.
 
+#### Function shorthand
+
+`[(value, formData) => value.includes("@") || "Enter a valid email address"]`
+
+A bare function in the rules array is a shorthand for `custom` validation without a separate `message` property. The function receives the field's own `value` and the complete `formData`, and its return value determines the outcome:
+
+| Return value                         | Result                                                    |
+| ------------------------------------ | --------------------------------------------------------- |
+| Non-empty string                     | Single error — the string is the error message            |
+| Non-empty array of non-empty strings | Multiple errors — each string is a separate error message |
+| Any other value                      | Valid — no error                                          |
+
+This mirrors the `custom` rule's `(value, formData)` signature, but inverts the convention: instead of returning a boolean and reading the message from the rule object, the function returns the error message(s) directly when validation fails. Functions and object rules can be freely mixed in the same rules array.
+
 #### `required_if`
 
 `[{ rule: "required_if", field: "wantsNewsletter", value: true, message: "Enter an email address to receive the newsletter" }]`
@@ -377,6 +391,14 @@ validateField("username", [{ rule: "required", message: "Enter a username" }], {
 validateField("username", [{ rule: "required", message: "Enter a username" }], {
 	username: "jack_skellington",
 }); // { valid: true, errors: [], validated: true }
+validateField(
+	"email",
+	[
+		{ rule: "required", message: "Enter your email" },
+		(value) => value.includes("@") || "Enter a valid email address",
+	],
+	{ email: "not-an-email" },
+); // { valid: false, errors: ["Enter a valid email address"], validated: true }
 ```
 
 ## General
