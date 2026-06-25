@@ -50,3 +50,8 @@ export declare function getRelativeDateParts(
 	relativeTo?: MaybeDateHelperInput,
 	options?: DateHelperOptions,
 ): RelativeDateParts | null;
+export declare function formatRelativeDate(
+	value: MaybeDateHelperInput,
+	relativeTo?: MaybeDateHelperInput,
+	options?: DateHelperOptions,
+): string | null;

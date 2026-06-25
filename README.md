@@ -230,6 +230,18 @@ formatDate("22/06/2026", "shortDate");
 formatDate("2026-06-22", { year: "numeric", month: "long", day: "2-digit" });
 ```
 
+### `formatRelativeDate(value: any, relativeTo?: any, options?: object)`
+
+Format a supported date input as a relative date string, such as
+`3 minutes ago` or `in 2 days`.
+
+#### Example
+
+```js
+formatRelativeDate("2026-06-22T09:59:00", "2026-06-22T10:00:00");
+// "1 minute ago"
+```
+
 ### `getRelativeDateParts(value: any, relativeTo?: any, options?: object)`
 
 Convert two supported dates into relative date parts for use with

@@ -15,6 +15,7 @@
 - Added `toEpochMilliseconds` to convert supported date input into epoch milliseconds. Plain dates and plain date-times are anchored to the configured timezone before conversion.
 - Added `formatDate` to format supported date input using a named configured format, a Day.js-style token string, or `Intl.DateTimeFormat` options. Uses the configured locale, timezone, and default format.
 - Added `getRelativeDateParts` to compute the relative value and unit between two dates, returning parts suitable for `Intl.RelativeTimeFormat` or custom UI rendering.
+- Added `formatRelativeDate` to format a supported date input as a relative date string (e.g. `3 minutes ago`, `in 2 days`), using `Intl.RelativeTimeFormat` with the configured locale.
 
 ## 1.0.1
 
