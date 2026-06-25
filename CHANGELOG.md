@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+
+- `updateCurrentUrlParameter` now preserves existing `window.history.state` when updating the URL, instead of replacing it with `null`. Passing `null` cleared any state set by the SPA or other callers, which could break navigation or component state restoration.
+
 ## 1.0.1
 
 ### Fixes
