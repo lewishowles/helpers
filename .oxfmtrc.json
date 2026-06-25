@@ -1,5 +1,12 @@
 {
-	"ignorePatterns": [".codebase-memory/**", ".boilersuit/**", "dist/**", "build/**", "support/**"],
+	"ignorePatterns": [
+		".codebase-memory/**",
+		".boilersuit/**",
+		"dist/**",
+		"build/**",
+		"support/**",
+		"README.md"
+	],
 	"printWidth": 100,
 	"semi": true,
 	"singleQuote": false,
