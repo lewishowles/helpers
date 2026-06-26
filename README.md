@@ -318,7 +318,7 @@ toEpochMilliseconds("06/22/2026", { inputFormat: "MM/DD/YYYY", timeZone: "Americ
 
 ## Form
 
-### `validateField(fieldName: string, validationRules: object[], formData: object)`
+### `validateField(fieldName: string, validationRules: object[], formData: object): Promise<ValidationResult>`
 
 Validate a field given its `fieldName`, the field's `validationRules`, and the sum total `formData`.
 
@@ -386,6 +386,19 @@ Ensure that the provided value matches `regexp`.
 
 The escape hatch for any rule the declarative rules can't express, including cross-field validation. `validate` receives the field's own `value` and the complete `formData`, and should return a truthy value to pass. A `custom` rule without a `validate` function always fails.
 
+#### Standard Schema
+
+Any object with a `~standard` property (Zod, Valibot, ArkType schemas) is detected and validated through the [Standard Schema](https://github.com/standard-schema/standard-schema) interface. The schema's `~standard.validate(value)` is called, and any returned issues are mapped to error strings. Schemas can return results synchronously or asynchronously.
+
+```js
+import { z } from "zod";
+const schema = z.string().email("Enter a valid email address");
+validateField("email", [schema], { email: "not-an-email" });
+// { valid: false, errors: ["Enter a valid email address"], validated: true }
+```
+
+Schemas, object rules, and function shorthand can be freely mixed in the same rules array.
+
 #### Function shorthand
 
 `[(value, formData) => value.includes("@") || "Enter a valid email address"]`
@@ -421,17 +434,17 @@ Ensure that the value differs from the value of another field.
 #### Example
 
 ```js
-validateField("username", [{ rule: "required", message: "Enter a username" }], { username: "" }); // { valid: false, errors: ["Enter a username"], validated: true }
-validateField("username", [{ rule: "required", message: "Enter a username" }], {
+await validateField("username", [{ rule: "required", message: "Enter a username" }], { username: "" }); // { valid: false, errors: ["Enter a username"], validated: true }
+await validateField("username", [{ rule: "required", message: "Enter a username" }], {
 	username: "jack_skellington",
 }); // { valid: true, errors: [], validated: true }
-validateField("email", [
+await validateField("email", [
 	{ rule: "required", message: "Enter your email" },
 	(value) => value.includes("@") || "Enter a valid email address",
 ], { email: "not-an-email" }); // { valid: false, errors: ["Enter a valid email address"], validated: true }
 ```
 
-### `validateForm(fields: object, formData: object)`
+### `validateForm(fields: object, formData: object): Promise<{ valid, validated, results }>`
 
 Validate multiple fields at once, delegating to `validateField` for each
 field's rules. Cross-field rules (`same`, `different`, `required_if`,
@@ -451,7 +464,7 @@ invalid.
 #### Example
 
 ```js
-validateForm({
+await validateForm({
 	username: [{ rule: "required", message: "Enter a username" }],
 	email: [
 		{ rule: "required", message: "Enter your email" },

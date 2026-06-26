@@ -180,6 +180,7 @@ function findExportLine(lines, helperName) {
 		`export class ${helperName}`,
 		`export const ${helperName}`,
 		`export function ${helperName}`,
+		`export async function ${helperName}`,
 	].some((prefix) => line.startsWith(prefix)));
 }
 

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.3.0 — Unreleased
+
+### Changes
+
+- `validateField` and `validateForm` are now async, returning `Promise<ValidationResult>` and `Promise<{ valid, validated, results }>` respectively. Sync callers must `await` the result.
+- `validateField` now accepts [Standard Schema](https://github.com/standard-schema/standard-schema) objects (Zod, Valibot, ArkType schemas) in the rules array alongside object rules and function shorthand. Schemas are detected via the `~standard` property, validated through `~standard.validate(value)`, and any returned issues are mapped to error strings.
+- Function shorthand rules are now awaited, so async functions work naturally in the rules array.
+
 ## 1.2.0 — 2026-06-26
 
 ### New helpers
