@@ -1,6 +1,6 @@
 {
 	"name": "@lewishowles/helpers",
-	"version": "1.2.0",
+	"version": "1.3.0",
 	"description": "A library of gorgeous Javascript methods to make working with—and validating—data quicker and less error-prone, letting the developer concentrate on the fun stuff.",
 	"keywords": [
 		"array",
