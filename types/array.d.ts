@@ -15,6 +15,10 @@ export declare function groupBy<T extends object>(
 export declare function head<T>(array: T[]): T | undefined;
 export declare function isNonEmptyArray(variable: any): variable is any[];
 export declare function lastDefined<T>(array: T[]): T | undefined;
+export declare function partition<T>(
+	array: T[],
+	predicate: (item: T, index: number, array: T[]) => boolean,
+): [T[], T[]];
 export declare function pluck<T extends object, K extends keyof T>(
 	array: T[],
 	property: K,

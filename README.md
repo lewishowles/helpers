@@ -154,6 +154,18 @@ lastDefined(["a", "b", undefined, undefined]); // "b"
 lastDefined([]); // undefined
 ```
 
+### `partition(array: any[], predicate: function)`
+
+Split an array into two arrays based on a predicate.
+Returns a tuple of [matching[], nonMatching[]].
+
+#### Example
+
+```js
+partition([1, 2, 3, 4, 5], (n) => n % 2 === 0); // [[2, 4], [1, 3, 5]]
+partition([], () => true); // [[], []]
+```
+
 ### `pluck(array: any[], property: string)`
 
 Retrieve an array of the `property` value from each of the objects found in `array`.

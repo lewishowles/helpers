@@ -7,6 +7,7 @@
 #### array
 
 - Added `groupBy` — groups an array of objects into sub-arrays keyed by a property value. Supports dot-path notation for nested properties via `getPathValue`. Items with missing property values are grouped under `"undefined"`.
+- Added `partition` — splits an array into a tuple of `[matching[], nonMatching[]]` based on a predicate. Always returns two arrays, even for non-array or non-function predicate input.
 
 #### object
 
