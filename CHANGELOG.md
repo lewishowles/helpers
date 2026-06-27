@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### New helpers
+
+#### array
+
+- Added `groupBy` — groups an array of objects into sub-arrays keyed by a property value. Supports dot-path notation for nested properties via `getPathValue`. Items with missing property values are grouped under `"undefined"`.
+
 #### object
 
 - Added `flattenObject` — collapses a nested object into a single-level object with dot-notation keys. Arrays are preserved as leaf values rather than being flattened into indexed keys.

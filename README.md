@@ -102,6 +102,23 @@ getNextIndex(3, ["A", "B", "C", "D"], { wrap: true }); // 0
 getNextIndex(3, ["A", "B", "C", "D"], { reverse: true }); // 2
 ```
 
+### `groupBy(array: object[], property: string)`
+
+Group the given `array` of objects into sub-arrays keyed by the value at `property`.
+Supports dot-path notation for nested properties.
+
+Items where `property` resolves to `undefined` are grouped under the key `"undefined"`.
+
+#### Example
+
+```js
+groupBy([{ type: "a", val: 1 }, { type: "b", val: 2 }, { type: "a", val: 3 }], "type");
+// { a: [{ type: "a", val: 1 }, { type: "a", val: 3 }], b: [{ type: "b", val: 2 }] }
+
+groupBy([{ addr: { city: "York" } }, { addr: { city: "York" } }, { addr: { city: "Leeds" } }], "addr.city");
+// { York: [{ addr: { city: "York" } }, { addr: { city: "York" } }], Leeds: [{ addr: { city: "Leeds" } }] }
+```
+
 ### `head(array: any[])`
 
 Returns the first element in `array`.

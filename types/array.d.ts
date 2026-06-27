@@ -8,6 +8,10 @@ export declare function getNextIndex(
 	reference: any[],
 	options?: { reverse?: boolean; wrap?: boolean },
 ): number;
+export declare function groupBy<T extends object>(
+	array: T[],
+	property: string,
+): Record<string, T[]>;
 export declare function head<T>(array: T[]): T | undefined;
 export declare function isNonEmptyArray(variable: any): variable is any[];
 export declare function lastDefined<T>(array: T[]): T | undefined;
