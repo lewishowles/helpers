@@ -771,6 +771,26 @@ pick({ a: "one", b: "two", c: "three" }, ["a"]); // { a: "one" }
 pick({ a: "one", b: "two", c: "three" }, ["a", "d"]); // { a: "one" }
 ```
 
+### `pickAs(object: object, mapping: object)`
+
+Returns a new object with keys from `mapping` whose values are resolved
+from `object` at the paths given by the mapping values.
+
+Uses `getPathValue` so dot-notation paths are supported.
+
+Missing source paths resolve as `undefined` — the key is always included in
+the result.
+
+#### Example
+
+```js
+pickAs({ id: 1, location: { name: "London" } }, { id: "id", locationName: "location.name" });
+// { id: 1, locationName: "London" }
+
+pickAs({ a: 1 }, { a: "a", b: "missing" });
+// { a: 1, b: undefined }
+```
+
 ### `pluckPathValues(array: object[], path: string)`
 
 Retrieve an array of the `path` value from each of the objects found in `array`.
