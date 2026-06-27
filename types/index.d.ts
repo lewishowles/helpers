@@ -6,4 +6,3 @@ export * from "./number.d.ts";
 export * from "./object.d.ts";
 export * from "./string.d.ts";
 export * from "./url.d.ts";
-export * from "./vue.d.ts";

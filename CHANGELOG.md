@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.1 — 2026-06-27
+
+### Fixes
+
+- Root import (`@lewishowles/helpers`) no longer re-exports Vue helpers, so it does not require Vue to be installed. Vue helpers remain available through the `@lewishowles/helpers/vue` subpath.
+
 ## 1.4.0 — 2026-06-27
 
 ### New helpers
