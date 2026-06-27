@@ -104,10 +104,11 @@ getNextIndex(3, ["A", "B", "C", "D"], { reverse: true }); // 2
 
 ### `groupBy(array: object[], property: string)`
 
-Group the given `array` of objects into sub-arrays keyed by the value at `property`.
-Supports dot-path notation for nested properties.
+Group the given `array` of objects into sub-arrays keyed by the value at
+`property`. Supports dot-path notation for nested properties.
 
-Items where `property` resolves to `undefined` are grouped under the key `"undefined"`.
+Items where `property` resolves to `undefined` are grouped under the key
+`"undefined"`.
 
 #### Example
 
@@ -156,8 +157,8 @@ lastDefined([]); // undefined
 
 ### `partition(array: any[], predicate: function)`
 
-Split an array into two arrays based on a predicate.
-Returns a tuple of [matching[], nonMatching[]].
+Split an array into two arrays based on a predicate. Returns a tuple of
+[matching[], nonMatching[]].
 
 #### Example
 
@@ -250,6 +251,28 @@ Safely reduce the provided `array` to those entries which are unique.
 unique([1, 2, 2, 3, 4, 4, 5]); // [1, 2, 3, 4, 5]
 unique(["a", "b", "a", "c"]); // ["a", "b", "c"]
 unique([]); // []
+```
+
+### `uniqueBy(array: object[], property: string)`
+
+Remove duplicate objects from an array based on a property value. Supports
+dot-path notation for nested properties. The first occurrence of each value
+is kept.
+
+Items where the resolved value is `undefined` are treated as equal, with only
+the first occurrence kept.
+
+#### Example
+
+```js
+uniqueBy([{ id: 1, name: "A" }, { id: 2, name: "B" }, { id: 1, name: "C" }], "id");
+// [{ id: 1, name: "A" }, { id: 2, name: "B" }]
+uniqueBy([{ address: { city: "London" } }, { address: { city: "Paris" } }, { address: { city: "London" } }], "address.city");
+// [{ address: { city: "London" } }, { address: { city: "Paris" } }]
+uniqueBy([{ id: 1 }, { id: 1 }, { id: 1 }], "id");
+// [{ id: 1 }]
+uniqueBy([], "id");
+// []
 ```
 
 ## Date
@@ -821,8 +844,8 @@ pick({ a: "one", b: "two", c: "three" }, ["a", "d"]); // { a: "one" }
 
 ### `pickAs(object: object, mapping: object)`
 
-Returns a new object with keys from `mapping` whose values are resolved
-from `object` at the paths given by the mapping values.
+Returns a new object with keys from `mapping` whose values are resolved from
+`object` at the paths given by the mapping values.
 
 Uses `getPathValue` so dot-notation paths are supported.
 

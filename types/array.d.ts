@@ -36,3 +36,4 @@ export declare function toggleItem<T>(
 	comparator?: ((a: T, b: T) => boolean) | string,
 ): T[];
 export declare function unique<T>(array: T[]): T[];
+export declare function uniqueBy<T extends object>(array: T[], property: string): T[];
