@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+#### object
+
+- Added `flattenObject` — collapses a nested object into a single-level object with dot-notation keys. Arrays are preserved as leaf values rather than being flattened into indexed keys.
+- Added `pickAs` — picks and renames keys from an object via a mapping of `{ outputKey: sourcePath }`, using `getPathValue` for source-path resolution so dot-notation flattening works for free.
+
 ## 1.3.0 — 2026-06-26
 
 ### Changes

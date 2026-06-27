@@ -636,6 +636,25 @@ deepMerge({ key: "value" }, { value: "key" }); // { key: "value", value: "key" }
 deepMerge({ key: "value", a: { b: 2 } }, { key: "modified", a: { c: 3 } }); // { key: "modified", a { b: 2, c: 3 }}
 ```
 
+### `flattenObject(object: object)`
+
+Flattens a nested object into a single-level object with dot-notation keys.
+
+Arrays are preserved as leaf values — they are not flattened into indexed
+keys (e.g. `"items.0"`).
+
+Only own enumerable properties are included.
+
+#### Example
+
+```js
+flattenObject({ a: { b: 1, c: 2 }, d: 3 });
+// { "a.b": 1, "a.c": 2, "d": 3 }
+
+flattenObject({ items: [1, 2, 3] });
+// { "items": [1, 2, 3] }
+```
+
 ### `getPathValue(object: object, path: string, returnValue: any = undefined)`
 
 Retrieve the `object` property value found at `path`, or `returnValue`.

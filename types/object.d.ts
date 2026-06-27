@@ -5,6 +5,7 @@ export declare function addProperty<T extends object>(
 ): T & Record<string, any>;
 export declare function deepCopy<T>(object: T): T;
 export declare function deepMerge<T extends object>(...objects: Partial<T>[]): T;
+export declare function flattenObject(object: object): Record<string, any>;
 export declare function getPathValue<T = undefined>(
 	object: object,
 	path: string,
