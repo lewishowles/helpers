@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.2 — 2026-06-28
+
+### Fixes
+
+- `deepMerge` now preserves class instances (`Date`, custom classes, Vue refs) instead of flattening them into `{}`. Recursion is restricted to plain objects (those whose `constructor` is `Object`) via an `isPlainObject` guard, replacing the broader `isObject` check. When source and target disagree on plain-object vs class instance at the same key, the source value replaces the target.
+
 ## 1.4.1 — 2026-06-27
 
 ### Fixes
