@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.3 — 2026-06-29
+
+### Fixes
+
+- `CHANGELOG.md` is now included in the published npm package.
+
 ## 1.4.2 — 2026-06-28
 
 ### Fixes
