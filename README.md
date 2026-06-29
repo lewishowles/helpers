@@ -559,6 +559,57 @@ isFunction("function"); // false
 isFunction(5); // false
 ```
 
+### `resolveOrFallback(promise: any, fallback: any | (() => any))`
+
+Resolves `promise`, returning its value, or `fallback` if it rejects. Always
+returns a promise, even for synchronous inputs, for a consistent shape.
+
+This is async/value recovery, not validation — see `validateOrFallback` for
+keyword-based value checks.
+
+If `fallback` is a function it is called lazily, only on rejection, and its
+return value is used. A throwing fallback function propagates. Non-thenable
+inputs resolve as-is, except `null` / `undefined`, which resolve to the
+fallback.
+
+#### Example
+
+```js
+await resolveOrFallback(api.getSettings(), defaultSettings);
+await resolveOrFallback(fetchRemote(), () => getCached());
+```
+
+### `settle(promises: any[])`
+
+Awaits an array of promises (or plain values) and reports every outcome,
+mirroring `Promise.allSettled`. Returns a positional `results` array
+alongside convenience `values` and `errors` arrays for common bulk-action
+patterns.
+
+Non-thenable values are treated as fulfilled and returned as-is — functions
+are never invoked. To run functions, call them first: `settle(items.map(item
+=> action(item)))`.
+
+`results` includes every item in order, and each entry carries its original
+`index`, so a failure can be mapped straight back to its input — useful for
+bulk operations where you need to know exactly which calls failed. `values`
+and `errors` exclude the other outcome's gaps, for the common "everything
+that worked / failed" patterns.
+
+#### Example
+
+```js
+await settle([Promise.resolve(1), Promise.reject("nope")]);
+// {
+//   values: [1],
+//   errors: ["nope"],
+//   results: [
+//     { status: "fulfilled", value: 1, index: 0 },
+//     { status: "rejected", reason: "nope", index: 1 },
+//   ],
+// }
+```
+
 ### `size(variable: any)`
 
 Determine the size of the given `variable`. For strings, the number of characters is used; for numbers, the value itself; for arrays, the length; for objects, the number of top-level properties. Returns `0` if no reasonable size can be determined.

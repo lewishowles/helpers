@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.5.0 — unreleased
+
+### New helpers
+
+#### general
+
+- Added `settle` — awaits an array of promises (or plain values) and reports every outcome as `{ values, errors, results }`. Each `results` entry carries its original `index`, so a failure can be mapped straight back to its input (which call failed) without the input array; `values` and `errors` are convenience arrays for bulk-action patterns. Non-thenable values (including functions) are treated as fulfilled and never invoked.
+- Added `resolveOrFallback` — resolves a promise, returning its value, or a fallback if it rejects. Always returns a promise. A function fallback is called lazily, only on rejection. Non-thenable inputs resolve as-is, except `null` / `undefined`, which resolve to the fallback.
+
 ## 1.4.3 — 2026-06-29
 
 ### Fixes
