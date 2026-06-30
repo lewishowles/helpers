@@ -1,10 +1,19 @@
+type DeepMergeArrayStrategy = "replace" | "concatenate" | "merge";
+
+type DeepMergeWithOptions = { arrayStrategy?: DeepMergeArrayStrategy };
+
 export declare function addProperty<T extends object>(
 	object: T,
 	key: string,
 	value: any,
 ): T & Record<string, any>;
-export declare function deepCopy<T>(object: T): T;
+export declare function deepCopy<T>(value: T): T;
 export declare function deepMerge<T extends object>(...objects: Partial<T>[]): T;
+export declare function deepMergeWith<T extends object>(
+	target: T,
+	sources: object[],
+	options?: DeepMergeWithOptions,
+): T & Record<string, any>;
 export declare function flattenObject(object: object): Record<string, any>;
 export declare function getPathValue<T = undefined>(
 	object: object,
@@ -41,6 +50,10 @@ export declare function pickAs<T extends object>(
 ): Record<string, any>;
 export declare function pluckPathValues<T = any>(array: object[], path: string): T[];
 export declare function removePathValue<T extends object>(object: T, path: string): Partial<T>;
+export declare function renameProperties<T extends object>(
+	object: T,
+	mapping: Record<string, string>,
+): Record<string, any>;
 export declare function setPathValue<T extends object>(object: T, path: string, value: any): T;
 export declare function unwrap(object: object): any | null;
 export declare function values(object: object): any[];

@@ -155,6 +155,23 @@ lastDefined(["a", "b", undefined, undefined]); // "b"
 lastDefined([]); // undefined
 ```
 
+### `moveItem(array: any[], fromIndex: number, toIndex: number)`
+
+Move an item to a new position, returning a new array and leaving the
+original untouched.
+
+`toIndex` is read after the item has been removed, matching how drag-and-drop
+libraries report a drop. `fromIndex` must point at an existing item,
+otherwise the array is returned unchanged; `toIndex` is clamped into range.
+
+#### Example
+
+```js
+moveItem(["a", "b", "c", "d"], 1, 3); // ["a", "c", "d", "b"]
+moveItem(["a", "b", "c", "d"], 3, 1); // ["a", "d", "b", "c"]
+moveItem(["a", "b", "c", "d"], 0, 3); // ["b", "c", "d", "a"]
+```
+
 ### `partition(array: any[], predicate: function)`
 
 Split an array into two arrays based on a predicate. Returns a tuple of
@@ -535,6 +552,26 @@ await validateForm({
 
 ## General
 
+### `debounce(fn: function, delay?: number, options?: object)`
+
+Returns a debounced version of `fn` that waits until `delay` milliseconds
+have passed without another call before running.
+
+By default `fn` runs on the trailing edge, after calls stop, using the most
+recent call's arguments and `this`. Set `options.leading` to also run on the
+first call, or `options.trailing: false` to skip the trailing run; with both
+`false` it never runs.
+
+The returned function exposes `.cancel()` to discard a pending run and
+`.flush()` to run it immediately and return its result. A non-function `fn`
+returns a safe no-op, and an invalid `delay` is treated as `0`.
+
+#### Example
+
+```js
+const save = debounce(saveForm, 1000, { leading: true });
+```
+
 ### `getFriendlyDisplay(variable: any)`
 
 Convert a given `variable` into a human-readable representation of its type.
@@ -622,6 +659,27 @@ size(42); // 42
 size([1, 2, 3]); // 3
 size({ a: 1, b: 2 }); // 2
 size(null); // 0
+```
+
+### `throttle(fn: function, delay?: number, options?: object)`
+
+Returns a throttled version of `fn` that runs at most once per `delay`
+milliseconds.
+
+By default `fn` runs immediately on the first call, then once more at the end
+of the window if further calls arrived during it, using the latest arguments
+and `this`. Set `options.leading: false` to skip the immediate run, or
+`options.trailing: false` to skip the closing one; with both `false` it never
+runs.
+
+The returned function exposes `.cancel()` to discard a pending run and
+`.flush()` to run it immediately and return its result. A non-function `fn`
+returns a safe no-op, and an invalid `delay` is treated as `0`.
+
+#### Example
+
+```js
+const save = throttle(saveForm, 500, { leading: false });
 ```
 
 ### `validateOrFallback(value: any, comparison: function | string, fallback: any)`
@@ -717,15 +775,22 @@ addProperty({ one: "One", two: "Two" }, "three", "Three"); // { one: "One", two:
 addProperty({ one: "One", two: null }, "two", "Two"); // { one: "One", two: "Two" }
 ```
 
-### `deepCopy(object: object)`
+### `deepCopy(value: any)`
 
-Returns a recursive copy of `object`.
+Returns a deep copy of `value`. Non-objects are returned unchanged.
+
+Uses the built-in `structuredClone` where possible, so `Date`, `Map`, `Set`,
+`RegExp`, typed arrays, and cyclic references are cloned correctly. For
+values `structuredClone` cannot handle, such as objects containing functions,
+it falls back to a recursive copy that copies functions by reference and
+preserves cyclic references via a `WeakMap`.
 
 #### Example
 
 ```js
 deepCopy({ key: "value" }); // { key: "value" }
 deepCopy(["a", "b"]); // ["a", "b"]
+deepCopy(new Date(0)); // a new Date with the same time
 ```
 
 ### `deepMerge(object: object)`
@@ -737,6 +802,30 @@ Recursively merges two or more objects. The values of later objects override tho
 ```js
 deepMerge({ key: "value" }, { value: "key" }); // { key: "value", value: "key" }
 deepMerge({ key: "value", a: { b: 2 } }, { key: "modified", a: { c: 3 } }); // { key: "modified", a { b: 2, c: 3 }}
+```
+
+### `deepMergeWith(target: object, sources: array, options?: object)`
+
+Works like `deepMerge`, but lets you decide what happens when the same key
+holds an array in both the target and a source.
+
+Pick the behaviour with `options.arrayStrategy`:
+
+- `"replace"` (default): the source array wins, just like `deepMerge`.
+- `"concatenate"`: the two arrays are joined together, target items first.
+- `"merge"`: the arrays are combined item by item, deep-merging the ones that
+line up.
+
+Everything else matches `deepMerge` — objects merge recursively, class
+instances stay intact, and your inputs are never changed. The only difference
+is that you pass the sources as a single array (instead of one after
+another), which keeps `options` neatly at the end.
+
+#### Example
+
+```js
+deepMergeWith({ a: { b: 1 } }, [{ a: { c: 2 } }]);
+// { a: { b: 1, c: 2 } }
 ```
 
 ### `flattenObject(object: object)`
@@ -939,6 +1028,25 @@ removePathValue({ key: "value" }, "key"); // {}
 removePathValue({ key: "value" }, "another"); // { key: "value" }
 removePathValue({ key: "value", one: { two: { three: "three" } } }, "one.two.three"); // { key: "value", one: { two: {} } }
 removePathValue({ key: "value", one: { two: "two" } }, "one.two.three"); // { key: "value", one: { two: "two" } }
+```
+
+### `renameProperties(object: object, mapping: object)`
+
+Returns a new object with keys renamed according to the given `mapping`, a
+plain object of `{ oldKey: newKey }` pairs. The original object is not
+mutated. Renaming is shallow only — nested objects are not deep-renamed.
+
+Use `pickAs` instead when you want to project or whitelist keys into a new
+shape; `renameProperties` renames keys in place while keeping all other keys.
+
+#### Example
+
+```js
+renameProperties({ a: 1, b: 2 }, { a: "alpha" });
+// { alpha: 1, b: 2 }
+
+renameProperties({ a: 1, b: 2 }, { a: "alpha", b: "beta" });
+// { alpha: 1, beta: 2 }
 ```
 
 ### `setPathValue(object: object, path: string, value: any)`

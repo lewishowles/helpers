@@ -6,8 +6,23 @@
 
 #### general
 
-- Added `settle` — awaits an array of promises (or plain values) and reports every outcome as `{ values, errors, results }`. Each `results` entry carries its original `index`, so a failure can be mapped straight back to its input (which call failed) without the input array; `values` and `errors` are convenience arrays for bulk-action patterns. Non-thenable values (including functions) are treated as fulfilled and never invoked.
+- Added `debounce` — delays invoking a function until `delay` ms have elapsed since the last call. Supports `leading` / `trailing` edge options (default trailing-only) and exposes `.cancel()` and `.flush()`. Junk-hardened: a non-function returns a no-op with working `.cancel()` / `.flush()`, and an invalid `delay` is treated as `0`.
+- Added `throttle` — guarantees at most one invocation per `delay` ms window. Fires on the leading edge and, by default, once more on the trailing edge if calls arrived during the cooldown. Supports `leading` / `trailing` options and exposes `.cancel()` and `.flush()`. Same junk-hardening as `debounce`.
 - Added `resolveOrFallback` — resolves a promise, returning its value, or a fallback if it rejects. Always returns a promise. A function fallback is called lazily, only on rejection. Non-thenable inputs resolve as-is, except `null` / `undefined`, which resolve to the fallback.
+- Added `settle` — awaits an array of promises (or plain values) and reports every outcome as `{ values, errors, results }`. Each `results` entry carries its original `index`, so a failure can be mapped straight back to its input (which call failed) without the input array; `values` and `errors` are convenience arrays for bulk-action patterns. Non-thenable values (including functions) are treated as fulfilled and never invoked.
+
+#### array
+
+- Added `moveItem` — returns a new array with the item at `fromIndex` moved to `toIndex`. `toIndex` is interpreted after removal (following the standard drag-and-drop convention) and clamped to `[0, length - 1]`.
+
+#### object
+
+- Added `renameProperties` — returns a new object with keys renamed via a `{ oldKey: newKey }` mapping, keeping all other keys in place and never mutating the original. Plain objects only; renaming is shallow. If a `newKey` already exists elsewhere, the renamed value wins and takes the original `oldKey` position. Use `pickAs` instead to project/whitelist keys into a new shape.
+- Added `deepMergeWith` — like `deepMerge`, but with a configurable `arrayStrategy` (`"replace"` default, `"concatenate"`, or `"merge"`). Sources are passed as a single array so `options` can occupy a stable trailing position. Class instances are preserved as in `deepMerge`; inputs are not mutated.
+
+### Changes
+
+- `deepCopy` now uses the built-in `structuredClone` where possible, so `Date`, `Map`, `Set`, `RegExp`, typed arrays, and cyclic references are cloned correctly instead of being flattened to `{}`. For values `structuredClone` cannot handle (such as objects containing functions), it falls back to a recursive copy that copies functions by reference and preserves cyclic references via a `WeakMap`. Non-objects still pass through unchanged.
 
 ## 1.4.3 — 2026-06-29
 
