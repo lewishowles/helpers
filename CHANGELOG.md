@@ -8,6 +8,10 @@
 
 - Added `isDefined` — checks whether a value is neither `null` nor `undefined`. Unlike a falsy check, treats `0`, `""`, and `false` as defined values.
 
+#### number
+
+- Added `toNullableNumber` — coerces a value to a number, returning `null` for empty string, `null`, or `undefined`. Useful for form round-trips where absent numeric fields should be `null` rather than `0` or `NaN`.
+
 ## 1.5.0 — 2026-06-30
 
 ### New helpers

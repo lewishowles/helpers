@@ -772,6 +772,19 @@ round(4.567, 0); // 5
 round(4.567, -1); // 0
 ```
 
+### `toNullableNumber(value: any)`
+
+Coerces the given `value` to a number, returning `null` for empty string, `null`, or `undefined`. Useful for form round-trips where absent numeric fields should be `null` rather than `0` or `NaN`.
+
+#### Example
+
+```js
+toNullableNumber("42"); // 42
+toNullableNumber(""); // null
+toNullableNumber(null); // null
+toNullableNumber(undefined); // null
+```
+
 ## Object
 
 ### `addProperty(object: object, key: string, value: any)`
