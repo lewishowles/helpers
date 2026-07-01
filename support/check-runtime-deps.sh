@@ -38,7 +38,12 @@ is_allowed_dependency() {
 }
 
 # Extract runtime dependency names from package.json.
-mapfile -t DEPS < <(
+DEPS=()
+
+while IFS= read -r dep; do
+	[[ -z "$dep" ]] && continue
+	DEPS+=("$dep")
+done < <(
 	python3 - "$REPO_ROOT/package.json" <<'EOF'
 import json, sys
 data = json.load(open(sys.argv[1]))

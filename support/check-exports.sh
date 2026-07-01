@@ -57,7 +57,12 @@ is_exported_helper() {
 }
 
 # Get a list of all helper categories from the `lib` folder.
-mapfile -t CATEGORIES < <(
+CATEGORIES=()
+
+while IFS= read -r category; do
+	[[ -z "$category" ]] && continue
+	CATEGORIES+=("$category")
+done < <(
 	for dir in "$REPO_ROOT/lib"/*/; do
 		category="$(basename "$dir")"
 		[[ -f "${dir}${category}.js" ]] && printf '%s\n' "$category"
