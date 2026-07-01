@@ -584,6 +584,19 @@ getFriendlyDisplay([]); // <array[0]>
 getFriendlyDisplay("hello"); // hello <string>
 ```
 
+### `isDefined(value: any)`
+
+Determines whether the given `value` is neither `null` nor `undefined`. Unlike a falsy check, this guard treats `0`, `""`, and `false` as defined values.
+
+#### Example
+
+```js
+isDefined("hello"); // true
+isDefined(0); // true
+isDefined(null); // false
+isDefined(undefined); // false
+```
+
 ### `isFunction(variable: any)`
 
 Determines whether the given `variable` is a function.

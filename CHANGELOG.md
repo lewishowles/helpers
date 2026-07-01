@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.6.0 — 2026-07-01
+
+### New helpers
+
+#### general
+
+- Added `isDefined` — checks whether a value is neither `null` nor `undefined`. Unlike a falsy check, treats `0`, `""`, and `false` as defined values.
+
 ## 1.5.0 — 2026-06-30
 
 ### New helpers
