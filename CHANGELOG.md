@@ -12,6 +12,10 @@
 
 - Added `toNullableNumber` — coerces a value to a number, returning `null` for empty string, `null`, or `undefined`. Useful for form round-trips where absent numeric fields should be `null` rather than `0` or `NaN`.
 
+#### string
+
+- Added `toNullableString` — coerces a value to a string, returning an empty string for `null` or `undefined`. Useful for form round-trips where absent string fields should be `""` rather than `"null"` or `"undefined"`.
+
 ## 1.5.0 — 2026-06-30
 
 ### New helpers

@@ -23,6 +23,7 @@ export declare function isNonEmptyString(
 export declare function ltrim(string: string, pattern?: string | RegExp): string;
 export declare function rtrim(string: string, pattern?: string | RegExp): string;
 export declare function toLowerCase(variable: any): string;
+export declare function toNullableString(value: any): string;
 export declare function toUpperCase(variable: any): string;
 export declare function trim(string: string, pattern?: string | RegExp): string;
 export declare function truncate(

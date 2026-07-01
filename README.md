@@ -1181,6 +1181,21 @@ toLowerCase(""); // ""
 toLowerCase(["A", "B"]); // ""
 ```
 
+### `toNullableString(value: any)`
+
+Coerces the given `value` to a string, returning an empty string for `null`
+or `undefined`. Useful for form round-trips where absent string fields should
+be `""` rather than `"null"` or `"undefined"`.
+
+#### Example
+
+```js
+toNullableString("hello"); // "hello"
+toNullableString(42); // "42"
+toNullableString(null); // ""
+toNullableString(undefined); // ""
+```
+
 ### `toUpperCase(variable: string)`
 
 A safe wrapper around `toUpperCase`, returning an empty string if the provided `variable` is not a string itself.
