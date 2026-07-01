@@ -1,13 +1,13 @@
 # Changelog
 
-## 1.5.0 — unreleased
+## 1.5.0 — 2026-06-30
 
 ### New helpers
 
 #### general
 
-- Added `debounce` — delays invoking a function until `delay` ms have elapsed since the last call. Supports `leading` / `trailing` edge options (default trailing-only) and exposes `.cancel()` and `.flush()`. Junk-hardened: a non-function returns a no-op with working `.cancel()` / `.flush()`, and an invalid `delay` is treated as `0`.
-- Added `throttle` — guarantees at most one invocation per `delay` ms window. Fires on the leading edge and, by default, once more on the trailing edge if calls arrived during the cooldown. Supports `leading` / `trailing` options and exposes `.cancel()` and `.flush()`. Same junk-hardening as `debounce`.
+- Added `debounce` — delays invoking a function until `delay` ms have elapsed since the last call. Supports `leading` / `trailing` edge options (default trailing-only) and exposes `.cancel()` and `.flush()`.
+- Added `throttle` — guarantees at most one invocation per `delay` ms window. Fires on the leading edge and, by default, once more on the trailing edge if calls arrived during the cooldown. Supports `leading` / `trailing` options and exposes `.cancel()` and `.flush()`.
 - Added `resolveOrFallback` — resolves a promise, returning its value, or a fallback if it rejects. Always returns a promise. A function fallback is called lazily, only on rejection. Non-thenable inputs resolve as-is, except `null` / `undefined`, which resolve to the fallback.
 - Added `settle` — awaits an array of promises (or plain values) and reports every outcome as `{ values, errors, results }`. Each `results` entry carries its original `index`, so a failure can be mapped straight back to its input (which call failed) without the input array; `values` and `errors` are convenience arrays for bulk-action patterns. Non-thenable values (including functions) are treated as fulfilled and never invoked.
 
