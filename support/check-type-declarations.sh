@@ -38,8 +38,12 @@ for category in "${CATEGORIES[@]}"; do
 	fi
 
 	if [[ ! -f "$types_file" ]]; then
-		output_failure "Missing types file"
-		output_item "types/$category.d.ts" "does not exist"
+		if [[ $missing -eq 0 ]]; then
+			printf '\n'
+			cli_style_status failed "Type declaration check failed"
+		fi
+
+		cli_style_row "types/$category.d.ts" "does not exist"
 		missing=1
 		continue
 	fi
@@ -63,19 +67,24 @@ for category in "${CATEGORIES[@]}"; do
 
 		if ! echo "$types_exports" | grep -qx "$name"; then
 			if [[ $missing -eq 0 ]]; then
-				output_failure "Type declaration check failed"
+				printf '\n'
+				cli_style_status failed "Type declaration check failed"
 			fi
 
-			output_item "$name" "is exported from lib/$category/$category.js but has no declaration in types/$category.d.ts"
+			cli_style_row "$name" "is exported from lib/$category/$category.js but has no declaration in types/$category.d.ts"
 
 			missing=1
 		fi
 	done <<< "$barrel_exports"
 done
 
+printf '\n'
+
 if [[ $missing -ne 0 ]]; then
-	output_hint "Add the missing declarations to the types file before committing."
+	cli_style_hint "Add the missing declarations to the types file before committing."
+	printf '\n'
 	exit 1
 fi
 
-output_success "All helpers have type declarations."
+cli_style_status success "All helpers have type declarations."
+printf '\n'

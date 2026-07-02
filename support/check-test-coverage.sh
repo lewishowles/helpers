@@ -45,10 +45,11 @@ for category in "${CATEGORIES[@]}"; do
 
 		if [[ ! -f "$test_path" ]]; then
 			if [[ $missing -eq 0 ]]; then
-				output_failure "Test coverage check failed"
+				printf '\n'
+				cli_style_status failed "Test coverage check failed"
 			fi
 
-			output_item "lib/$category/$source_file" "has no test file"
+			cli_style_row "lib/$category/$source_file" "has no test file"
 
 			missing=1
 		fi
@@ -57,9 +58,13 @@ for category in "${CATEGORIES[@]}"; do
 		| tr -d '"')
 done
 
+printf '\n'
+
 if [[ $missing -ne 0 ]]; then
-	output_hint "Add a test file for each helper before pushing."
+	cli_style_hint "Add a test file for each helper before pushing."
+	printf '\n'
 	exit 1
 fi
 
-output_success "All helpers have tests."
+cli_style_status success "All helpers have tests."
+printf '\n'

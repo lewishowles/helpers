@@ -18,7 +18,8 @@ printf '\n'
 
 if ! output="$(node "$REPO_ROOT/support/generate-readme.js" --check 2>&1)"; then
 	cli_style_status failed "Generated README check failed"
-	cli_style_render_json row '{"label":"Run","value":"npm run docs:readme","valueColour":"info"}'
+	command="$(cli_style_span "npm run docs:readme" info)"
+	cli_style_hint "Run $command before release"
 
 	# generate-readme.js only prints on unexpected failures (e.g. a crash);
 	# the plain README mismatch case has no extra output to surface here.

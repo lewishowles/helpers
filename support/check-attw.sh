@@ -11,8 +11,11 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/output.sh"
+
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 PACK_DIR="$(mktemp -d "${TMPDIR:-/tmp}/helpers-attw.XXXXXX")"
+ATTW_BIN="$REPO_ROOT/node_modules/.bin/attw"
 
 # Remove the temporary package tarball directory created for ATTW.
 cleanup() {
@@ -27,12 +30,36 @@ trap cleanup EXIT
 
 cd "$REPO_ROOT"
 
+if [[ ! -x "$ATTW_BIN" ]]; then
+	printf '\n'
+	cli_style_status failed "Are The Types Wrong check failed"
+	cli_style_hint "attw binary not found. Run bun install to restore devDependencies."
+	printf '\n'
+	exit 1
+fi
+
 bun pm pack --ignore-scripts --destination "$PACK_DIR" --quiet >/dev/null
 PACK_FILE="$(find "$PACK_DIR" -name "*.tgz" -print -quit)"
 
 if [[ -z "$PACK_FILE" ]]; then
-	printf 'Package tarball was not created.\n' >&2
+	printf '\n'
+	cli_style_status failed "Are The Types Wrong check failed"
+	cli_style_hint "Package tarball was not created."
+	printf '\n'
 	exit 1
 fi
 
-attw "$PACK_FILE" --profile esm-only
+printf '\n'
+cli_style_divider "Are The Types Wrong"
+
+if ! "$ATTW_BIN" "$PACK_FILE" --profile esm-only; then
+	printf '\n'
+	cli_style_status failed "Are The Types Wrong check failed"
+	cli_style_hint "Fix the type export issues reported above before releasing."
+	printf '\n'
+	exit 1
+fi
+
+printf '\n'
+cli_style_status success "Package types are correct."
+printf '\n'

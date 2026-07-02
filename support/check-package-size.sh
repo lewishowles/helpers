@@ -40,6 +40,9 @@ sum_file_bytes() {
 
 # Print a size failure and mark the check as failed.
 #
+# Uses a row with the failed result state so over-budget items stay aligned
+# with the neutral rows above while gaining an error symbol and colour.
+#
 # @param  {string}  label
 #     The file or group that exceeded its budget.
 # @param  {number}  actual_bytes
@@ -51,7 +54,7 @@ print_size_failure() {
 	local actual_bytes="$2"
 	local max_bytes="$3"
 
-	cli_style_status failed "$label" "is $(format_bytes "$actual_bytes"), above the $(format_bytes "$max_bytes") budget"
+	cli_style_row "$label" "is $(format_bytes "$actual_bytes"), above the $(format_bytes "$max_bytes") budget" failed
 }
 
 if [[ ! -d "$DIST_DIR" ]]; then
