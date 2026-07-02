@@ -23,6 +23,7 @@ export declare function getPathValue<T = undefined>(
 export declare function hasAnyPath(object: object, paths: string[]): boolean;
 export declare function isNonEmptyObject(variable: any): variable is Record<string, any>;
 export declare function isObject(variable: any): variable is object;
+export declare function isPlainObject(variable: any): variable is Record<string, any>;
 export declare function keyBy<T extends object>(array: T[], key: keyof T): Record<string, T>;
 export declare function keys(object: object): string[];
 export declare function objectContains(

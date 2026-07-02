@@ -597,6 +597,25 @@ isDefined(null); // false
 isDefined(undefined); // false
 ```
 
+### `isEqual(a: unknown, b: unknown)`
+
+Determine whether `a` and `b` are deeply equal. Primitives are compared with SameValueZero
+semantics, so `NaN` is equal to `NaN`, and `null`/`undefined` are not equal to each other.
+Arrays are equal when they share the same length and every element is deeply equal in order.
+Plain objects are equal when they share the same set of own-enumerable keys and every value is
+deeply equal, regardless of key order. Anything else, including a type mismatch between the two
+values, or non-plain objects such as `Date`, `Map`, `Set`, or class instances, is not equal
+unless the two values are the same reference.
+
+#### Example
+
+```js
+isEqual(NaN, NaN); // true
+isEqual(null, undefined); // false
+isEqual([1, { property: "value" }], [1, { property: "value" }]); // true
+isEqual({ a: 1, b: 2 }, { b: 2, a: 1 }); // true
+```
+
 ### `isFunction(variable: any)`
 
 Determines whether the given `variable` is a function.
@@ -938,6 +957,20 @@ Determine whether the given `variable` is an object, excluding arrays and null.
 isObject({ property: "value" }); // true
 isObject(["A", "B", "C", "D"]); // false
 isObject(null); // false
+```
+
+### `isPlainObject(variable: any)`
+
+Determine whether the given `variable` is a plain object literal, excluding arrays, `null`,
+and non-plain objects such as `Date`, `Map`, `Set`, or class instances.
+
+#### Example
+
+```js
+isPlainObject({ property: "value" }); // true
+isPlainObject(["A", "B", "C", "D"]); // false
+isPlainObject(new Date()); // false
+isPlainObject(null); // false
 ```
 
 ### `keyBy(array: object[], key: string)`

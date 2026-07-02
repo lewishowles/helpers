@@ -25,6 +25,7 @@ export declare function debounce<T extends (...args: any[]) => any>(
 ): ControlledFunction<T>;
 export declare function getFriendlyDisplay(variable: any): string;
 export declare function isDefined(value: any): boolean;
+export declare function isEqual(a: unknown, b: unknown): boolean;
 export declare function isFunction(variable: any): variable is Function;
 export declare function resolveOrFallback<T, F>(
 	promise: T | PromiseLike<T> | null | undefined,

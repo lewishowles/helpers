@@ -7,11 +7,16 @@
 #### general
 
 - Added `isDefined`: checks whether a value is neither `null` nor `undefined`. Unlike a falsy check, treats `0`, `""`, and `false` as defined values.
+- Added `isEqual`: deep-equality check for JSON-safe values (primitives, arrays, plain objects). Primitives use SameValueZero semantics, so `NaN` equals `NaN`; `null` and `undefined` are not equal to each other; key order doesn't matter for objects.
 
 #### number
 
 - Added `toNullableNumber`: coerces a value to a number, returning `null` for empty string, `null`, or `undefined`. Useful for form round-trips where absent numeric fields should be `null` rather than `0` or `NaN`.
 - Added `toPercentage`: calculates the percentage of a value relative to a total, returning `0` when the total is zero or falsy to avoid division by zero. Non-finite inputs return `0`; the result is not clamped.
+
+#### object
+
+- Added `isPlainObject`: checks whether a value is a plain object literal, excluding arrays, `null`, and non-plain objects such as `Date`, `Map`, `Set`, or class instances.
 
 #### string
 
