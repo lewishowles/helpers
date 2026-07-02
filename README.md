@@ -526,6 +526,12 @@ toEpochMilliseconds("06/22/2026", { inputFormat: "MM/DD/YYYY", timeZone: "Americ
 
 Validate a field given its `fieldName`, the field's `validationRules`, and the sum total `formData`.
 
+#### Parameters
+
+- `fieldName` `{string}` — The name of the field to validate.
+- `validationRules` `{object[]}` — The rules, schemas, or validation functions to apply.
+- `formData` `{object}` — The current values of each form field.
+
 Returns `{ valid, errors, validated }`. If input is invalid (missing field name, rules, or form data), `validated` is false and the field is treated as valid.
 
 Available rules and properties include:
@@ -654,6 +660,11 @@ Validate multiple fields at once, delegating to `validateField` for each
 field's rules. Cross-field rules (`same`, `different`, `required_if`,
 `custom`) work naturally because the full `formData` is passed through to
 each field.
+
+#### Parameters
+
+- `fields` `{object}` — A map of field names to validation rule arrays.
+- `formData` `{object}` — The current values of each form field.
 
 Returns `{ valid, validated, results }`. If input is invalid (non-object
 `fields` or `formData`), `validated` is `false` and the form is treated as
