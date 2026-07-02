@@ -459,6 +459,31 @@ formatRelativeDate("2026-06-22T09:59:00", "2026-06-22T10:00:00");
 // "1 minute ago"
 ```
 
+### `getDateParts(value: any, options?: object)`
+
+Convert a `parseDate`-compatible input into `{ year, month, day }`, for use
+with `<input type="date">`-style three-field date components. Instants and
+zoned date-times are anchored to the configured or per-call timezone before
+the calendar date is read.
+
+#### Parameters
+
+- `value` `{any}` — The date value to convert.
+- `options` `{object}` — Per-call date helper options.
+- `options.timeZone` `{string}` — The timezone used when anchoring instants and zoned date-times.
+- `options.inputFormat` `{string}` — The Day.js-style token format used when parsing non-ISO strings.
+
+Invalid or empty input returns `null`.
+
+#### Example
+
+```js
+getDateParts("2026-06-22"); // { year: 2026, month: 6, day: 22 }
+getDateParts("2026-06-22T23:30:00Z", { timeZone: "Europe/London" });
+// { year: 2026, month: 6, day: 23 }
+getDateParts("not a date"); // null
+```
+
 ### `getRelativeDateParts(value: any, relativeTo?: any, options?: object)`
 
 Convert two supported dates into relative date parts for use with
@@ -481,8 +506,9 @@ getRelativeDateParts("2026-06-22T10:00:00", "2026-06-22T10:01:00");
 
 ### `parseDate(value: any, options?: object)`
 
-Convert `Date`, timestamp, Temporal, ISO/RFC 9557 string, or configured
-token-format string input into a Temporal date value.
+Convert `Date`, timestamp, Temporal, ISO/RFC 9557 string, configured
+token-format string, or `{ year, month, day }` parts object into a
+Temporal date value.
 
 #### Parameters
 
@@ -491,7 +517,8 @@ token-format string input into a Temporal date value.
 - `options.inputFormat` `{string}` — The Day.js-style token format used when parsing non-ISO strings.
 
 Token strings use Day.js-style tokens such as `DD/MM/YYYY`. Invalid or empty
-values return `null`.
+values return `null`. Parts objects are rejected (not clamped) when the
+month or day is out of range, e.g. `{ year: 2026, month: 2, day: 30 }`.
 
 #### Example
 
@@ -499,6 +526,32 @@ values return `null`.
 parseDate("2026-06-22"); // Temporal.PlainDate
 parseDate("2026-06-22T10:15:30Z"); // Temporal.Instant
 parseDate("22/06/2026 10:15", { inputFormat: "DD/MM/YYYY HH:mm" }); // Temporal.PlainDateTime
+parseDate({ year: 2026, month: 6, day: 22 }); // Temporal.PlainDate
+```
+
+### `toDateFromParts(parts: object)`
+
+Convert `<input type="date">`-style three-field parts into a
+`Temporal.PlainDate`. Parts carry no timezone information, so the result is
+always a plain date; anchor it with `toEpochMilliseconds`/`formatDate` when
+an instant is needed.
+
+#### Parameters
+
+- `parts` `{object}` — The date parts to convert.
+- `parts.year` `{number}` — The year.
+- `parts.month` `{number}` — The month, `1`-indexed.
+- `parts.day` `{number}` — The day of the month.
+
+Only a `{ year, month, day }` plain object is accepted; strings,
+timestamps, `Date` instances, and Temporal values are rejected. Missing,
+non-numeric, or out-of-range parts also return `null`.
+
+#### Example
+
+```js
+toDateFromParts({ year: 2026, month: 6, day: 22 }); // Temporal.PlainDate
+toDateFromParts({ year: 2026, month: 2, day: 30 }); // null
 ```
 
 ### `toEpochMilliseconds(value: any, options?: object)`

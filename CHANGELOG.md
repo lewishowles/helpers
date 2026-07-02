@@ -4,6 +4,12 @@
 
 ### New helpers
 
+#### date
+
+- Added `getDateParts`: converts any `parseDate`-compatible input into `{ year, month, day }`, for `<input type="date">`-style three-field date components. Instants and zoned date-times are anchored to the configured or per-call timezone first.
+- Added `toDateFromParts`: builds a `Temporal.PlainDate` from `{ year, month, day }` parts. Out-of-range parts (e.g. day 30 in February) are rejected rather than clamped.
+- Extended `parseDate`: now also accepts a `{ year, month, day }` parts object as input, so `formatDate`/`toEpochMilliseconds` accept parts directly too.
+
 #### general
 
 - Added `isDefined`: checks whether a value is neither `null` nor `undefined`. Unlike a falsy check, treats `0`, `""`, and `false` as defined values.

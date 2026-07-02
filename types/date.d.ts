@@ -1,9 +1,16 @@
 import type { Temporal } from "temporal-polyfill";
 
+export interface DateParts {
+	year: number;
+	month: number;
+	day: number;
+}
+
 export type DateHelperInput =
 	| Date
 	| number
 	| string
+	| DateParts
 	| Temporal.Instant
 	| Temporal.PlainDate
 	| Temporal.PlainDateTime
@@ -36,6 +43,11 @@ export declare function parseDate(
 	value: MaybeDateHelperInput,
 	options?: DateHelperOptions,
 ): DateHelperValue | null;
+export declare function getDateParts(
+	value: MaybeDateHelperInput,
+	options?: DateHelperOptions,
+): DateParts | null;
+export declare function toDateFromParts(parts: Partial<DateParts>): Temporal.PlainDate | null;
 export declare function toEpochMilliseconds(
 	value: MaybeDateHelperInput,
 	options?: DateHelperOptions,
