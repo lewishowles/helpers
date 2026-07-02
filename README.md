@@ -1781,6 +1781,10 @@ truncate(["A", "B"]); // ""
 
 Retrieve `parameter` from the current browser URL, returning `null` if the parameter is not present.
 
+#### Parameters
+
+- `parameter` `{string}` — The search parameter to retrieve.
+
 #### Example
 
 ```js
@@ -1794,6 +1798,11 @@ getCurrentUrlParameter("unknown"); // null
 
 Retrieve `parameter` from a URL search string or `URLSearchParams` instance, returning `null` when the parameter is not present.
 
+#### Parameters
+
+- `search` `{string | URLSearchParams}` — The search string or URL search parameters to read from.
+- `parameter` `{string}` — The search parameter to retrieve.
+
 #### Example
 
 ```js
@@ -1804,6 +1813,10 @@ getSearchParameter("?page=2", "unknown"); // null
 ### `removeCurrentUrlParameter(parameter: string)`
 
 Remove `parameter` from the current browser URL if it exists.
+
+#### Parameters
+
+- `parameter` `{string}` — The search parameter to remove.
 
 #### Example
 
@@ -1818,6 +1831,11 @@ removeCurrentUrlParameter("page"); // https://duckduckgo.com
 
 Return a search string with `parameter` removed.
 
+#### Parameters
+
+- `search` `{string | URLSearchParams}` — The search string or URL search parameters to update.
+- `parameter` `{string}` — The search parameter to remove.
+
 #### Example
 
 ```js
@@ -1828,6 +1846,11 @@ removeSearchParameter("?page=2", "page"); // ""
 ### `updateCurrentUrlParameter(parameter: string, value: string | null)`
 
 Update the current browser URL to set `parameter` to `value`, adding `parameter` if it doesn't already exist, or overwriting any current value if it doesn't. If `value` is `null`, the parameter is removed.
+
+#### Parameters
+
+- `parameter` `{string}` — The search parameter to update.
+- `value` `{string | null}` — The value to set, or `null` to remove the parameter.
 
 #### Example
 
@@ -1843,6 +1866,12 @@ updateCurrentUrlParameter("page", null); // https://duckduckgo.com
 ### `updateSearchParameter(search: string | URLSearchParams, parameter: string, value: string | null)`
 
 Return a search string with `parameter` set to `value`. If `value` is `null`, the parameter is removed.
+
+#### Parameters
+
+- `search` `{string | URLSearchParams}` — The search string or URL search parameters to update.
+- `parameter` `{string}` — The search parameter to update.
+- `value` `{string | null}` — The value to set, or `null` to remove the parameter.
 
 #### Example
 
