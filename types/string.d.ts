@@ -3,6 +3,7 @@ interface TruncateOptions {
 	preserveWords?: boolean;
 	strict?: boolean;
 	includeDecoration?: boolean;
+	position?: "start" | "end" | "middle";
 }
 
 export declare class StringManipulator {

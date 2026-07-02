@@ -22,6 +22,7 @@
 #### string
 
 - Added `capitalise`: uppercases the first character of a string, leaving the rest unchanged. Returns an empty string for non-string inputs.
+- Extended `truncate`: added `position` option (`"start"`, `"end"`, `"middle"`, default `"end"`) to truncate from the front, end, or middle of a string. The `"middle"` position splits the available length either side of the decoration using `Math.ceil`/`Math.floor`.
 - Added `toKebabCase`: converts a string to kebab-case using a word-boundary tokeniser that correctly handles acronyms (`APIKey` → `api-key`), digit boundaries (`item2Name` → `item2-name`), and mixed separators.
 - Added `toCamelCase`: converts a string to camelCase, normalising acronyms and mixed separators.
 - Added `toPascalCase`: converts a string to PascalCase, normalising acronyms and mixed separators.

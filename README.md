@@ -1404,7 +1404,7 @@ trim("***string***", new RegExp("\\*")); // **string**
 trim("***string***", new RegExp("\\*+")); // string
 ```
 
-### `truncate(string: string, length: number = 10, { decoration: string = "…", preserveWords: boolean = false, strict: boolean = true, includeDecoration: boolean = true })`
+### `truncate(string: string, length: number = 10, { decoration: string = "…", preserveWords: boolean = false, strict: boolean = true, includeDecoration: boolean = true, position: "start" | "end" | "middle" = "end" })`
 
 Truncate a string to a given length, with various options for how the truncation occurs.
 
@@ -1415,6 +1415,7 @@ If the provided variable is not a string, returns an empty string.
 - `includeDecoration`: Whether to include the length of the decoration in length calculations
 - `preserveWords`: Whether to avoid breaking a word during truncation
 - `strict`: When preserving words, if strict the resulting length will be less than the desired length
+- `position`: Where to truncate: `"end"` (default), `"start"`, or `"middle"`
 
 #### Example
 
@@ -1423,6 +1424,10 @@ truncate("Hello, world!"); // "Hello, wo…"
 truncate("Hello, world!", 15); // "Hello, world!"
 truncate("Hello, world!", 8); // "Hello, …"
 truncate("Hello, world!", 8, { preserveWords: true }); // "Hello,…"
+truncate("Hello, world!", 8, { position: "start" }); // "…world!"
+truncate("Hello, world!", 8, { position: "middle" }); // "Hell…ld!"
+truncate("one two three four", 12, { position: "start", preserveWords: true }); // "…three four"
+truncate("one two three four five", 15, { position: "middle", preserveWords: true }); // "one two…five"
 truncate(["A", "B"]); // ""
 ```
 
