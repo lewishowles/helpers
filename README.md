@@ -692,6 +692,14 @@ await validateForm({
 Returns a debounced version of `fn` that waits until `delay` milliseconds
 have passed without another call before running.
 
+#### Parameters
+
+- `fn` `{function}` — The function to debounce.
+- `delay` `{number}` — The delay in milliseconds before running the function.
+- `options` `{object}` — Options controlling when the function runs.
+- `options.leading` `{boolean}` — Whether to run on the first call in a debounce window.
+- `options.trailing` `{boolean}` — Whether to run after calls stop.
+
 By default `fn` runs on the trailing edge, after calls stop, using the most
 recent call's arguments and `this`. Set `options.leading` to also run on the
 first call, or `options.trailing: false` to skip the trailing run; with both
@@ -711,6 +719,10 @@ const save = debounce(saveForm, 1000, { leading: true });
 
 Convert a given `variable` into a human-readable representation of its type.
 
+#### Parameters
+
+- `variable` `{any}` — The value to describe.
+
 #### Example
 
 ```js
@@ -722,6 +734,10 @@ getFriendlyDisplay("hello"); // hello <string>
 ### `isDefined(value: any)`
 
 Determines whether the given `value` is neither `null` nor `undefined`. Unlike a falsy check, this guard treats `0`, `""`, and `false` as defined values.
+
+#### Parameters
+
+- `value` `{any}` — The value to check.
 
 #### Example
 
@@ -742,6 +758,11 @@ deeply equal, regardless of key order. Anything else, including a type mismatch 
 values, or non-plain objects such as `Date`, `Map`, `Set`, or class instances, is not equal
 unless the two values are the same reference.
 
+#### Parameters
+
+- `a` `{unknown}` — The first value to compare.
+- `b` `{unknown}` — The second value to compare.
+
 #### Example
 
 ```js
@@ -755,6 +776,10 @@ isEqual({ a: 1, b: 2 }, { b: 2, a: 1 }); // true
 
 Determines whether the given `variable` is a function.
 
+#### Parameters
+
+- `variable` `{any}` — The value to check.
+
 #### Example
 
 ```js
@@ -767,6 +792,11 @@ isFunction(5); // false
 
 Resolves `promise`, returning its value, or `fallback` if it rejects. Always
 returns a promise, even for synchronous inputs, for a consistent shape.
+
+#### Parameters
+
+- `promise` `{any}` — The promise or value to resolve.
+- `fallback` `{any | function}` — The fallback value, or function returning one, to use when resolution fails.
 
 This is async/value recovery, not validation — see `validateOrFallback` for
 keyword-based value checks.
@@ -789,6 +819,10 @@ Awaits an array of promises (or plain values) and reports every outcome,
 mirroring `Promise.allSettled`. Returns a positional `results` array
 alongside convenience `values` and `errors` arrays for common bulk-action
 patterns.
+
+#### Parameters
+
+- `promises` `{any[]}` — The promises or values to settle.
 
 Non-thenable values are treated as fulfilled and returned as-is — functions
 are never invoked. To run functions, call them first: `settle(items.map(item
@@ -818,6 +852,10 @@ await settle([Promise.resolve(1), Promise.reject("nope")]);
 
 Determine the size of the given `variable`. For strings, the number of characters is used; for numbers, the value itself; for arrays, the length; for objects, the number of top-level properties. Returns `0` if no reasonable size can be determined.
 
+#### Parameters
+
+- `variable` `{any}` — The value to measure.
+
 #### Example
 
 ```js
@@ -832,6 +870,14 @@ size(null); // 0
 
 Returns a throttled version of `fn` that runs at most once per `delay`
 milliseconds.
+
+#### Parameters
+
+- `fn` `{function}` — The function to throttle.
+- `delay` `{number}` — The minimum delay in milliseconds between function runs.
+- `options` `{object}` — Options controlling when the function runs.
+- `options.leading` `{boolean}` — Whether to run at the start of a throttle window.
+- `options.trailing` `{boolean}` — Whether to run at the end of a throttle window.
 
 By default `fn` runs immediately on the first call, then once more at the end
 of the window if further calls arrived during it, using the latest arguments
@@ -852,6 +898,12 @@ const save = throttle(saveForm, 500, { leading: false });
 ### `validateOrFallback(value: any, comparison: function | string, fallback: any)`
 
 Apply `comparison` to the provided `value`, returning `value` if `true`, and `fallback` if not.
+
+#### Parameters
+
+- `variable` `{any}` — The value to validate.
+- `comparison` `{function | string}` — The validation function or keyword to apply.
+- `fallback` `{any}` — The value to return when validation fails.
 
 `comparison` can be a function, or one of the keywords:
 
