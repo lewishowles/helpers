@@ -51,32 +51,37 @@ print_size_failure() {
 	local actual_bytes="$2"
 	local max_bytes="$3"
 
-	output_item "$label" "is $(format_bytes "$actual_bytes"), above the $(format_bytes "$max_bytes") budget"
+	cli_style_status failed "$label" "is $(format_bytes "$actual_bytes"), above the $(format_bytes "$max_bytes") budget"
 }
 
 if [[ ! -d "$DIST_DIR" ]]; then
-	output_failure "Package size check failed"
-	output_hint "Build output is missing. Run $(output_value "bun run build") before checking package size."
+	printf '\n'
+	cli_style_status failed "Package size check failed"
+	cli_style_hint "Build output is missing. Run bun run build before checking package size."
+	printf '\n'
 	exit 1
 fi
 
 built_js_files=("$DIST_DIR"/*.js)
 
 if [[ ${#built_js_files[@]} -eq 0 ]]; then
-	output_failure "Package size check failed"
-	output_hint "No built JavaScript files found in $(output_value "dist")."
+	printf '\n'
+	cli_style_status failed "Package size check failed"
+	cli_style_hint "No built JavaScript files found in dist."
+	printf '\n'
 	exit 1
 fi
 
 failed=0
 
-output_heading "Package size budgets"
+printf '\n'
+cli_style_divider "Package size budgets"
 
 for built_js_file in "${built_js_files[@]}"; do
 	size="$(wc -c < "$built_js_file" | tr -d ' ')"
 	label="dist/$(basename "$built_js_file")"
 
-	output_row "$label" "$(format_bytes "$size")"
+	cli_style_row "$label" "$(format_bytes "$size")"
 
 	if (( size > MAX_JS_FILE_BYTES )); then
 		print_size_failure "$label" "$size" "$MAX_JS_FILE_BYTES"
@@ -88,8 +93,8 @@ dist_size="$(sum_file_bytes "$DIST_DIR")"
 package_size="$(sum_file_bytes "$DIST_DIR" "$TYPES_DIR")"
 
 printf '\n'
-output_row "dist total" "$(format_bytes "$dist_size")"
-output_row "published files total" "$(format_bytes "$package_size")"
+cli_style_row "dist total" "$(format_bytes "$dist_size")"
+cli_style_row "published files total" "$(format_bytes "$package_size")"
 
 if (( dist_size > MAX_DIST_BYTES )); then
 	print_size_failure "dist total" "$dist_size" "$MAX_DIST_BYTES"
@@ -102,9 +107,12 @@ if (( package_size > MAX_PACKAGE_BYTES )); then
 fi
 
 if [[ $failed -ne 0 ]]; then
-	output_hint "Reduce package size, or raise the budget with a release-note-worthy reason."
+	printf '\n'
+	cli_style_status failed "Package size check failed"
+	cli_style_hint "Reduce package size, or raise the budget with a release-note-worthy reason."
+	printf '\n'
 	exit 1
 fi
 
+cli_style_status success "Package size is within budget"
 printf '\n'
-output_success "Package size is within budget."
