@@ -1,79 +1,80 @@
 # Changelog
 
-## 1.6.0 — 2026-07-01
+## 1.6.0: 2026-07-01
 
 ### New helpers
 
 #### general
 
-- Added `isDefined` — checks whether a value is neither `null` nor `undefined`. Unlike a falsy check, treats `0`, `""`, and `false` as defined values.
+- Added `isDefined`: checks whether a value is neither `null` nor `undefined`. Unlike a falsy check, treats `0`, `""`, and `false` as defined values.
 
 #### number
 
-- Added `toNullableNumber` — coerces a value to a number, returning `null` for empty string, `null`, or `undefined`. Useful for form round-trips where absent numeric fields should be `null` rather than `0` or `NaN`.
+- Added `toNullableNumber`: coerces a value to a number, returning `null` for empty string, `null`, or `undefined`. Useful for form round-trips where absent numeric fields should be `null` rather than `0` or `NaN`.
+- Added `toPercentage`: calculates the percentage of a value relative to a total, returning `0` when the total is zero or falsy to avoid division by zero. Non-finite inputs return `0`; the result is not clamped.
 
 #### string
 
-- Added `toNullableString` — coerces a value to a string, returning an empty string for `null` or `undefined`. Useful for form round-trips where absent string fields should be `""` rather than `"null"` or `"undefined"`.
+- Added `toNullableString`: coerces a value to a string, returning an empty string for `null` or `undefined`. Useful for form round-trips where absent string fields should be `""` rather than `"null"` or `"undefined"`.
 
-## 1.5.0 — 2026-06-30
+## 1.5.0: 2026-06-30
 
 ### New helpers
 
 #### general
 
-- Added `debounce` — delays invoking a function until `delay` ms have elapsed since the last call. Supports `leading` / `trailing` edge options (default trailing-only) and exposes `.cancel()` and `.flush()`.
-- Added `throttle` — guarantees at most one invocation per `delay` ms window. Fires on the leading edge and, by default, once more on the trailing edge if calls arrived during the cooldown. Supports `leading` / `trailing` options and exposes `.cancel()` and `.flush()`.
-- Added `resolveOrFallback` — resolves a promise, returning its value, or a fallback if it rejects. Always returns a promise. A function fallback is called lazily, only on rejection. Non-thenable inputs resolve as-is, except `null` / `undefined`, which resolve to the fallback.
-- Added `settle` — awaits an array of promises (or plain values) and reports every outcome as `{ values, errors, results }`. Each `results` entry carries its original `index`, so a failure can be mapped straight back to its input (which call failed) without the input array; `values` and `errors` are convenience arrays for bulk-action patterns. Non-thenable values (including functions) are treated as fulfilled and never invoked.
+- Added `debounce`: delays invoking a function until `delay` ms have elapsed since the last call. Supports `leading` / `trailing` edge options (default trailing-only) and exposes `.cancel()` and `.flush()`.
+- Added `throttle`: guarantees at most one invocation per `delay` ms window. Fires on the leading edge and, by default, once more on the trailing edge if calls arrived during the cooldown. Supports `leading` / `trailing` options and exposes `.cancel()` and `.flush()`.
+- Added `resolveOrFallback`: resolves a promise, returning its value, or a fallback if it rejects. Always returns a promise. A function fallback is called lazily, only on rejection. Non-thenable inputs resolve as-is, except `null` / `undefined`, which resolve to the fallback.
+- Added `settle`: awaits an array of promises (or plain values) and reports every outcome as `{ values, errors, results }`. Each `results` entry carries its original `index`, so a failure can be mapped straight back to its input (which call failed) without the input array; `values` and `errors` are convenience arrays for bulk-action patterns. Non-thenable values (including functions) are treated as fulfilled and never invoked.
 
 #### array
 
-- Added `moveItem` — returns a new array with the item at `fromIndex` moved to `toIndex`. `toIndex` is interpreted after removal (following the standard drag-and-drop convention) and clamped to `[0, length - 1]`.
+- Added `moveItem`: returns a new array with the item at `fromIndex` moved to `toIndex`. `toIndex` is interpreted after removal (following the standard drag-and-drop convention) and clamped to `[0, length - 1]`.
 
 #### object
 
-- Added `renameProperties` — returns a new object with keys renamed via a `{ oldKey: newKey }` mapping, keeping all other keys in place and never mutating the original. Plain objects only; renaming is shallow. If a `newKey` already exists elsewhere, the renamed value wins and takes the original `oldKey` position. Use `pickAs` instead to project/whitelist keys into a new shape.
-- Added `deepMergeWith` — like `deepMerge`, but with a configurable `arrayStrategy` (`"replace"` default, `"concatenate"`, or `"merge"`). Sources are passed as a single array so `options` can occupy a stable trailing position. Class instances are preserved as in `deepMerge`; inputs are not mutated.
+- Added `renameProperties`: returns a new object with keys renamed via a `{ oldKey: newKey }` mapping, keeping all other keys in place and never mutating the original. Plain objects only; renaming is shallow. If a `newKey` already exists elsewhere, the renamed value wins and takes the original `oldKey` position. Use `pickAs` instead to project/whitelist keys into a new shape.
+- Added `deepMergeWith`: like `deepMerge`, but with a configurable `arrayStrategy` (`"replace"` default, `"concatenate"`, or `"merge"`). Sources are passed as a single array so `options` can occupy a stable trailing position. Class instances are preserved as in `deepMerge`; inputs are not mutated.
 
 ### Changes
 
 - `deepCopy` now uses the built-in `structuredClone` where possible, so `Date`, `Map`, `Set`, `RegExp`, typed arrays, and cyclic references are cloned correctly instead of being flattened to `{}`. For values `structuredClone` cannot handle (such as objects containing functions), it falls back to a recursive copy that copies functions by reference and preserves cyclic references via a `WeakMap`. Non-objects still pass through unchanged.
 
-## 1.4.3 — 2026-06-29
+## 1.4.3: 2026-06-29
 
 ### Fixes
 
 - `CHANGELOG.md` is now included in the published npm package.
 
-## 1.4.2 — 2026-06-28
+## 1.4.2: 2026-06-28
 
 ### Fixes
 
 - `deepMerge` now preserves class instances (`Date`, custom classes, Vue refs) instead of flattening them into `{}`. Recursion is restricted to plain objects (those whose `constructor` is `Object`) via an `isPlainObject` guard, replacing the broader `isObject` check. When source and target disagree on plain-object vs class instance at the same key, the source value replaces the target.
 
-## 1.4.1 — 2026-06-27
+## 1.4.1: 2026-06-27
 
 ### Fixes
 
 - Root import (`@lewishowles/helpers`) no longer re-exports Vue helpers, so it does not require Vue to be installed. Vue helpers remain available through the `@lewishowles/helpers/vue` subpath.
 
-## 1.4.0 — 2026-06-27
+## 1.4.0: 2026-06-27
 
 ### New helpers
 
 #### array
 
-- Added `groupBy` — groups an array of objects into sub-arrays keyed by a property value. Supports dot-path notation for nested properties via `getPathValue`. Items with missing property values are grouped under `"undefined"`.
-- Added `partition` — splits an array into a tuple of `[matching[], nonMatching[]]` based on a predicate. Always returns two arrays, even for non-array or non-function predicate input.
-- Added `uniqueBy` — removes duplicate objects from an array based on a property value, keeping the first occurrence. Supports dot-path notation via `getPathValue`.
+- Added `groupBy`: groups an array of objects into sub-arrays keyed by a property value. Supports dot-path notation for nested properties via `getPathValue`. Items with missing property values are grouped under `"undefined"`.
+- Added `partition`: splits an array into a tuple of `[matching[], nonMatching[]]` based on a predicate. Always returns two arrays, even for non-array or non-function predicate input.
+- Added `uniqueBy`: removes duplicate objects from an array based on a property value, keeping the first occurrence. Supports dot-path notation via `getPathValue`.
 
 #### object
 
-- Added `flattenObject` — collapses a nested object into a single-level object with dot-notation keys. Arrays are preserved as leaf values rather than being flattened into indexed keys.
-- Added `pickAs` — picks and renames keys from an object via a mapping of `{ outputKey: sourcePath }`, using `getPathValue` for source-path resolution so dot-notation flattening works for free.
+- Added `flattenObject`: collapses a nested object into a single-level object with dot-notation keys. Arrays are preserved as leaf values rather than being flattened into indexed keys.
+- Added `pickAs`: picks and renames keys from an object via a mapping of `{ outputKey: sourcePath }`, using `getPathValue` for source-path resolution so dot-notation flattening works for free.
 
-## 1.3.0 — 2026-06-26
+## 1.3.0: 2026-06-26
 
 ### Changes
 
@@ -81,20 +82,20 @@
 - `validateField` now accepts [Standard Schema](https://github.com/standard-schema/standard-schema) objects (Zod, Valibot, ArkType schemas) in the rules array alongside object rules and function shorthand. Schemas are detected via the `~standard` property, validated through `~standard.validate(value)`, and any returned issues are mapped to error strings.
 - Function shorthand rules are now awaited, so async functions work naturally in the rules array.
 
-## 1.2.0 — 2026-06-26
+## 1.2.0: 2026-06-26
 
 ### New helpers
 
 #### array
 
-- Added `toggleItem` to add an item to an array if absent, or remove all occurrences if present. Supports an optional comparator — either a function `(a, b) => boolean` or a string key for object matching. Always returns a new array.
+- Added `toggleItem` to add an item to an array if absent, or remove all occurrences if present. Supports an optional comparator: either a function `(a, b) => boolean` or a string key for object matching. Always returns a new array.
 - Added `range` to generate a numeric array between two values, inclusive of both ends. Supports single-argument shorthand (`range(5)` → `[0..5]`), explicit start and end, and an optional step. Direction is inferred automatically when `start > end`; a negative step can also be passed explicitly.
 
 #### form
 
 - Added `validateForm` to validate multiple fields at once, delegating to `validateField` for each field's rules. Returns `{ valid, validated, results }` where `results` maps each field name to its `validateField` result. Cross-field rules work naturally because the full `formData` is passed through.
 
-## 1.1.0 — 2026-06-25
+## 1.1.0: 2026-06-25
 
 ### Fixes
 

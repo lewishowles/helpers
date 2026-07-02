@@ -785,6 +785,22 @@ toNullableNumber(null); // null
 toNullableNumber(undefined); // null
 ```
 
+### `toPercentage(value: any, total: any)`
+
+Calculates the percentage of `value` relative to `total`, returning `0` when
+`total` is zero or falsy to avoid division by zero. Non-numeric inputs are
+coerced; `NaN` or `Infinity` inputs return `0`. The result is not clamped, so
+a `value` exceeding `total` will produce a percentage above 100.
+
+#### Example
+
+```js
+toPercentage(25, 100); // 25
+toPercentage(1, 4); // 25
+toPercentage(10, 0); // 0
+toPercentage(10, null); // 0
+```
+
 ## Object
 
 ### `addProperty(object: object, key: string, value: any)`
