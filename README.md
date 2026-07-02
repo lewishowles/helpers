@@ -22,6 +22,10 @@ import { getNextIndex } from "@lewishowles/helpers/array";
 
 Determine the number of items in the given `array`.
 
+#### Parameters
+
+- `array` `{any[]}` — The array to measure.
+
 If the provided input is not an array, returns `0`.
 
 #### Example
@@ -36,6 +40,11 @@ arrayLength(undefined); // 0
 
 Split an array into chunks of a specified size
 
+#### Parameters
+
+- `array` `{any[]}` — The array to split into chunks.
+- `chunkSize` `{number}` — The number of items to include in each chunk.
+
 #### Example
 
 ```js
@@ -48,6 +57,10 @@ chunk([1, 2, 3], 5); // [[1, 2, 3]]
 
 Remove falsy values from the given array.
 
+#### Parameters
+
+- `array` `{any[]}` — The array to remove falsy values from.
+
 #### Example
 
 ```js
@@ -58,6 +71,10 @@ compact([true, true, true]); // [true, true, true]
 ### `ensureArray(variable: any)`
 
 Ensure that the given variable is an array.
+
+#### Parameters
+
+- `variable` `{any}` — The value to return as an array.
 
 Arrays are returned unchanged. Any non-array value is returned as a single-item array.
 
@@ -77,6 +94,10 @@ ensureArray(undefined); // [undefined]
 
 Returns the first non-undefined element in `array`.
 
+#### Parameters
+
+- `array` `{any[]}` — The array to search.
+
 #### Example
 
 ```js
@@ -89,8 +110,12 @@ firstDefined([]); // undefined
 
 Given a starting `index`, determine the next available index in the `reference` array.
 
-- `reverse` - Reverse the direction, finding the previous index instead
-- `wrap` - When reaching the end of the array, wrap to the start, and vice-versa
+#### Parameters
+
+- `index` `{number}` — The starting index to move from.
+- `reference` `{any[]}` — The array that defines the valid index range.
+- `options.reverse` `{boolean}` — Whether to find the previous index instead of the next index.
+- `options.wrap` `{boolean}` — Whether to wrap around when moving beyond either end of the array.
 
 If the provided index is outside of the reference array, or the provided index or reference array are unexpected, a default value of `0` is returned.
 
@@ -106,6 +131,11 @@ getNextIndex(3, ["A", "B", "C", "D"], { reverse: true }); // 2
 
 Group the given `array` of objects into sub-arrays keyed by the value at
 `property`. Supports dot-path notation for nested properties.
+
+#### Parameters
+
+- `array` `{object[]}` — The array of objects to group.
+- `property` `{string}` — The property path to group items by.
 
 Items where `property` resolves to `undefined` are grouped under the key
 `"undefined"`.
@@ -124,6 +154,10 @@ groupBy([{ addr: { city: "York" } }, { addr: { city: "York" } }, { addr: { city:
 
 Returns the first element in `array`.
 
+#### Parameters
+
+- `array` `{any[]}` — The array to read from.
+
 #### Example
 
 ```js
@@ -134,6 +168,10 @@ head([]); // undefined
 ### `isNonEmptyArray(variable: any[])`
 
 Determines whether the given `variable` is both an array and has at least one item.
+
+#### Parameters
+
+- `variable` `{any[]}` — The value to check.
 
 #### Example
 
@@ -147,6 +185,10 @@ isNonEmptyArray("string"); // false
 
 Returns the last non-undefined element in `array`.
 
+#### Parameters
+
+- `array` `{any[]}` — The array to search.
+
 #### Example
 
 ```js
@@ -159,6 +201,12 @@ lastDefined([]); // undefined
 
 Move an item to a new position, returning a new array and leaving the
 original untouched.
+
+#### Parameters
+
+- `array` `{any[]}` — The array containing the item to move.
+- `fromIndex` `{number}` — The index of the item to move.
+- `toIndex` `{number}` — The index to move the item to.
 
 `toIndex` is read after the item has been removed, matching how drag-and-drop
 libraries report a drop. `fromIndex` must point at an existing item,
@@ -177,6 +225,11 @@ moveItem(["a", "b", "c", "d"], 0, 3); // ["b", "c", "d", "a"]
 Split an array into two arrays based on a predicate. Returns a tuple of
 [matching[], nonMatching[]].
 
+#### Parameters
+
+- `array` `{any[]}` — The array to split.
+- `predicate` `{function}` — The function used to decide which output array receives each item.
+
 #### Example
 
 ```js
@@ -187,6 +240,11 @@ partition([], () => true); // [[], []]
 ### `pluck(array: any[], property: string)`
 
 Retrieve an array of the `property` value from each of the objects found in `array`.
+
+#### Parameters
+
+- `array` `{any[]}` — The array of objects to read from.
+- `property` `{string}` — The direct property key to pluck from each object.
 
 Any non-objects in `array` are ignored. Objects that don't have the given property yield `undefined` in the result. Empty or invalid input returns `[]`.
 
@@ -208,6 +266,12 @@ with a single argument, `start` is treated as `end` and the range begins at
 `0`. Direction is inferred automatically when `start > end` and no `step` is
 given; an explicit `step` overrides it. A zero `step` returns an empty array.
 
+#### Parameters
+
+- `start` `{number}` — The first number in the range, or the end value when called with one argument.
+- `end` `{number}` — The final number to include in the range.
+- `step` `{number}` — The amount to change by between each number.
+
 #### Example
 
 ```js
@@ -222,6 +286,12 @@ range(5, 0, -1); // [5, 4, 3, 2, 1, 0]
 
 Returns a new array containing the `array` of objects, sorted by the value at `property`, with optional direction.
 
+#### Parameters
+
+- `array` `{any[]}` — The array of objects to sort.
+- `property` `{string}` — The property path to sort by.
+- `options.ascending` `{boolean}` — Whether to sort from lowest to highest.
+
 #### Example
 
 ```js
@@ -233,6 +303,10 @@ sortByProperty([{ name: "Lewis" }, { name: "Alice" }], "name", { ascending: fals
 ### `tail(array: any[])`
 
 Returns the last element in `array`.
+
+#### Parameters
+
+- `array` `{any[]}` — The array to read from.
 
 #### Example
 
@@ -246,9 +320,11 @@ tail([]); // undefined
 Add an item to an array if it is not present, or remove all occurrences of it
 if it is. Returns a new array and does not mutate the original.
 
-An optional `comparator` controls how items are matched. Pass a function
-`(a, b) => boolean` for custom logic, or a string key to compare objects by
-a specific property. Without a comparator, strict equality (`===`) is used.
+#### Parameters
+
+- `array` `{any[]}` — The array to toggle the item within.
+- `item` `{any}` — The item to add or remove.
+- `comparator` `{((a: any, b: any) => boolean) | string}` — The matching function or object key used to compare items.
 
 #### Example
 
@@ -261,6 +337,10 @@ toggleItem([{ id: 1 }, { id: 2 }], { id: 1 }, 'id');  // [{ id: 2 }]
 ### `unique(array: any[])`
 
 Safely reduce the provided `array` to those entries which are unique.
+
+#### Parameters
+
+- `array` `{any[]}` — The array to reduce to unique entries.
 
 #### Example
 
@@ -275,6 +355,11 @@ unique([]); // []
 Remove duplicate objects from an array based on a property value. Supports
 dot-path notation for nested properties. The first occurrence of each value
 is kept.
+
+#### Parameters
+
+- `array` `{object[]}` — The array of objects to reduce.
+- `property` `{string}` — The property path that identifies duplicate items.
 
 Items where the resolved value is `undefined` are treated as equal, with only
 the first occurrence kept.
