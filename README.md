@@ -889,6 +889,25 @@ deepMergeWith({ a: { b: 1 } }, [{ a: { c: 2 } }]);
 // { a: { b: 1, c: 2 } }
 ```
 
+### `firstDefinedPath(object: object, paths: string[])`
+
+Try each dot-notation `path` in turn, returning the first defined value
+found. Values that are `null` or `undefined` are skipped, so a path that
+exists but holds `null` does not short-circuit the search. Returns
+`undefined` when no path yields a defined value, or when the input is not
+a non-empty object with a non-empty `paths` array.
+
+#### Example
+
+```js
+firstDefinedPath({ a: 1, b: 2 }, ["a"]); // 1
+firstDefinedPath({ a: 1, b: 2 }, ["c", "a"]); // 1
+firstDefinedPath({ a: null, b: 2 }, ["a", "b"]); // 2
+firstDefinedPath({ a: { b: { c: "deep" } } }, ["a.b.c"]); // "deep"
+firstDefinedPath({ a: 1 }, ["c", "d"]); // undefined
+firstDefinedPath([], ["a"]); // undefined
+```
+
 ### `flattenObject(object: object)`
 
 Flattens a nested object into a single-level object with dot-notation keys.

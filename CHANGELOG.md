@@ -16,6 +16,7 @@
 
 #### object
 
+- Added `firstDefinedPath`: tries each dot-notation path in turn, returning the first defined value found. Paths with `null` or `undefined` values are skipped. Useful for extracting data from responses with varying shapes without hard-coding one structure.
 - Added `isPlainObject`: checks whether a value is a plain object literal, excluding arrays, `null`, and non-plain objects such as `Date`, `Map`, `Set`, or class instances.
 
 #### string

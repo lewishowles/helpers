@@ -14,6 +14,7 @@ export declare function deepMergeWith<T extends object>(
 	sources: object[],
 	options?: DeepMergeWithOptions,
 ): T & Record<string, any>;
+export declare function firstDefinedPath(object: object, paths: string[]): any;
 export declare function flattenObject(object: object): Record<string, any>;
 export declare function getPathValue<T = undefined>(
 	object: object,
