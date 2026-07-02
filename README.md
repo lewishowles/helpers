@@ -1887,6 +1887,12 @@ updateSearchParameter("?page=3", "page", null); // ""
 
 If the given `component` is an object and contains a function parameter `method`, call that method with any additional `parameters` and return its result. This helper allows safe calling of a method when an object might not exist.
 
+#### Parameters
+
+- `component` `{object}` — The component instance or component reference to call.
+- `method` `{string}` — The method name to call.
+- `params` `{any[]}` — Additional parameters to pass to the method.
+
 #### Example
 
 ```js
@@ -1899,6 +1905,13 @@ callComponentMethod(null); // undefined
 ### `getSlotText(slotReference)`
 
 Retrieve the text from the given `slotReference`. `slotReference` is a direct reference to a slot - for example `slots.default`. Text is concatenated when multiple children exist.
+
+#### Parameters
+
+- `slot` `{Function | object[]}` — The slot function or vnode array to read.
+- `options` `{object}` — Options for reading slot text.
+- `options.props` `{object}` — Props to pass when rendering a slot function.
+- `options.trim` `{boolean}` — Whether to trim whitespace from the returned text.
 
 #### Example
 
@@ -1915,6 +1928,11 @@ getSlotText("string"); // ""
 ### `isNonEmptySlot(slotReference)`
 
 Determines whether the given `slotReference` contains content. `slotReference` is a direct reference to a slot - for example `slots.default`.
+
+#### Parameters
+
+- `slot` `{Function}` — The slot function to check.
+- `props` `{object}` — Props to pass when rendering the slot function.
 
 #### Example
 
