@@ -4,6 +4,17 @@
 # These helpers keep diagnostics readable without adding anything to the
 # runtime package. Set NO_COLOR to any value to disable ANSI colours.
 
+SUPPORT_SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SUPPORT_REPO_ROOT="$(cd "$SUPPORT_SCRIPT_DIR/.." && pwd)"
+
+# Locate the installed cli-style binary and Bash adapter, then source the
+# adapter's cli_style_* convenience functions. Scripts call these directly
+# instead of the legacy output_* helpers below.
+CLI_STYLE_BIN="$SUPPORT_REPO_ROOT/node_modules/.bin/cli-style"
+export CLI_STYLE_BIN
+
+source "$SUPPORT_REPO_ROOT/node_modules/@lewishowles/cli-style/adapters/bash/cli-style.sh"
+
 if [[ -n "${NO_COLOR:-}" ]]; then
 	SUPPORT_HEADING=""
 	SUPPORT_VALUE=""

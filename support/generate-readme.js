@@ -53,12 +53,11 @@ function getGeneratedReadme() {
  */
 function checkReadme(readme, nextReadme) {
 	if (readme === nextReadme) {
-		console.log("README helper reference is current.");
 		return;
 	}
 
-	console.error("Generated README check failed.");
-	console.error("Run npm run docs:readme and commit the updated README.");
+	// Presentation of this failure is owned by support/check-readme.sh, so
+	// this only needs to signal failure via the exit code.
 	process.exit(1);
 }
 

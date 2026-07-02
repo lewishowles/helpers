@@ -14,11 +14,22 @@ source "$SCRIPT_DIR/output.sh"
 
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
+printf '\n'
+
 if ! output="$(node "$REPO_ROOT/support/generate-readme.js" --check 2>&1)"; then
-	output_failure "Generated README check failed"
-	printf '\n%s\n' "$output"
-	output_hint "Run $(output_value "npm run docs:readme") and commit the updated README."
+	cli_style_status failed "Generated README check failed"
+	cli_style_render_json row '{"label":"Run","value":"npm run docs:readme","valueColour":"info"}'
+
+	# generate-readme.js only prints on unexpected failures (e.g. a crash);
+	# the plain README mismatch case has no extra output to surface here.
+	if [[ -n "$output" ]]; then
+		printf '\n%s\n' "$output"
+	fi
+
+	printf '\n'
 	exit 1
 fi
 
-output_success "README helper reference is current."
+cli_style_status success "README helper reference is current."
+
+printf '\n'
