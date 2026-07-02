@@ -5,7 +5,7 @@ export default mergeConfig(
 	viteConfig,
 	defineConfig({
 		test: {
-			include: ["lib/**/*.test.js"],
+			include: ["lib/**/*.test.js", "support/**/*.test.js"],
 			environment: "happy-dom",
 		},
 	}),

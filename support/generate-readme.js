@@ -212,8 +212,8 @@ function getDocBlockBeforeLine(lines, lineIndex) {
  * @param  {string}  docBlock
  *     The raw JSDoc block.
  */
-function parseTags(docBlock) {
-	const docs = {};
+export function parseTags(docBlock) {
+	const docs = { params: [] };
 
 	let currentTag = null;
 
@@ -232,7 +232,24 @@ function parseTags(docBlock) {
 			}
 
 			currentTag = line.slice(1, tagNameEnd);
+
+			if (currentTag === "param") {
+				docs.params.push(parseParamTag(line.slice(tagNameEnd + 1)));
+				continue;
+			}
+
 			docs[currentTag] = line.slice(tagNameEnd + 1);
+			continue;
+		}
+
+		if (currentTag === "param") {
+			if (line.trim() === "") {
+				continue;
+			}
+
+			const param = docs.params.at(-1);
+
+			param.description += `${param.description ? "\n" : ""}${line.trim()}`;
 			continue;
 		}
 
@@ -242,6 +259,18 @@ function parseTags(docBlock) {
 	}
 
 	return docs;
+}
+
+/**
+ * Parse one `@param` tag's `{type}  name` header into its parts.
+ *
+ * @param  {string}  header
+ *     The `@param` line content after the tag name, e.g. `{string}  readme`.
+ */
+export function parseParamTag(header) {
+	const [, type, name] = header.trim().match(/^\{(.+?)\}\s+(\S+)/) ?? [, "", ""];
+
+	return { type, name, description: "" };
 }
 
 /**
@@ -292,11 +321,22 @@ function renderHelperReference(categories) {
  * @param  {object}  docs
  *     The structured docs for a helper.
  */
-function renderHelperDocs(docs) {
+export function renderHelperDocs(docs) {
 	const parts = [
 		`### \`${docs.signature.trim()}\``,
 		docs.description.trim(),
 	];
+
+	if (docs.params.length) {
+		const parameters = docs.params
+			.map(({ description, name, type }) => `- \`${name}\` \`{${type}}\` — ${description}`)
+			.join("\n");
+
+		parts.push([
+			"#### Parameters",
+			parameters,
+		].join("\n\n"));
+	}
 
 	if (docs.note?.trim()) {
 		parts.push(docs.note.trim());
@@ -391,4 +431,6 @@ function toTitleCase(value) {
 	return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
-generateReadme();
+if (import.meta.url === `file://${process.argv[1]}`) {
+	generateReadme();
+}
