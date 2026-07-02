@@ -16,6 +16,7 @@ export declare class StringManipulator {
 	get value(): string;
 }
 
+export declare function capitalise(value: any): string;
 export declare function isNonEmptyString(
 	variable: any,
 	options?: { trim?: boolean },

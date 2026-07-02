@@ -15,6 +15,7 @@
 
 #### string
 
+- Added `capitalise`: uppercases the first character of a string, leaving the rest unchanged. Returns an empty string for non-string inputs.
 - Added `toNullableString`: coerces a value to a string, returning an empty string for `null` or `undefined`. Useful for form round-trips where absent string fields should be `""` rather than `"null"` or `"undefined"`.
 
 ## 1.5.0: 2026-06-30

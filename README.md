@@ -1135,6 +1135,25 @@ values("string"); // []
 
 ## String
 
+### `capitalise(value: any)`
+
+Returns the string with the first character uppercased and the remaining
+characters unchanged. Handles surrogate pairs correctly by iterating code
+points rather than UTF-16 code units. Returns an empty string if the provided
+`value` is not a non-empty string.
+
+#### Example
+
+```js
+capitalise("hello world"); // "Hello world"
+capitalise("HELLO"); // "HELLO"
+capitalise("a"); // "A"
+capitalise(""); // ""
+capitalise(42); // ""
+capitalise("über"); // "Über"
+capitalise("αβγ"); // "Αβγ"
+```
+
 ### `isNonEmptyString(variable: any, { trim: boolean = false })`
 
 Determines whether the given `variable` is both a string and has at least one character. If `trim` is true, the string is trimmed of whitespace before the test is performed.
