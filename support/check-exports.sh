@@ -101,19 +101,24 @@ for category in "${CATEGORIES[@]}"; do
 
 		if ! is_exported_helper "$helper_path" "${exported_helpers[@]}"; then
 			if [[ $missing -eq 0 ]]; then
-				output_failure "Helper export check failed"
+				printf '\n'
+				cli_style_status failed "Helper export check failed"
 			fi
 
-			output_item "$helper_path" "is not exported from lib/$category/$category.js"
+			cli_style_row "$helper_path" "is not exported from lib/$category/$category.js"
 
 			missing=1
 		fi
 	done
 done
 
+printf '\n'
+
 if [[ $missing -ne 0 ]]; then
-	output_hint "Export each public helper from its category barrel, or add intentional internals to INTERNAL_HELPERS."
+	cli_style_hint "Export each public helper from its category barrel, or add intentional internals to INTERNAL_HELPERS."
+	printf '\n'
 	exit 1
 fi
 
-output_success "All public helpers are exported."
+cli_style_status success "All public helpers are exported"
+printf '\n'
