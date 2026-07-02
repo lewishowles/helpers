@@ -17,6 +17,7 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 INTERNAL_HELPERS=(
 	"lib/object/path-traversal.js"
+	"lib/string/tokenise-words.js"
 )
 
 # Returns 0 when the helper file is intentionally internal.

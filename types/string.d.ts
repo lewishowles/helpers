@@ -23,9 +23,14 @@ export declare function isNonEmptyString(
 ): variable is string;
 export declare function ltrim(string: string, pattern?: string | RegExp): string;
 export declare function rtrim(string: string, pattern?: string | RegExp): string;
+export declare function toKebabCase(value: any): string;
+export declare function toCamelCase(value: any): string;
 export declare function toLowerCase(variable: any): string;
 export declare function toNullableString(value: any): string;
 export declare function toUpperCase(variable: any): string;
+export declare function toPascalCase(value: any): string;
+export declare function toSnakeCase(value: any): string;
+export declare function toScreamingSnakeCase(value: any): string;
 export declare function trim(string: string, pattern?: string | RegExp): string;
 export declare function truncate(
 	string: string,

@@ -1256,6 +1256,45 @@ const userId = "82FAA75F-B47A-43B6-82F6-389C9408BB67";
 const userIdPreview = new StringManipulator(userId).toLowerCase().truncate(15).value; // 82faa75f-b47a-…
 ```
 
+### `toCamelCase(value: any)`
+
+Converts a string to camelCase (first word lowercase, subsequent words
+capitalised, no separators). Handles kebab-case, PascalCase, snake_case,
+SCREAMING_SNAKE_CASE, and mixed separators. Acronyms are normalised
+(APIKey → apiKey). Returns an empty string for non-string inputs.
+
+#### Example
+
+```js
+toCamelCase("kebab-case"); // "kebabCase"
+toCamelCase("PascalCase"); // "pascalCase"
+toCamelCase("APIKey"); // "apiKey"
+toCamelCase("item2Name"); // "item2Name"
+toCamelCase("snake_case"); // "snakeCase"
+toCamelCase(""); // ""
+toCamelCase(42); // ""
+```
+
+### `toKebabCase(value: any)`
+
+Converts a string to kebab-case (lowercase words joined by hyphens).
+Handles camelCase, PascalCase, snake_case, SCREAMING_SNAKE_CASE, and mixed
+separators. Acronyms are split correctly (APIKey → api-key). Returns an
+empty string for non-string inputs.
+
+#### Example
+
+```js
+toKebabCase("camelCase"); // "camel-case"
+toKebabCase("PascalCase"); // "pascal-case"
+toKebabCase("APIKey"); // "api-key"
+toKebabCase("item2Name"); // "item2-name"
+toKebabCase("snake_case"); // "snake-case"
+toKebabCase("already-kebab"); // "already-kebab"
+toKebabCase(""); // ""
+toKebabCase(42); // ""
+```
+
 ### `toLowerCase(variable: string)`
 
 A safe wrapper around `toLowerCase`, returning an empty string if the provided `variable` is not a string itself.
@@ -1281,6 +1320,63 @@ toNullableString("hello"); // "hello"
 toNullableString(42); // "42"
 toNullableString(null); // ""
 toNullableString(undefined); // ""
+```
+
+### `toPascalCase(value: any)`
+
+Converts a string to PascalCase (each word capitalised, no separators).
+Handles camelCase, kebab-case, snake_case, SCREAMING_SNAKE_CASE, and mixed
+separators. Acronyms are normalised (APIKey → ApiKey). Returns an empty
+string for non-string inputs.
+
+#### Example
+
+```js
+toPascalCase("camelCase"); // "CamelCase"
+toPascalCase("kebab-case"); // "KebabCase"
+toPascalCase("APIKey"); // "ApiKey"
+toPascalCase("item2Name"); // "Item2Name"
+toPascalCase("snake_case"); // "SnakeCase"
+toPascalCase(""); // ""
+toPascalCase(42); // ""
+```
+
+### `toScreamingSnakeCase(value: any)`
+
+Converts a string to SCREAMING_SNAKE_CASE (uppercase words joined by
+underscores). Handles camelCase, PascalCase, kebab-case, snake_case, and
+mixed separators. Acronyms are split correctly (APIKey → API_KEY). Returns
+an empty string for non-string inputs.
+
+#### Example
+
+```js
+toScreamingSnakeCase("camelCase"); // "CAMEL_CASE"
+toScreamingSnakeCase("PascalCase"); // "PASCAL_CASE"
+toScreamingSnakeCase("APIKey"); // "API_KEY"
+toScreamingSnakeCase("item2Name"); // "ITEM2_NAME"
+toScreamingSnakeCase("kebab-case"); // "KEBAB_CASE"
+toScreamingSnakeCase(""); // ""
+toScreamingSnakeCase(42); // ""
+```
+
+### `toSnakeCase(value: any)`
+
+Converts a string to snake_case (lowercase words joined by underscores).
+Handles camelCase, PascalCase, kebab-case, SCREAMING_SNAKE_CASE, and mixed
+separators. Acronyms are split correctly (APIKey → api_key). Returns an
+empty string for non-string inputs.
+
+#### Example
+
+```js
+toSnakeCase("camelCase"); // "camel_case"
+toSnakeCase("PascalCase"); // "pascal_case"
+toSnakeCase("APIKey"); // "api_key"
+toSnakeCase("item2Name"); // "item2_name"
+toSnakeCase("kebab-case"); // "kebab_case"
+toSnakeCase(""); // ""
+toSnakeCase(42); // ""
 ```
 
 ### `toUpperCase(variable: string)`

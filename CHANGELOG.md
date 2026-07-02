@@ -22,6 +22,11 @@
 #### string
 
 - Added `capitalise`: uppercases the first character of a string, leaving the rest unchanged. Returns an empty string for non-string inputs.
+- Added `toKebabCase`: converts a string to kebab-case using a word-boundary tokeniser that correctly handles acronyms (`APIKey` → `api-key`), digit boundaries (`item2Name` → `item2-name`), and mixed separators.
+- Added `toCamelCase`: converts a string to camelCase, normalising acronyms and mixed separators.
+- Added `toPascalCase`: converts a string to PascalCase, normalising acronyms and mixed separators.
+- Added `toSnakeCase`: converts a string to snake_case, handling the same boundaries as the other case-conversion helpers.
+- Added `toScreamingSnakeCase`: converts a string to SCREAMING_SNAKE_CASE, uppercasing all tokens joined by underscores.
 - Added `toNullableString`: coerces a value to a string, returning an empty string for `null` or `undefined`. Useful for form round-trips where absent string fields should be `""` rather than `"null"` or `"undefined"`.
 
 ## 1.5.0: 2026-06-30
