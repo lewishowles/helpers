@@ -383,6 +383,15 @@ uniqueBy([], "id");
 
 Set project-wide defaults for date parsing and formatting.
 
+#### Parameters
+
+- `config` `{object}` — The date helper defaults to merge into the active configuration.
+- `config.locale` `{string}` — The BCP 47 locale used by Intl formatters.
+- `config.timeZone` `{string}` — The timezone used when anchoring plain dates and date-times.
+- `config.inputFormat` `{string}` — The Day.js-style token format used when parsing non-ISO strings.
+- `config.defaultFormat` `{string}` — The named format used when formatting without a format argument.
+- `config.formats` `{object}` — The named Day.js token or Intl format options available to `formatDate`.
+
 Calling this helper with no arguments returns the current configuration.
 
 Projects can override these defaults per helper call. The default locale is
@@ -410,6 +419,17 @@ The `defaultFormat` option determines which named format is used when
 Format supported date input using a named configured format, a Day.js-style
 token string, or `Intl.DateTimeFormat` options.
 
+#### Parameters
+
+- `value` `{any}` — The date value to format.
+- `format` `{string | object}` — The named format, Day.js token string, or Intl format options to use.
+- `options` `{object}` — Per-call date helper options.
+- `options.locale` `{string}` — The BCP 47 locale used by Intl formatters.
+- `options.timeZone` `{string}` — The timezone used when anchoring plain dates and date-times.
+- `options.inputFormat` `{string}` — The Day.js-style token format used when parsing non-ISO strings.
+- `options.defaultFormat` `{string}` — The named format used when `format` is omitted.
+- `options.formats` `{object}` — The named Day.js token or Intl format options available by key.
+
 #### Example
 
 ```js
@@ -423,6 +443,15 @@ formatDate("2026-06-22", { year: "numeric", month: "long", day: "2-digit" });
 Format a supported date input as a relative date string, such as
 `3 minutes ago` or `in 2 days`.
 
+#### Parameters
+
+- `value` `{any}` — The date value to format.
+- `relativeTo` `{any}` — The date value to compare against.
+- `options` `{object}` — Per-call date helper options.
+- `options.locale` `{string}` — The BCP 47 locale used by the relative time formatter.
+- `options.timeZone` `{string}` — The timezone used when anchoring plain dates and date-times.
+- `options.inputFormat` `{string}` — The Day.js-style token format used when parsing non-ISO strings.
+
 #### Example
 
 ```js
@@ -435,6 +464,14 @@ formatRelativeDate("2026-06-22T09:59:00", "2026-06-22T10:00:00");
 Convert two supported dates into relative date parts for use with
 `Intl.RelativeTimeFormat` or custom UI rendering.
 
+#### Parameters
+
+- `value` `{any}` — The date value to compare.
+- `relativeTo` `{any}` — The date value to compare against.
+- `options` `{object}` — Per-call date helper options.
+- `options.timeZone` `{string}` — The timezone used when anchoring plain dates and date-times.
+- `options.inputFormat` `{string}` — The Day.js-style token format used when parsing non-ISO strings.
+
 #### Example
 
 ```js
@@ -446,6 +483,12 @@ getRelativeDateParts("2026-06-22T10:00:00", "2026-06-22T10:01:00");
 
 Convert `Date`, timestamp, Temporal, ISO/RFC 9557 string, or configured
 token-format string input into a Temporal date value.
+
+#### Parameters
+
+- `value` `{any}` — The date value to parse.
+- `options` `{object}` — Per-call date helper options.
+- `options.inputFormat` `{string}` — The Day.js-style token format used when parsing non-ISO strings.
 
 Token strings use Day.js-style tokens such as `DD/MM/YYYY`. Invalid or empty
 values return `null`.
@@ -462,6 +505,13 @@ parseDate("22/06/2026 10:15", { inputFormat: "DD/MM/YYYY HH:mm" }); // Temporal.
 
 Convert a supported date input into epoch milliseconds. Plain dates and
 plain date-times use the configured timezone.
+
+#### Parameters
+
+- `value` `{any}` — The date value to convert.
+- `options` `{object}` — Per-call date helper options.
+- `options.timeZone` `{string}` — The timezone used when anchoring plain dates and date-times.
+- `options.inputFormat` `{string}` — The Day.js-style token format used when parsing non-ISO strings.
 
 #### Example
 
