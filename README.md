@@ -828,6 +828,12 @@ Add a shallow key / value pair to an object without overwriting any existing val
 That is, only if that key isn't already present, or if its value is undefined
 or null.
 
+#### Parameters
+
+- `object` `{object}` — The object to add the property to.
+- `key` `{string}` — The property key to add.
+- `value` `{any}` — The value to set when the key is missing or empty.
+
 #### Example
 
 ```js
@@ -839,6 +845,10 @@ addProperty({ one: "One", two: null }, "two", "Two"); // { one: "One", two: "Two
 ### `deepCopy(value: any)`
 
 Returns a deep copy of `value`. Non-objects are returned unchanged.
+
+#### Parameters
+
+- `value` `{any}` — The value to copy.
 
 Uses the built-in `structuredClone` where possible, so `Date`, `Map`, `Set`,
 `RegExp`, typed arrays, and cyclic references are cloned correctly. For
@@ -858,6 +868,11 @@ deepCopy(new Date(0)); // a new Date with the same time
 
 Recursively merges two or more objects. The values of later objects override those of earlier objects.
 
+#### Parameters
+
+- `target` `{object}` — The object to merge into.
+- `sources` `{object[]}` — The source objects to merge from.
+
 #### Example
 
 ```js
@@ -869,6 +884,13 @@ deepMerge({ key: "value", a: { b: 2 } }, { key: "modified", a: { c: 3 } }); // {
 
 Works like `deepMerge`, but lets you decide what happens when the same key
 holds an array in both the target and a source.
+
+#### Parameters
+
+- `target` `{object}` — The object to merge into.
+- `sources` `{object[]}` — The source objects to merge from.
+- `options` `{object}` — Merge behaviour.
+- `options.arrayStrategy` `{string}` — How arrays are combined when both objects contain arrays at the same key.
 
 Pick the behaviour with `options.arrayStrategy`:
 
@@ -897,6 +919,11 @@ exists but holds `null` does not short-circuit the search. Returns
 `undefined` when no path yields a defined value, or when the input is not
 a non-empty object with a non-empty `paths` array.
 
+#### Parameters
+
+- `object` `{object}` — The object to inspect.
+- `paths` `{string[]}` — The dot-notation paths to try.
+
 #### Example
 
 ```js
@@ -911,6 +938,10 @@ firstDefinedPath([], ["a"]); // undefined
 ### `flattenObject(object: object)`
 
 Flattens a nested object into a single-level object with dot-notation keys.
+
+#### Parameters
+
+- `object` `{object}` — The object to flatten.
 
 Arrays are preserved as leaf values — they are not flattened into indexed
 keys (e.g. `"items.0"`).
@@ -931,6 +962,12 @@ flattenObject({ items: [1, 2, 3] });
 
 Retrieve the `object` property value found at `path`, or `returnValue`.
 
+#### Parameters
+
+- `object` `{object}` — The object to inspect.
+- `path` `{string}` — The dot-notation path to retrieve.
+- `returnValue` `{any}` — The fallback value when the path cannot be resolved.
+
 #### Example
 
 ```js
@@ -945,6 +982,11 @@ getPathValue([], "property"); // undefined
 
 Determine if the given object has any of the properties at `paths`.
 
+#### Parameters
+
+- `object` `{object}` — The object to inspect.
+- `paths` `{string[]}` — The dot-notation paths to check.
+
 #### Example
 
 ```js
@@ -958,6 +1000,10 @@ hasAnyPath({ a: { b: { c: 1 } } }, ["a.b.e", "a.b.f"]); // false
 
 Determines whether the given `variable` is both an object (and not null, or an array), and has at least one property.
 
+#### Parameters
+
+- `variable` `{any}` — The value to check.
+
 #### Example
 
 ```js
@@ -969,6 +1015,10 @@ isNonEmptyObject("string"); // false
 ### `isObject(variable: any)`
 
 Determine whether the given `variable` is an object, excluding arrays and null.
+
+#### Parameters
+
+- `variable` `{any}` — The value to check.
 
 #### Example
 
@@ -983,6 +1033,10 @@ isObject(null); // false
 Determine whether the given `variable` is a plain object literal, excluding arrays, `null`,
 and non-plain objects such as `Date`, `Map`, `Set`, or class instances.
 
+#### Parameters
+
+- `variable` `{any}` — The value to check.
+
 #### Example
 
 ```js
@@ -996,6 +1050,11 @@ isPlainObject(null); // false
 
 Convert the given `array` of objects into a single object, where each object in the original array is placed under the value of its given `key`.
 
+#### Parameters
+
+- `array` `{object[]}` — The objects to index.
+- `key` `{string}` — The property whose value becomes each output key.
+
 Objects without the given `key` are discarded. If an object has the same value `key` as a previous object, the previous object will be overwritten.
 
 #### Example
@@ -1007,6 +1066,10 @@ keyBy([{ a: 1 }, { a: 2 }], "a"); // { 1: { a: 1 }, 2: { a: 2 } }
 ### `keys(object: object)`
 
 Returns an array of the keys of the given `object`.
+
+#### Parameters
+
+- `object` `{object}` — The object to read keys from.
 
 #### Example
 
@@ -1020,9 +1083,16 @@ keys("string"); // []
 
 Returns true if one of the `object`'s values is `needle`. Also works when `object` is an array.
 
-String `needle`s are checked case-insensitively by default, and partial matches can be enabled via option.
+#### Parameters
 
-`exclude` defines an array of properties to exclude from the search, while `include` defines an array of properties which are searched exclusively. If `include` is defined, `exclude` is ignored.
+- `object` `{object}` — The object or array to search.
+- `needle` `{any}` — The value to find.
+- `options.exclude` `{string[]}` — The object keys to omit from the search.
+- `options.include` `{string[]}` — The only object keys to search.
+- `options.caseInsensitive` `{boolean}` — Whether string comparisons ignore case.
+- `options.allowPartial` `{boolean}` — Whether string comparisons allow partial matches.
+
+String `needle`s are checked case-insensitively by default, and partial matches can be enabled via option.
 
 #### Example
 
@@ -1040,6 +1110,10 @@ objectContains({ length: 52 }, 5); // false
 
 Return the number of top-level keys in `object`. Returns `0` for empty or non-objects.
 
+#### Parameters
+
+- `object` `{object}` — The object to count keys on.
+
 #### Example
 
 ```js
@@ -1052,6 +1126,11 @@ objectLength("string"); // 0
 
 Returns a new object with the specified `properties` omitted from the given `object`.
 
+#### Parameters
+
+- `object` `{object}` — The object to copy from.
+- `properties` `{string[]}` — The property keys to omit.
+
 #### Example
 
 ```js
@@ -1063,6 +1142,11 @@ omit({ a: 1, b: 2, c: 3 }, []); // { a: 1, b: 2, c: 3 }
 ### `pick(object: object, properties: string[])`
 
 Returns an object containing only `properties` properties from `object`.
+
+#### Parameters
+
+- `object` `{object}` — The object to copy from.
+- `properties` `{string[]}` — The property keys to keep.
 
 Any non-string properties are ignored.
 
@@ -1080,6 +1164,11 @@ pick({ a: "one", b: "two", c: "three" }, ["a", "d"]); // { a: "one" }
 
 Returns a new object with keys from `mapping` whose values are resolved from
 `object` at the paths given by the mapping values.
+
+#### Parameters
+
+- `object` `{object}` — The object to read values from.
+- `mapping` `{object}` — The output keys and source paths to use.
 
 Uses `getPathValue` so dot-notation paths are supported.
 
@@ -1100,6 +1189,11 @@ pickAs({ a: 1 }, { a: "a", b: "missing" });
 
 Retrieve an array of the `path` value from each of the objects found in `array`.
 
+#### Parameters
+
+- `array` `{object[]}` — The objects to read from.
+- `path` `{string}` — The dot-notation path to retrieve from each object.
+
 Any non-objects in `array` are ignored. Objects that don't have the given path yield `undefined` in the result. Empty or invalid input returns `[]`.
 
 #### Example
@@ -1115,6 +1209,11 @@ pluckPathValues([], "user.name"); // []
 
 Remove an object property at `path`. This method makes a copy of the provided object to not modify the original.
 
+#### Parameters
+
+- `object` `{object}` — The object to remove the value from.
+- `path` `{string}` — The dot-notation path to remove.
+
 #### Example
 
 ```js
@@ -1129,6 +1228,11 @@ removePathValue({ key: "value", one: { two: "two" } }, "one.two.three"); // { ke
 Returns a new object with keys renamed according to the given `mapping`, a
 plain object of `{ oldKey: newKey }` pairs. The original object is not
 mutated. Renaming is shallow only — nested objects are not deep-renamed.
+
+#### Parameters
+
+- `object` `{object}` — The object to rename keys on.
+- `mapping` `{object}` — The existing keys and replacement keys to use.
 
 Use `pickAs` instead when you want to project or whitelist keys into a new
 shape; `renameProperties` renames keys in place while keeping all other keys.
@@ -1146,6 +1250,12 @@ renameProperties({ a: 1, b: 2 }, { a: "alpha", b: "beta" });
 ### `setPathValue(object: object, path: string, value: any)`
 
 Set an object property at `path`.
+
+#### Parameters
+
+- `object` `{object}` — The object to update.
+- `path` `{string}` — The dot-notation path to set.
+- `value` `{any}` — The value to write at the path.
 
 If any part of the path dot notation chain results in a non-object, no modifications are made.
 
@@ -1165,6 +1275,10 @@ setPathValue({ a: 1, b: 2 }, "b.c.d", 4); // { a: 1, b: 2 }
 
 Safely unwrap a single-key object, returning the value of that key. `null` is returned if the object contains more than one key, or the value cannot be retrieved.
 
+#### Parameters
+
+- `object` `{object}` — The object to unwrap.
+
 #### Example
 
 ```js
@@ -1176,6 +1290,10 @@ unwrap({ key_one: "value", key_two: "value two" }); // null
 ### `values(object: object)`
 
 Returns an array of the values of the given `object`.
+
+#### Parameters
+
+- `object` `{object}` — The object to read values from.
 
 #### Example
 
