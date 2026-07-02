@@ -60,17 +60,22 @@ for dep in "${DEPS[@]}"; do
 	fi
 
 	if [[ $unexpected -eq 0 ]]; then
-		output_failure "Unexpected runtime dependency found"
+		printf '\n'
+		cli_style_status failed "Unexpected runtime dependency found"
 	fi
 
-	output_item "$dep" "is listed in dependencies but is not allowlisted"
+	cli_style_row "$dep" "is listed in dependencies but is not allowlisted"
 	unexpected=1
 done
 
+printf '\n'
+
 if [[ $unexpected -eq 0 ]]; then
-	output_success "Runtime dependencies are approved."
+	cli_style_status success "Runtime dependencies are approved"
+	printf '\n'
 	exit 0
 fi
 
-output_hint "Move runtime dependencies to devDependencies, or document the exception in ALLOWED_DEPS."
+cli_style_hint "Move runtime dependencies to devDependencies, or document the exception in ALLOWED_DEPS."
+printf '\n'
 exit 1
