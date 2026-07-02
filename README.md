@@ -1194,6 +1194,10 @@ characters unchanged. Handles surrogate pairs correctly by iterating code
 points rather than UTF-16 code units. Returns an empty string if the provided
 `value` is not a non-empty string.
 
+#### Parameters
+
+- `value` `{any}` — The value to capitalise.
+
 #### Example
 
 ```js
@@ -1210,6 +1214,11 @@ capitalise("αβγ"); // "Αβγ"
 
 Determines whether the given `variable` is both a string and has at least one character. If `trim` is true, the string is trimmed of whitespace before the test is performed.
 
+#### Parameters
+
+- `variable` `{any}` — The value to check.
+- `options.trim` `{boolean}` — Whether to trim whitespace before checking length.
+
 #### Example
 
 ```js
@@ -1224,6 +1233,11 @@ isNonEmptyString("  ", { trim: true }); // false
 
 Trim the left hand side of `string` using the provided string or RegExp `pattern`. Trims whitespace by default.
 
+#### Parameters
+
+- `string` `{string}` — The string to trim.
+- `pattern` `{string | RegExp}` — The pattern to trim from the left hand side.
+
 #### Example
 
 ```js
@@ -1236,6 +1250,11 @@ ltrim("***string***", new RegExp("\\*+")); // string***
 
 Trim the right hand side of `string` using the provided string or RegExp `pattern`. Trims whitespace by default.
 
+#### Parameters
+
+- `string` `{string}` — The string to trim.
+- `pattern` `{string | RegExp}` — The pattern to trim from the right hand side.
+
 #### Example
 
 ```js
@@ -1247,6 +1266,10 @@ rtrim("***string***", new RegExp("\\*+")); // ***string
 ### `StringManipulator`
 
 `StringManipulator` can be used to chain string methods together safely. A new instance of the class is created, and then any of the string helper methods can be used in any sequence. If the input at any stage is invalid, an empty string is returned.
+
+#### Parameters
+
+- `value` `{any}` — The initial string value to wrap. Non-strings fall back to an empty string.
 
 #### Example
 
@@ -1262,6 +1285,10 @@ Converts a string to camelCase (first word lowercase, subsequent words
 capitalised, no separators). Handles kebab-case, PascalCase, snake_case,
 SCREAMING_SNAKE_CASE, and mixed separators. Acronyms are normalised
 (APIKey → apiKey). Returns an empty string for non-string inputs.
+
+#### Parameters
+
+- `value` `{any}` — The value to convert to camelCase.
 
 #### Example
 
@@ -1282,6 +1309,10 @@ Handles camelCase, PascalCase, snake_case, SCREAMING_SNAKE_CASE, and mixed
 separators. Acronyms are split correctly (APIKey → api-key). Returns an
 empty string for non-string inputs.
 
+#### Parameters
+
+- `value` `{any}` — The value to convert to kebab-case.
+
 #### Example
 
 ```js
@@ -1299,6 +1330,10 @@ toKebabCase(42); // ""
 
 A safe wrapper around `toLowerCase`, returning an empty string if the provided `variable` is not a string itself.
 
+#### Parameters
+
+- `variable` `{string}` — The string to lowercase.
+
 #### Example
 
 ```js
@@ -1312,6 +1347,10 @@ toLowerCase(["A", "B"]); // ""
 Coerces the given `value` to a string, returning an empty string for `null`
 or `undefined`. Useful for form round-trips where absent string fields should
 be `""` rather than `"null"` or `"undefined"`.
+
+#### Parameters
+
+- `value` `{any}` — The value to coerce to a string.
 
 #### Example
 
@@ -1328,6 +1367,10 @@ Converts a string to PascalCase (each word capitalised, no separators).
 Handles camelCase, kebab-case, snake_case, SCREAMING_SNAKE_CASE, and mixed
 separators. Acronyms are normalised (APIKey → ApiKey). Returns an empty
 string for non-string inputs.
+
+#### Parameters
+
+- `value` `{any}` — The value to convert to PascalCase.
 
 #### Example
 
@@ -1348,6 +1391,10 @@ underscores). Handles camelCase, PascalCase, kebab-case, snake_case, and
 mixed separators. Acronyms are split correctly (APIKey → API_KEY). Returns
 an empty string for non-string inputs.
 
+#### Parameters
+
+- `value` `{any}` — The value to convert to SCREAMING_SNAKE_CASE.
+
 #### Example
 
 ```js
@@ -1367,6 +1414,10 @@ Handles camelCase, PascalCase, kebab-case, SCREAMING_SNAKE_CASE, and mixed
 separators. Acronyms are split correctly (APIKey → api_key). Returns an
 empty string for non-string inputs.
 
+#### Parameters
+
+- `value` `{any}` — The value to convert to snake_case.
+
 #### Example
 
 ```js
@@ -1383,6 +1434,10 @@ toSnakeCase(42); // ""
 
 A safe wrapper around `toUpperCase`, returning an empty string if the provided `variable` is not a string itself.
 
+#### Parameters
+
+- `variable` `{string}` — The string to uppercase.
+
 #### Example
 
 ```js
@@ -1394,6 +1449,11 @@ toUpperCase(["A", "B"]); // ""
 ### `trim(string, pattern: string | RegExp = "\\s")`
 
 Trim both sides of `string` using the provided string or RegExp `pattern`. Trims whitespace by default.
+
+#### Parameters
+
+- `string` `{string}` — The string to trim.
+- `pattern` `{string | RegExp}` — The pattern to trim from both sides.
 
 #### Example
 
@@ -1408,14 +1468,17 @@ trim("***string***", new RegExp("\\*+")); // string
 
 Truncate a string to a given length, with various options for how the truncation occurs.
 
-If the provided variable is not a string, returns an empty string.
+#### Parameters
 
-- `length`: The length to truncate the string to
-- `decoration`: The decoration to append to the string if it is truncated
-- `includeDecoration`: Whether to include the length of the decoration in length calculations
-- `preserveWords`: Whether to avoid breaking a word during truncation
-- `strict`: When preserving words, if strict the resulting length will be less than the desired length
-- `position`: Where to truncate: `"end"` (default), `"start"`, or `"middle"`
+- `string` `{string}` — The string to truncate.
+- `length` `{number}` — The length to truncate the string to.
+- `options.decoration` `{string}` — The decoration to append to the string if it is truncated.
+- `options.includeDecoration` `{boolean}` — Whether to include the length of the decoration in length calculations.
+- `options.preserveWords` `{boolean}` — Whether to avoid breaking a word during truncation.
+- `options.strict` `{boolean}` — When preserving words, if strict the resulting length will be less than the desired length.
+- `options.position` `{"start" | "end" | "middle"}` — Where to truncate: `"end"` (default), `"start"`, or `"middle"`.
+
+If the provided variable is not a string, returns an empty string.
 
 #### Example
 
