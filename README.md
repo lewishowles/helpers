@@ -826,6 +826,12 @@ validateOrFallback(5, "number", 0); // 5
 
 Ensure that the provided `number` is between `minimum` and `maximum` (inclusive). If `number` is lower than `minimum`, `minimum` is returned. If `number` is higher than maximum, `maximum` is returned.
 
+#### Parameters
+
+- `number` `{number}` — The number to clamp.
+- `minimum` `{number}` — The lowest allowed value.
+- `maximum` `{number}` — The highest allowed value.
+
 If `number` is not a number, `minimum` is returned.
 
 #### Example
@@ -841,6 +847,10 @@ clamp(NaN); // 0
 
 Determines whether the given `variable` is a number and not NaN.
 
+#### Parameters
+
+- `variable` `{any}` — The value to check.
+
 #### Example
 
 ```js
@@ -852,6 +862,10 @@ isNumber("string"); // false
 ### `isNumeric(variable: any)`
 
 Determines whether the given `variable` is a number, or a string containing a number.
+
+#### Parameters
+
+- `variable` `{any}` — The value to check.
 
 #### Example
 
@@ -867,6 +881,11 @@ isNumeric("5.6"); // true
 
 Rounds the given `number` to the specified `precision`. If `precision` is not provided, it defaults to 0.
 
+#### Parameters
+
+- `number` `{number}` — The number to round.
+- `precision` `{number}` — The number of decimal places to keep.
+
 #### Example
 
 ```js
@@ -879,6 +898,10 @@ round(4.567, -1); // 0
 ### `toNullableNumber(value: any)`
 
 Coerces the given `value` to a number, returning `null` for empty string, `null`, or `undefined`. Useful for form round-trips where absent numeric fields should be `null` rather than `0` or `NaN`.
+
+#### Parameters
+
+- `value` `{any}` — The value to coerce.
 
 #### Example
 
@@ -895,6 +918,11 @@ Calculates the percentage of `value` relative to `total`, returning `0` when
 `total` is zero or falsy to avoid division by zero. Non-numeric inputs are
 coerced; `NaN` or `Infinity` inputs return `0`. The result is not clamped, so
 a `value` exceeding `total` will produce a percentage above 100.
+
+#### Parameters
+
+- `value` `{any}` — The value to convert to a percentage.
+- `total` `{any}` — The total value that represents 100%.
 
 #### Example
 
