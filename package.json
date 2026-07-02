@@ -90,7 +90,8 @@
 		"check:type-declarations": "support/check-type-declarations.sh",
 		"helpers:search": "support/search-helpers.js",
 		"publint": "publint",
-		"attw": "support/check-attw.sh"
+		"attw": "support/check-attw.sh",
+		"check:all": "support/run-all-checks.sh"
 	},
 	"dependencies": {
 		"dayjs": "^1.11.21",
