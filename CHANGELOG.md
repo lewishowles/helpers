@@ -1,6 +1,8 @@
 # Changelog
 
-## 1.6.0: 2026-07-01
+## Unreleased
+
+## 1.6.0: 2026-07-03
 
 ### New helpers
 
