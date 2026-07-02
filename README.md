@@ -1358,6 +1358,29 @@ keys({}); // []
 keys("string"); // []
 ```
 
+### `mapArrayProperty(object: object, property: string, mapper: Function)`
+
+Returns a shallow copy of `object` with the array at `property` replaced by
+the result of calling `mapper` over it. If `object[property]` is not a
+non-empty array, `property` resolves to `[]` in the result rather than
+being omitted.
+
+#### Parameters
+
+- `object` `{object}` — The object to read the array from.
+- `property` `{string}` — The property holding the array to map.
+- `mapper` `{Function}` — The mapper function, forwarded as-is to `Array.prototype.map`.
+
+#### Example
+
+```js
+mapArrayProperty({ items: [1, 2, 3] }, "items", (item) => item * 2);
+// { items: [2, 4, 6] }
+
+mapArrayProperty({ total: 0 }, "items", (item) => item);
+// { total: 0, items: [] }
+```
+
 ### `objectContains(object: object, needle: any, { exclude: string[] = null, include: string[] = null, caseInsensitive: boolean = true, allowPartial: boolean = false })`
 
 Returns true if one of the `object`'s values is `needle`. Also works when `object` is an array.

@@ -27,6 +27,11 @@ export declare function isObject(variable: any): variable is object;
 export declare function isPlainObject(variable: any): variable is Record<string, any>;
 export declare function keyBy<T extends object>(array: T[], key: keyof T): Record<string, T>;
 export declare function keys(object: object): string[];
+export declare function mapArrayProperty<T extends object, U = any>(
+	object: T,
+	property: string,
+	mapper: (item: any, index: number, array: any[]) => U,
+): T & Record<string, U[]>;
 export declare function objectContains(
 	object: object | any[],
 	needle: any,

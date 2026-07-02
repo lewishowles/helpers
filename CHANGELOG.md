@@ -24,6 +24,7 @@
 
 - Added `firstDefinedPath`: tries each dot-notation path in turn, returning the first defined value found. Paths with `null` or `undefined` values are skipped. Useful for extracting data from responses with varying shapes without hard-coding one structure.
 - Added `isPlainObject`: checks whether a value is a plain object literal, excluding arrays, `null`, and non-plain objects such as `Date`, `Map`, `Set`, or class instances.
+- Added `mapArrayProperty`: returns a shallow copy of an object with the array at `property` replaced by the result of mapping it. Missing, empty, or non-array `property` resolves to `[]` in the result rather than being omitted. An invalid (non-string or empty) `property` returns a shallow copy of the object unchanged.
 
 #### string
 
