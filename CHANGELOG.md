@@ -10,6 +10,12 @@
 
 ### Changes
 
+#### array
+
+- Extended `sortByProperty` with an optional multi-criteria form: passing an array of `{ property, ascending }` objects sorts by each in order, using the first non-zero comparison.
+
+### Changes
+
 #### date
 
 - Exposed `getDateHelpersConfig` from the `@lewishowles/helpers/date` subpath. Previously internal, now available for projects building custom date helpers that need to respect the same global defaults set via `configureDateHelpers`.

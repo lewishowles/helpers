@@ -282,22 +282,31 @@ range(5, 0);     // [5, 4, 3, 2, 1, 0]
 range(5, 0, -1); // [5, 4, 3, 2, 1, 0]
 ```
 
-### `sortByProperty(array: any[], property: string, { ascending: boolean: true })`
+### `sortByProperty(array: any[], criteria: object[])`
 
-Returns a new array containing the `array` of objects, sorted by the value at `property`, with optional direction.
+Returns a new array containing the `array` of objects, sorted by the value at
+`property`, with optional direction. When an array of criteria objects is
+passed, sorts by each criterion in order, using the first non-zero
+comparison.
 
 #### Parameters
 
 - `array` `{any[]}` — The array of objects to sort.
 - `property` `{string}` — The property path to sort by.
 - `options.ascending` `{boolean}` — Whether to sort from lowest to highest.
+- `criteria` `{object[]}` — An array of criteria objects to sort by, in priority order.
+- `criteria[].property` `{string}` — The property path to sort by.
+- `criteria[].ascending` `{boolean}` — Whether to sort from lowest to highest.
 
 #### Example
 
 ```js
 sortByProperty([{ name: "Lewis" }, { name: "Alice" }], "name"); // [{ name: "Alice" }, { name: "Lewis" }]
-sortByProperty([{ name: "Lewis" }, { name: "Alice" }], "age"); // [{ name: "Lewis" }, { name: "Alice" }]
 sortByProperty([{ name: "Lewis" }, { name: "Alice" }], "name", { ascending: false }); // [{ name: "Lewis" }, { name: "Alice" }]
+sortByProperty([{ last: "Smith", first: "Alice" }, { last: "Jones", first: "Bob" }], [
+  { property: "last", ascending: true },
+  { property: "first", ascending: true },
+]); // [{ last: "Jones", first: "Bob" }, { last: "Smith", first: "Alice" }]
 ```
 
 ### `tail(array: any[])`
