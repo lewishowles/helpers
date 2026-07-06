@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.7.0: 2026-07-06
 
 ### New helpers
 
@@ -18,8 +18,6 @@
 #### array
 
 - Extended `sortByProperty` with an optional multi-criteria form: passing an array of `{ property, ascending }` objects sorts by each in order, using the first non-zero comparison.
-
-### Changes
 
 #### date
 
