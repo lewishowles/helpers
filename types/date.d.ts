@@ -39,6 +39,7 @@ export type DateHelperOptions = Partial<Omit<DateHelperConfig, "formats">> & {
 };
 
 export declare function configureDateHelpers(config?: DateHelperOptions): DateHelperConfig;
+export declare function getDateHelpersConfig(): DateHelperConfig;
 export declare function parseDate(
 	value: MaybeDateHelperInput,
 	options?: DateHelperOptions,

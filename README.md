@@ -459,6 +459,17 @@ formatRelativeDate("2026-06-22T09:59:00", "2026-06-22T10:00:00");
 // "1 minute ago"
 ```
 
+### `getDateHelpersConfig()`
+
+Get a defensive copy of the active date helper configuration. Useful when building custom date helpers that should respect the same global defaults set via `configureDateHelpers`.
+
+#### Example
+
+```js
+const config = getDateHelpersConfig();
+// { locale: "en-GB", timeZone: "Europe/London", inputFormat: "DD/MM/YYYY", ... }
+```
+
 ### `getDateParts(value: any, options?: object)`
 
 Convert a `parseDate`-compatible input into `{ year, month, day }`, for use

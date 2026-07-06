@@ -1,0 +1,33 @@
+{
+	"$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
+
+	"entry": [
+		"lib/index.js",
+		"lib/array/array.js",
+		"lib/date/date.js",
+		"lib/form/form.js",
+		"lib/general/general.js",
+		"lib/number/number.js",
+		"lib/object/object.js",
+		"lib/string/string.js",
+		"lib/url/url.js",
+		"lib/vue/vue.js"
+	],
+
+	"publicPackages": ["@lewishowles/helpers"],
+
+	"ignoreDependencies": [
+		"@arethetypeswrong/cli",
+		"@lewishowles/cli-style",
+		"@stylistic/eslint-plugin",
+		"globals"
+	],
+
+	"duplicates": {
+		"minOccurrences": 2
+	},
+
+	"rules": {
+		"unused-dependencies": "warn"
+	}
+}

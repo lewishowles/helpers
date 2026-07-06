@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Changes
+
+#### date
+
+- Exposed `getDateHelpersConfig` from the `@lewishowles/helpers/date` subpath. Previously internal, now available for projects building custom date helpers that need to respect the same global defaults set via `configureDateHelpers`.
+
+### Fixes
+
+- `vue` is now an optional peer dependency rather than a dev dependency. The `@lewishowles/helpers/vue` subpath imports from `vue` at runtime, so a production-only install no longer breaks the Vue helpers. Consumers who only use the root import do not need Vue installed.
+
 ## 1.6.0: 2026-07-03
 
 ### New helpers
