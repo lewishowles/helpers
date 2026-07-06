@@ -1,6 +1,10 @@
 export declare function arrayLength(array: any[]): number;
 export declare function chunk<T>(array: T[], chunkSize: number): T[][];
 export declare function compact(array: any[]): any[];
+export declare function countBy<T extends object>(
+	array: T[],
+	property: string,
+): Record<string, number>;
 export declare function ensureArray<T>(variable: T | T[]): T[];
 export declare function firstDefined<T>(array: T[]): T | undefined;
 export declare function getNextIndex(

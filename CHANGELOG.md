@@ -4,6 +4,10 @@
 
 ### New helpers
 
+#### array
+
+- Added `countBy`: counts occurrences in an array of objects grouped by a property value. Mirrors the `groupBy` signature and dot-path support, returning counts instead of sub-arrays.
+
 #### date
 
 - Added `addToDate`: shifts a `parseDate`-compatible value by a calendar amount (`day`/`week`/`month`/`year`), returning a new Temporal value of the same precision. Negative amounts subtract; `0` returns the same date.

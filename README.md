@@ -68,6 +68,29 @@ compact([0, 1, false, 2, "", 3]); // [1, 2, 3]
 compact([true, true, true]); // [true, true, true]
 ```
 
+### `countBy(array: object[], property: string)`
+
+Count the occurrences in `array` of each distinct value at `property`.
+Supports dot-path notation for nested properties.
+
+#### Parameters
+
+- `array` `{object[]}` — The array of objects to count.
+- `property` `{string}` — The property path to count items by. Dot paths are supported.
+
+Items where `property` resolves to `undefined` are counted under the key
+`"undefined"`.
+
+#### Example
+
+```js
+countBy([{ type: "a" }, { type: "b" }, { type: "a" }], "type");
+// { a: 2, b: 1 }
+
+countBy([{ address: { city: "York" } }, { address: { city: "Leeds" } }, { address: { city: "York" } }], "address.city");
+// { York: 2, Leeds: 1 }
+```
+
 ### `ensureArray(variable: any)`
 
 Ensure that the given variable is an array.
