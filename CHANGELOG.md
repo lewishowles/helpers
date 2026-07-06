@@ -7,6 +7,7 @@
 #### array
 
 - Added `countBy`: counts occurrences in an array of objects grouped by a property value. Mirrors the `groupBy` signature and dot-path support, returning counts instead of sub-arrays.
+- Added `firstWhere`: returns the first item in an array matching a predicate function or a filter object. Filter-object form supports dot-path notation and uses strict equality with AND logic.
 
 #### date
 

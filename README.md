@@ -129,6 +129,29 @@ firstDefined([undefined, undefined, "c", "d"]); // "c"
 firstDefined([]); // undefined
 ```
 
+### `firstWhere(array: any[], filters: object): any`
+
+Return the first item in `array` that matches the given predicate function or
+filter object. Returns `undefined` when no item matches or the input is
+empty.
+
+#### Parameters
+
+- `array` `{any[]}` — The array to search.
+- `predicate` `{function}` — A function called with `(item, index, array)` that returns a truthy value
+to match.
+- `filters` `{object}` — An object of key-value pairs to match exactly using strict equality.
+Supports dot-path notation for nested properties. All pairs must match
+(AND logic).
+
+#### Example
+
+```js
+firstWhere(users, (user) => user.active);
+firstWhere(users, { role: "admin", active: true });
+firstWhere(orders, { "customer.city": "York" });
+```
+
 ### `getNextIndex(index: number, reference: any[], { reverse: boolean = false, wrap: boolean = false })`
 
 Given a starting `index`, determine the next available index in the `reference` array.

@@ -7,6 +7,14 @@ export declare function countBy<T extends object>(
 ): Record<string, number>;
 export declare function ensureArray<T>(variable: T | T[]): T[];
 export declare function firstDefined<T>(array: T[]): T | undefined;
+export declare function firstWhere<T>(
+	array: T[],
+	predicate: (item: T, index: number, array: T[]) => unknown,
+): T | undefined;
+export declare function firstWhere<T extends object>(
+	array: T[],
+	filters: Record<string, unknown>,
+): T | undefined;
 export declare function getNextIndex(
 	index: number,
 	reference: any[],
