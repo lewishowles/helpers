@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### New helpers
+
+#### date
+
+- Added `addToDate`: shifts a `parseDate`-compatible value by a calendar amount (`day`/`week`/`month`/`year`), returning a new Temporal value of the same precision. Negative amounts subtract; `0` returns the same date.
+
 ### Changes
 
 #### date

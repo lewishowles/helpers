@@ -38,10 +38,18 @@ export type DateHelperOptions = Partial<Omit<DateHelperConfig, "formats">> & {
 	formats?: Record<string, DateHelperFormat>;
 };
 
+export type DateHelperUnit = "day" | "week" | "month" | "year";
+
 export declare function configureDateHelpers(config?: DateHelperOptions): DateHelperConfig;
 export declare function getDateHelpersConfig(): DateHelperConfig;
 export declare function parseDate(
 	value: MaybeDateHelperInput,
+	options?: DateHelperOptions,
+): DateHelperValue | null;
+export declare function addToDate(
+	value: MaybeDateHelperInput,
+	amount: number,
+	unit: DateHelperUnit,
 	options?: DateHelperOptions,
 ): DateHelperValue | null;
 export declare function getDateParts(

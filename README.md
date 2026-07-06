@@ -379,6 +379,32 @@ uniqueBy([], "id");
 
 ## Date
 
+### `addToDate(value: any, amount: number, unit: "day" | "week" | "month" | "year", options?: object)`
+
+Shift a `parseDate`-compatible value by a calendar amount and unit, returning
+a new Temporal value of the same precision as the input. Negative amounts
+subtract; `0` returns an equivalent value for the same day.
+
+#### Parameters
+
+- `value` `{any}` — The date value to shift.
+- `amount` `{number}` — The integer amount to shift by. Negative values subtract.
+- `unit` `{("day"|"week"|"month"|"year")}` — The calendar unit to shift by.
+- `options` `{object}` — Per-call date helper options (passed through to `parseDate`).
+- `options.inputFormat` `{string}` — The Day.js-style token format used when parsing non-ISO strings.
+
+`Temporal.Instant` values return `null` because instants have no calendar and
+cannot accept calendar-unit arithmetic. Anchor to a timezone first if you
+need to shift an instant.
+
+#### Example
+
+```js
+addToDate("2026-07-06", 1, "day"); // Temporal.PlainDate 2026-07-07
+addToDate("2026-07-06T10:15:30", -3, "day"); // Temporal.PlainDateTime 2026-07-03T10:15:30
+addToDate("2026-07-06T10:00:00[Europe/London]", 2, "week"); // Temporal.ZonedDateTime 2026-07-20T10:00:00+01:00[Europe/London]
+```
+
 ### `configureDateHelpers(config?: object)`
 
 Set project-wide defaults for date parsing and formatting.
