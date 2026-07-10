@@ -596,6 +596,23 @@ getRelativeDateParts("2026-06-22T10:00:00", "2026-06-22T10:01:00");
 // { value: -1, unit: "minute" }
 ```
 
+### `hasDateParts(parts: object)`
+
+Determine whether a `{ day, month, year }` object has at least one non-empty
+part. Empty strings, whitespace-only strings, `null`, and `undefined` count
+as empty.
+
+#### Parameters
+
+- `parts` `{object}` — The date parts to inspect.
+
+#### Example
+
+```js
+hasDateParts({ day: "1", month: "", year: "" }); // true
+hasDateParts({ day: "", month: "", year: "" }); // false
+```
+
 ### `parseDate(value: any, options?: object)`
 
 Convert `Date`, timestamp, Temporal, ISO/RFC 9557 string, configured
@@ -631,13 +648,13 @@ an instant is needed.
 #### Parameters
 
 - `parts` `{object}` — The date parts to convert.
-- `parts.year` `{number}` — The year.
-- `parts.month` `{number}` — The month, `1`-indexed.
-- `parts.day` `{number}` — The day of the month.
+- `parts.year` `{number|string}` — The year.
+- `parts.month` `{number|string}` — The month, `1`-indexed.
+- `parts.day` `{number|string}` — The day of the month.
 
 Only a `{ year, month, day }` plain object is accepted; strings,
-timestamps, `Date` instances, and Temporal values are rejected. Missing,
-non-numeric, or out-of-range parts also return `null`.
+timestamps, `Date` instances, and Temporal values are rejected. String parts
+must be numeric. Missing, non-numeric, or out-of-range parts return `null`.
 
 #### Example
 
@@ -680,6 +697,9 @@ Validate a field given its `fieldName`, the field's `validationRules`, and the s
 Returns `{ valid, errors, validated }`. If input is invalid (missing field name, rules, or form data), `validated` is false and the field is treated as valid.
 
 Available rules and properties include:
+
+Single-field rules other than `required` pass when the field has no value.
+Combine them with `required` or `required_if` when empty values should fail.
 
 #### `required`
 
@@ -734,6 +754,14 @@ Ensure that the given value is not included within `options`.
 `[{ rule: "regexp", regexp: /[abc]+/, message: "Your ID should only contain the letters a, b, and c" }]`
 
 Ensure that the provided value matches `regexp`.
+
+#### `valid_date`
+
+`[{ rule: "valid_date", message: "Enter a complete date" }]`
+
+Validate `{ day, month, year }` date-parts objects when the user has entered
+at least one part. Empty or missing values pass so presence remains the job
+of `required` and `required_if`.
 
 #### `custom`
 

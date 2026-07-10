@@ -29,6 +29,7 @@ type ValidationRule =
 	| { rule: "in"; options: any[]; message: string }
 	| { rule: "not_in"; options: any[]; message: string }
 	| { rule: "regexp"; regexp: RegExp; message: string }
+	| { rule: "valid_date"; message: string }
 	| {
 			rule: "custom";
 			validate: (value: any, formData: Record<string, any>) => boolean;

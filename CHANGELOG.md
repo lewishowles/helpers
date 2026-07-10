@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased
+
+### New helpers
+
+#### date
+
+- Added `hasDateParts`: checks whether a `{ day, month, year }` object has at least one non-empty part, for date-parts form validation.
+
+### Fixes
+
+- `required` and `required_if` now treat empty arrays as missing values, so empty checkbox groups fail required validation.
+- Added the `valid_date` form rule for date-parts fields, validating partial and invalid dates while skipping untouched or fully cleared optional fields.
+- Optional single-field form rules now skip missing values consistently, including `null`, empty strings, `false`, and empty arrays.
+
 ## 1.7.0: 2026-07-06
 
 ### New helpers

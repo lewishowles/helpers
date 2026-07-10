@@ -6,6 +6,8 @@ export interface DateParts {
 	day: number;
 }
 
+export type DatePartInput = Partial<Record<keyof DateParts, number | string | null | undefined>>;
+
 export type DateHelperInput =
 	| Date
 	| number
@@ -56,7 +58,8 @@ export declare function getDateParts(
 	value: MaybeDateHelperInput,
 	options?: DateHelperOptions,
 ): DateParts | null;
-export declare function toDateFromParts(parts: Partial<DateParts>): Temporal.PlainDate | null;
+export declare function hasDateParts(parts: DatePartInput | null | undefined): boolean;
+export declare function toDateFromParts(parts: DatePartInput): Temporal.PlainDate | null;
 export declare function toEpochMilliseconds(
 	value: MaybeDateHelperInput,
 	options?: DateHelperOptions,
