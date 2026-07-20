@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Run all support checks and render an aggregate diagnostic report.
+# Run all package and support checks, then render an aggregate diagnostic report.
 #
-# Each check script runs with its stdout suppressed. The runner records the
-# exit code and any failure detail, then renders a single diagnostic report
-# through cli-style's `diagnostic-report` pattern.
+# Each check runs with its stdout suppressed. The runner records the exit code
+# and any failure detail, then renders a single diagnostic report through
+# cli-style's `diagnostic-report` pattern.
 #
 # Usage:
 #   ./support/run-all-checks.sh
@@ -15,14 +15,14 @@ source "$SCRIPT_DIR/output.sh"
 
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
-# Checks to run, in display order. Each entry is "name|description|script".
+# Checks to run, in display order. Each entry is "name|description|command".
 CHECKS=(
 	"README|Generated README|support/check-readme.sh"
-	"Exports|Helper exports|support/check-exports.sh"
-	"Runtime deps|Runtime dependencies|support/check-runtime-deps.sh"
-	"Package size|Package size budgets|support/check-package-size.sh"
-	"Test coverage|Test coverage|support/check-test-coverage.sh"
-	"Type declarations|Type declarations|support/check-type-declarations.sh"
+	"Exports|Helper exports|check:exports"
+	"Runtime deps|Runtime dependencies|check:runtime-deps"
+	"Package size|Package size budgets|check:package-size"
+	"Test coverage|Test coverage|check:test-coverage"
+	"Type declarations|Type declarations|check:type-declarations"
 	"ATTW|Are the types wrong|support/check-attw.sh"
 )
 
@@ -37,16 +37,20 @@ has_failures=0
 #     Short check name for the report.
 # @param  {string}  description
 #     Human-readable description for the report.
-# @param  {string}  script
-#     Repo-relative path to the check script.
+# @param  {string}  command
+#     Package script name or repo-relative support-script path.
 run_check() {
 	local name="$1"
 	local description="$2"
-	local script="$3"
+	local command="$3"
 	local output
 	local exit_code
 
-	output="$(bash "$REPO_ROOT/$script" 2>&1)" && exit_code=0 || exit_code=$?
+	if [[ "$command" == check:* ]]; then
+		output="$(bun run "$command" 2>&1)" && exit_code=0 || exit_code=$?
+	else
+		output="$(bash "$REPO_ROOT/$command" 2>&1)" && exit_code=0 || exit_code=$?
+	fi
 
 	local result
 	if [[ $exit_code -eq 0 ]]; then
@@ -87,8 +91,8 @@ run_check() {
 }
 
 for check in "${CHECKS[@]}"; do
-	IFS='|' read -r name description script <<< "$check"
-	run_check "$name" "$description" "$script"
+	IFS='|' read -r name description command <<< "$check"
+	run_check "$name" "$description" "$command"
 done
 
 # Build the nextActions array — empty on success, guidance on failure.

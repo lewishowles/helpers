@@ -1,0 +1,27 @@
+{
+	"exportsPolicy": {
+		"internalOnly": ["lib/object/path-traversal.js", "lib/string/tokenise-words.js"],
+		"fileOnlyEntrypoints": ["./resolver"]
+	},
+	"sizeBudgets": {
+		"perFile": {
+			"globs": ["dist/*.js"],
+			"maxBytes": 12288
+		},
+		"total": [
+			{
+				"name": "dist total",
+				"globs": ["dist/**"],
+				"maxBytes": 122880
+			},
+			{
+				"name": "published files total",
+				"globs": ["dist/**", "types/**"],
+				"maxBytes": 184320
+			}
+		]
+	},
+	"runtimeDependencyPolicy": {
+		"allowed": ["dayjs", "temporal-polyfill"]
+	}
+}

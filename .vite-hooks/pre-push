@@ -1,10 +1,10 @@
 bun test:unit:run
-./support/check-exports.sh
-./support/check-test-coverage.sh
-./support/check-type-declarations.sh
+bun run check:exports
+bun run check:test-coverage
+bun run check:type-declarations
 ./support/check-readme.sh
-./support/check-runtime-deps.sh
+bun run check:runtime-deps
 bun run build
-./support/check-package-size.sh
+bun run check:package-size
 bun run publint
 bun run attw

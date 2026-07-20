@@ -1,2 +1,2 @@
 vp staged
-./support/check-type-declarations.sh
+bun run check:type-declarations

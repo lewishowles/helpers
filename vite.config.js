@@ -6,7 +6,7 @@ import lint from "./.oxlintrc.json" with { type: "json" };
 export default defineConfig({
 	staged: {
 		"*": "vp check --fix",
-		"{lib/**/*.js,support/check-exports.sh}": "bun run check:exports",
+		"{lib/**/*.js,quality.config.json}": getExportsCheckCommand,
 		"{README.md,lib/**/*.js,support/generate-readme.js}": "bun run check:readme",
 	},
 	fmt,
@@ -46,6 +46,16 @@ export default defineConfig({
 		},
 	},
 });
+
+/**
+ * Run the exports check without staged file arguments.
+ *
+ * @returns {string}
+ *     Package script command.
+ */
+function getExportsCheckCommand() {
+	return "bun run check:exports";
+}
 
 /**
  * Get the paths to multiple files from their names.
