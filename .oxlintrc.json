@@ -14,7 +14,13 @@
 		"builtin": true,
 		"browser": true
 	},
-	"ignorePatterns": ["**/dist/*", ".codebase-memory/**", ".boilersuit/**", "support/"],
+	"ignorePatterns": [
+		"**/.*",
+		"dist/**",
+		"dist-docs/**",
+		"PROGRESS.md",
+		"AGENTS.md"
+	],
 	"rules": {
 		"no-case-declarations": "error",
 		"no-empty": "error",
