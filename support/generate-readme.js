@@ -3,8 +3,10 @@
 // Automatically generate helper references from their JSDoc in README,
 // replacing content between two markers.
 
+import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
+import process from "node:process";
 
 // The marker where generated helper documentation starts in the README.
 const readmeStartMarker = "<!-- helpers:start -->";
@@ -25,6 +27,7 @@ function generateReadme() {
 
 	if (shouldCheckReadme) {
 		checkReadme(readme, nextReadme);
+
 		return;
 	}
 
@@ -38,9 +41,31 @@ function getGeneratedReadme() {
 	const readmePath = path.join(repoRoot, "README.md");
 	const readme = fs.readFileSync(readmePath, "utf8");
 	const reference = renderHelperReference(loadHelperDocs());
-	const nextReadme = replaceGeneratedReference(readme, reference);
+	const generatedReadme = replaceGeneratedReference(readme, reference);
+	const nextReadme = formatReadme(generatedReadme);
 
 	return { nextReadme, readme, readmePath };
+}
+
+/**
+ * Format generated README content with the repository formatter.
+ *
+ * @param  {string}  readme
+ *     The generated README content.
+ */
+export function formatReadme(readme) {
+	// The local formatter keeps generated content identical to lint output.
+	const result = spawnSync("bunx", ["vp", "fmt", "--stdin-filepath=README.md"], {
+		cwd: repoRoot,
+		encoding: "utf8",
+		input: readme,
+	});
+
+	if (result.status !== 0) {
+		throw new Error(result.stderr || "Unable to format generated README content.");
+	}
+
+	return result.stdout;
 }
 
 /**
@@ -75,7 +100,8 @@ function loadHelperDocs() {
  * Get every category with a public barrel file.
  */
 function getPublicCategories() {
-	return fs.readdirSync(path.join(repoRoot, "lib"), { withFileTypes: true })
+	return fs
+		.readdirSync(path.join(repoRoot, "lib"), { withFileTypes: true })
 		.filter((entry) => entry.isDirectory())
 		.map((entry) => entry.name)
 		.filter((category) => fs.existsSync(path.join(repoRoot, "lib", category, `${category}.js`)))
@@ -98,17 +124,19 @@ function loadCategoryDocs(category) {
 	const barrel = fs.readFileSync(barrelPath, "utf8");
 	const exports = getBarrelExports(barrel);
 
-	return exports.map(({ helperFile, helperName }) => {
-		const helperPath = path.join(repoRoot, "lib", category, `${helperFile}.js`);
-		const source = fs.readFileSync(helperPath, "utf8");
-		const docs = parseHelperDocs(source, helperName, `lib/${category}/${helperFile}.js`);
+	return exports
+		.map(({ helperFile, helperName }) => {
+			const helperPath = path.join(repoRoot, "lib", category, `${helperFile}.js`);
+			const source = fs.readFileSync(helperPath, "utf8");
+			const docs = parseHelperDocs(source, helperName, `lib/${category}/${helperFile}.js`);
 
-		if (docs.category.toLowerCase() !== category) {
-			throw new Error(`${helperName} has category ${docs.category}, expected ${category}`);
-		}
+			if (docs.category.toLowerCase() !== category) {
+				throw new Error(`${helperName} has category ${docs.category}, expected ${category}`);
+			}
 
-		return docs;
-	}).sort((left, right) => compareAlphabetically(left.helper, right.helper));
+			return docs;
+		})
+		.sort((left, right) => compareAlphabetically(left.helper, right.helper));
 }
 
 /**
@@ -118,15 +146,14 @@ function loadCategoryDocs(category) {
  *     The category barrel source.
  */
 function getBarrelExports(barrel) {
-	return barrel.split("\n")
+	return barrel
+		.split("\n")
 		.map((line) => line.trim())
 		.filter((line) => line.startsWith("export { "))
 		.map((line) => {
 			const [exportClause, importPath] = line.split(" from ");
 			const helperName = exportClause.replace("export { ", "").replace(" }", "");
-			const helperFile = importPath
-				.replace("\"./", "")
-				.replace(".js\";", "");
+			const helperFile = importPath.replace('"./', "").replace('.js";', "");
 
 			return { helperFile, helperName };
 		});
@@ -152,8 +179,10 @@ function parseHelperDocs(source, helperName, helperPath) {
 	}
 
 	const docs = parseTags(docBlock);
-	const missing = ["helper", "category", "signature", "description"]
-		.filter((tag) => !docs[tag] || docs[tag].trim() === "");
+
+	const missing = ["helper", "category", "signature", "description"].filter(
+		(tag) => !docs[tag] || docs[tag].trim() === "",
+	);
 
 	if (missing.length) {
 		throw new Error(`${helperPath} is missing @${missing.join(", @")}`);
@@ -175,12 +204,14 @@ function parseHelperDocs(source, helperName, helperPath) {
  *     The exported helper name.
  */
 function findExportLine(lines, helperName) {
-	return lines.findIndex((line) => [
-		`export class ${helperName}`,
-		`export const ${helperName}`,
-		`export function ${helperName}`,
-		`export async function ${helperName}`,
-	].some((prefix) => line.startsWith(prefix)));
+	return lines.findIndex((line) =>
+		[
+			`export class ${helperName}`,
+			`export const ${helperName}`,
+			`export function ${helperName}`,
+			`export async function ${helperName}`,
+		].some((prefix) => line.startsWith(prefix)),
+	);
 }
 
 /**
@@ -216,9 +247,7 @@ export function parseTags(docBlock) {
 
 	let currentTag = null;
 
-	const lines = docBlock.split("\n")
-		.slice(1, -1)
-		.map(cleanJSDocLine);
+	const lines = docBlock.split("\n").slice(1, -1).map(cleanJSDocLine);
 
 	for (const line of lines) {
 		if (line.startsWith("@")) {
@@ -267,7 +296,7 @@ export function parseTags(docBlock) {
  *     The `@param` line content after the tag name, e.g. `{string}  readme`.
  */
 export function parseParamTag(header) {
-	const [, type, name] = header.trim().match(/^\{(.+?)\}\s+(\S+)/) ?? [, "", ""];
+	const [, type, name] = header.trim().match(/^\{(.+?)\}\s+(\S+)/) ?? [undefined, "", ""];
 
 	return { type, name, description: "" };
 }
@@ -301,17 +330,10 @@ function renderHelperReference(categories) {
 		const helpers = docs.map(renderHelperDocs).join("\n\n");
 		const categoryTitle = categoryTitles[category] ?? toTitleCase(category);
 
-		return [
-			`## ${categoryTitle}`,
-			helpers,
-		].join("\n\n");
+		return [`## ${categoryTitle}`, helpers].join("\n\n");
 	});
 
-	return [
-		readmeStartMarker,
-		sections.join("\n\n"),
-		readmeEndMarker,
-	].join("\n\n");
+	return [readmeStartMarker, sections.join("\n\n"), readmeEndMarker].join("\n\n");
 }
 
 /**
@@ -321,20 +343,14 @@ function renderHelperReference(categories) {
  *     The structured docs for a helper.
  */
 export function renderHelperDocs(docs) {
-	const parts = [
-		`### \`${docs.signature.trim()}\``,
-		docs.description.trim(),
-	];
+	const parts = [`### \`${docs.signature.trim()}\``, docs.description.trim()];
 
 	if (docs.params.length) {
 		const parameters = docs.params
 			.map(({ description, name, type }) => `- \`${name}\` \`{${type}}\` — ${description}`)
 			.join("\n");
 
-		parts.push([
-			"#### Parameters",
-			parameters,
-		].join("\n\n"));
+		parts.push(["#### Parameters", parameters].join("\n\n"));
 	}
 
 	if (docs.note?.trim()) {
@@ -342,16 +358,9 @@ export function renderHelperDocs(docs) {
 	}
 
 	if (docs.example?.trim()) {
-		const fencedExample = [
-			"```js",
-			docs.example.trim(),
-			"```",
-		].join("\n");
+		const fencedExample = ["```js", docs.example.trim(), "```"].join("\n");
 
-		parts.push([
-			"#### Example",
-			fencedExample,
-		].join("\n\n"));
+		parts.push(["#### Example", fencedExample].join("\n\n"));
 	}
 
 	return parts.join("\n\n");
@@ -395,6 +404,7 @@ function replaceGeneratedReference(readme, reference) {
  */
 function findHeadingIndex(content, heading) {
 	const lines = content.split("\n");
+
 	let offset = 0;
 
 	for (const line of lines) {

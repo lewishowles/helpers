@@ -4,6 +4,7 @@
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
+import process from "node:process";
 
 // The repository root is the parent folder of this support script.
 const repoRoot = path.resolve(import.meta.dirname, "..");
@@ -24,6 +25,7 @@ function searchHelpers() {
 
 	if (!query && process.stdin.isTTY && process.stdout.isTTY && hasFzf()) {
 		runFzf(helpers);
+
 		return;
 	}
 
@@ -31,6 +33,7 @@ function searchHelpers() {
 
 	if (matches.length === 0) {
 		console.log("No helpers found.");
+
 		return;
 	}
 
@@ -43,40 +46,41 @@ function searchHelpers() {
  * Load helper docs for every public category export.
  */
 function loadHelpers() {
-	return getCategories().flatMap((category) => {
-		const barrelPath = path.join(repoRoot, "lib", category, `${category}.js`);
-		const barrel = fs.readFileSync(barrelPath, "utf8");
-		const helperFiles = [...barrel.matchAll(/from "\.\/([^"]+)\.js"/g)].map((match) => match[1]);
+	return getCategories()
+		.flatMap((category) => {
+			const barrelPath = path.join(repoRoot, "lib", category, `${category}.js`);
+			const barrel = fs.readFileSync(barrelPath, "utf8");
+			const helperFiles = [...barrel.matchAll(/from "\.\/([^"]+)\.js"/g)].map((match) => match[1]);
 
-		return helperFiles.map((helperFile) => {
-			const sourcePath = path.join(repoRoot, "lib", category, `${helperFile}.js`);
-			const source = fs.readFileSync(sourcePath, "utf8");
-			const docs = parseDocs(source);
-			const description = docs.description.replace(/\s+/g, " ").trim();
-			const searchText = [
-				docs.helper,
-				docs.category,
-				docs.signature,
-				description,
-			].join(" ").toLowerCase();
+			return helperFiles.map((helperFile) => {
+				const sourcePath = path.join(repoRoot, "lib", category, `${helperFile}.js`);
+				const source = fs.readFileSync(sourcePath, "utf8");
+				const docs = parseDocs(source);
+				const description = docs.description.replace(/\s+/g, " ").trim();
 
-			return {
-				category: docs.category,
-				description,
-				helper: docs.helper,
-				key: `${docs.category.toLowerCase()}:${docs.helper}`,
-				searchText,
-				signature: docs.signature,
-			};
-		});
-	}).sort((left, right) => left.key.localeCompare(right.key));
+				const searchText = [docs.helper, docs.category, docs.signature, description]
+					.join(" ")
+					.toLowerCase();
+
+				return {
+					category: docs.category,
+					description,
+					helper: docs.helper,
+					key: `${docs.category.toLowerCase()}:${docs.helper}`,
+					searchText,
+					signature: docs.signature,
+				};
+			});
+		})
+		.sort((left, right) => left.key.localeCompare(right.key));
 }
 
 /**
  * Return public category folder names.
  */
 function getCategories() {
-	return fs.readdirSync(path.join(repoRoot, "lib"), { withFileTypes: true })
+	return fs
+		.readdirSync(path.join(repoRoot, "lib"), { withFileTypes: true })
 		.filter((entry) => entry.isDirectory())
 		.map((entry) => entry.name)
 		.filter((category) => fs.existsSync(path.join(repoRoot, "lib", category, `${category}.js`)))
@@ -92,6 +96,7 @@ function getCategories() {
 function parseDocs(source) {
 	const block = source.match(/\/\*\*([\s\S]*?)\*\//)?.[1] ?? "";
 	const lines = block.split("\n").map((line) => line.replace(/^\s*\*\s?/, ""));
+
 	const docs = {
 		category: getTag(lines, "category"),
 		description: getDescription(lines),
@@ -164,27 +169,41 @@ function hasFzf() {
  */
 function runFzf(helpers) {
 	const helperWidth = Math.max(...helpers.map((helper) => helper.helper.length));
-	const rows = helpers.map((helper) => [
-		helper.helper,
-		helper.category,
-		helper.signature,
-		helper.description,
-		helper.key,
-		`${helper.helper.padEnd(helperWidth)}  ${dim}${helper.category}${reset}  ${helper.description}`,
-	].join(fieldSeparator)).join("\n");
 
-	const result = spawnSync("fzf", [
-		"--delimiter", fieldSeparator,
-		"--ansi",
-		"--with-nth", "6",
-		"--nth", "1,2,3,4,5",
-		"--preview", `${process.argv[1]} --preview {1} {2} {3} {4} {5}`,
-		"--preview-window", "down,30%,wrap",
-	], {
-		encoding: "utf8",
-		input: rows,
-		stdio: ["pipe", "pipe", "inherit"],
-	});
+	const rows = helpers
+		.map((helper) =>
+			[
+				helper.helper,
+				helper.category,
+				helper.signature,
+				helper.description,
+				helper.key,
+				`${helper.helper.padEnd(helperWidth)}  ${dim}${helper.category}${reset}  ${helper.description}`,
+			].join(fieldSeparator),
+		)
+		.join("\n");
+
+	const result = spawnSync(
+		"fzf",
+		[
+			"--delimiter",
+			fieldSeparator,
+			"--ansi",
+			"--with-nth",
+			"6",
+			"--nth",
+			"1,2,3,4,5",
+			"--preview",
+			`${process.argv[1]} --preview {1} {2} {3} {4} {5}`,
+			"--preview-window",
+			"down,30%,wrap",
+		],
+		{
+			encoding: "utf8",
+			input: rows,
+			stdio: ["pipe", "pipe", "inherit"],
+		},
+	);
 
 	if (result.status !== 0 || !result.stdout.trim()) {
 		return;
@@ -227,6 +246,7 @@ function printPreview() {
 function wrapText(text, width) {
 	const words = text.split(/\s+/).filter(Boolean);
 	const lines = [];
+
 	let line = "";
 
 	for (const word of words) {

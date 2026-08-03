@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+### New helpers
+
+#### date
+
+- Added `isTemporalDate`: recognises supported Temporal date values across compatible module copies, with an optional type-specific check.
+
+### Fixes
+
+- Date helpers now accept and process supported Temporal values from another compatible `temporal-polyfill` copy without relying on shared constructor identity.
+
 ## 1.7.1: 2026-07-10
 
 ### New helpers

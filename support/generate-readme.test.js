@@ -1,5 +1,15 @@
 import { describe, expect, test } from "vite-plus/test";
-import { parseParamTag, parseTags, renderHelperDocs } from "./generate-readme.js";
+import { formatReadme, parseParamTag, parseTags, renderHelperDocs } from "./generate-readme.js";
+
+describe("formatReadme", () => {
+	test("Formats generated Markdown with the repository formatter", () => {
+		const readme = ["# Test", "", "```js", "const items=[1,2]", "```", ""].join("\n");
+
+		expect(formatReadme(readme)).toBe(
+			["# Test", "", "```js", "const items = [1, 2];", "```", ""].join("\n"),
+		);
+	});
+});
 
 describe("parseTags", () => {
 	test("should parse a single @param tag", () => {
@@ -41,7 +51,11 @@ describe("parseTags", () => {
 		].join("\n");
 
 		expect(parseTags(docBlock).params).toEqual([
-			{ type: "string", name: "options.decoration", description: "The decoration to append when truncating." },
+			{
+				type: "string",
+				name: "options.decoration",
+				description: "The decoration to append when truncating.",
+			},
 		]);
 	});
 
@@ -92,12 +106,12 @@ describe("renderHelperDocs", () => {
 		const docs = {
 			signature: "example(needle: string)",
 			description: "Find a needle.",
-			params: [
-				{ type: "string", name: "needle", description: "The value to find." },
-			],
+			params: [{ type: "string", name: "needle", description: "The value to find." }],
 		};
 
-		expect(renderHelperDocs(docs)).toContain("#### Parameters\n\n- `needle` `{string}` — The value to find.");
+		expect(renderHelperDocs(docs)).toContain(
+			"#### Parameters\n\n- `needle` `{string}` — The value to find.",
+		);
 	});
 
 	test("should omit the Parameters section when there are no params", () => {

@@ -26,6 +26,8 @@ export type DateHelperValue =
 	| Temporal.PlainDateTime
 	| Temporal.ZonedDateTime;
 
+export type TemporalDateType = "Instant" | "PlainDate" | "PlainDateTime" | "ZonedDateTime";
+
 export type DateHelperFormat = Intl.DateTimeFormatOptions | string;
 
 export interface DateHelperConfig {
@@ -59,6 +61,10 @@ export declare function getDateParts(
 	options?: DateHelperOptions,
 ): DateParts | null;
 export declare function hasDateParts(parts: DatePartInput | null | undefined): boolean;
+export declare function isTemporalDate(
+	value: unknown,
+	type?: TemporalDateType,
+): value is DateHelperValue;
 export declare function toDateFromParts(parts: DatePartInput): Temporal.PlainDate | null;
 export declare function toEpochMilliseconds(
 	value: MaybeDateHelperInput,

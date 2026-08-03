@@ -87,7 +87,10 @@ Items where `property` resolves to `undefined` are counted under the key
 countBy([{ type: "a" }, { type: "b" }, { type: "a" }], "type");
 // { a: 2, b: 1 }
 
-countBy([{ address: { city: "York" } }, { address: { city: "Leeds" } }, { address: { city: "York" } }], "address.city");
+countBy(
+	[{ address: { city: "York" } }, { address: { city: "Leeds" } }, { address: { city: "York" } }],
+	"address.city",
+);
 // { York: 2, Leeds: 1 }
 ```
 
@@ -139,10 +142,10 @@ empty.
 
 - `array` `{any[]}` — The array to search.
 - `predicate` `{function}` — A function called with `(item, index, array)` that returns a truthy value
-to match.
+  to match.
 - `filters` `{object}` — An object of key-value pairs to match exactly using strict equality.
-Supports dot-path notation for nested properties. All pairs must match
-(AND logic).
+  Supports dot-path notation for nested properties. All pairs must match
+  (AND logic).
 
 #### Example
 
@@ -189,10 +192,20 @@ Items where `property` resolves to `undefined` are grouped under the key
 #### Example
 
 ```js
-groupBy([{ type: "a", val: 1 }, { type: "b", val: 2 }, { type: "a", val: 3 }], "type");
+groupBy(
+	[
+		{ type: "a", val: 1 },
+		{ type: "b", val: 2 },
+		{ type: "a", val: 3 },
+	],
+	"type",
+);
 // { a: [{ type: "a", val: 1 }, { type: "a", val: 3 }], b: [{ type: "b", val: 2 }] }
 
-groupBy([{ addr: { city: "York" } }, { addr: { city: "York" } }, { addr: { city: "Leeds" } }], "addr.city");
+groupBy(
+	[{ addr: { city: "York" } }, { addr: { city: "York" } }, { addr: { city: "Leeds" } }],
+	"addr.city",
+);
 // { York: [{ addr: { city: "York" } }, { addr: { city: "York" } }], Leeds: [{ addr: { city: "Leeds" } }] }
 ```
 
@@ -321,10 +334,10 @@ given; an explicit `step` overrides it. A zero `step` returns an empty array.
 #### Example
 
 ```js
-range(5);        // [0, 1, 2, 3, 4, 5]
-range(1, 5);     // [1, 2, 3, 4, 5]
+range(5); // [0, 1, 2, 3, 4, 5]
+range(1, 5); // [1, 2, 3, 4, 5]
 range(0, 10, 2); // [0, 2, 4, 6, 8, 10]
-range(5, 0);     // [5, 4, 3, 2, 1, 0]
+range(5, 0); // [5, 4, 3, 2, 1, 0]
 range(5, 0, -1); // [5, 4, 3, 2, 1, 0]
 ```
 
@@ -349,10 +362,16 @@ comparison.
 ```js
 sortByProperty([{ name: "Lewis" }, { name: "Alice" }], "name"); // [{ name: "Alice" }, { name: "Lewis" }]
 sortByProperty([{ name: "Lewis" }, { name: "Alice" }], "name", { ascending: false }); // [{ name: "Lewis" }, { name: "Alice" }]
-sortByProperty([{ last: "Smith", first: "Alice" }, { last: "Jones", first: "Bob" }], [
-  { property: "last", ascending: true },
-  { property: "first", ascending: true },
-]); // [{ last: "Jones", first: "Bob" }, { last: "Smith", first: "Alice" }]
+sortByProperty(
+	[
+		{ last: "Smith", first: "Alice" },
+		{ last: "Jones", first: "Bob" },
+	],
+	[
+		{ property: "last", ascending: true },
+		{ property: "first", ascending: true },
+	],
+); // [{ last: "Jones", first: "Bob" }, { last: "Smith", first: "Alice" }]
 ```
 
 ### `tail(array: any[])`
@@ -384,9 +403,9 @@ if it is. Returns a new array and does not mutate the original.
 #### Example
 
 ```js
-toggleItem([1, 2, 3], 2);                             // [1, 3]
-toggleItem([1, 2, 3], 4);                             // [1, 2, 3, 4]
-toggleItem([{ id: 1 }, { id: 2 }], { id: 1 }, 'id');  // [{ id: 2 }]
+toggleItem([1, 2, 3], 2); // [1, 3]
+toggleItem([1, 2, 3], 4); // [1, 2, 3, 4]
+toggleItem([{ id: 1 }, { id: 2 }], { id: 1 }, "id"); // [{ id: 2 }]
 ```
 
 ### `unique(array: any[])`
@@ -422,9 +441,23 @@ the first occurrence kept.
 #### Example
 
 ```js
-uniqueBy([{ id: 1, name: "A" }, { id: 2, name: "B" }, { id: 1, name: "C" }], "id");
+uniqueBy(
+	[
+		{ id: 1, name: "A" },
+		{ id: 2, name: "B" },
+		{ id: 1, name: "C" },
+	],
+	"id",
+);
 // [{ id: 1, name: "A" }, { id: 2, name: "B" }]
-uniqueBy([{ address: { city: "London" } }, { address: { city: "Paris" } }, { address: { city: "London" } }], "address.city");
+uniqueBy(
+	[
+		{ address: { city: "London" } },
+		{ address: { city: "Paris" } },
+		{ address: { city: "London" } },
+	],
+	"address.city",
+);
 // [{ address: { city: "London" } }, { address: { city: "Paris" } }]
 uniqueBy([{ id: 1 }, { id: 1 }, { id: 1 }], "id");
 // [{ id: 1 }]
@@ -613,6 +646,29 @@ hasDateParts({ day: "1", month: "", year: "" }); // true
 hasDateParts({ day: "", month: "", year: "" }); // false
 ```
 
+### `isTemporalDate(value: any, type?: string)`
+
+Check whether a value is a Temporal `Instant`, `PlainDate`, `PlainDateTime`,
+or `ZonedDateTime`. An optional type restricts the check to one supported
+Temporal type.
+
+#### Parameters
+
+- `value` `{any}` — The value to inspect.
+- `type` `{string}` — The optional Temporal type name to match.
+
+Recognition uses Temporal's standard string tags, so values from another
+compatible Temporal implementation or module copy are supported. This is a
+type check for genuine Temporal values, not validation of untrusted objects
+that deliberately imitate those tags.
+
+#### Example
+
+```js
+isTemporalDate(Temporal.PlainDate.from("2026-06-22")); // true
+isTemporalDate(value, "PlainDate");
+```
+
 ### `parseDate(value: any, options?: object)`
 
 Convert `Date`, timestamp, Temporal, ISO/RFC 9557 string, configured
@@ -788,11 +844,11 @@ Schemas, object rules, and function shorthand can be freely mixed in the same ru
 
 A bare function in the rules array is a shorthand for `custom` validation without a separate `message` property. The function receives the field's own `value` and the complete `formData`, and its return value determines the outcome:
 
-| Return value | Result |
-| --- | --- |
-| Non-empty string | Single error — the string is the error message |
+| Return value                         | Result                                                    |
+| ------------------------------------ | --------------------------------------------------------- |
+| Non-empty string                     | Single error — the string is the error message            |
 | Non-empty array of non-empty strings | Multiple errors — each string is a separate error message |
-| Any other value | Valid — no error |
+| Any other value                      | Valid — no error                                          |
 
 This mirrors the `custom` rule's `(value, formData)` signature, but inverts the convention: instead of returning a boolean and reading the message from the rule object, the function returns the error message(s) directly when validation fails. Functions and object rules can be freely mixed in the same rules array.
 
@@ -817,14 +873,20 @@ Ensure that the value differs from the value of another field.
 #### Example
 
 ```js
-await validateField("username", [{ rule: "required", message: "Enter a username" }], { username: "" }); // { valid: false, errors: ["Enter a username"], validated: true }
+await validateField("username", [{ rule: "required", message: "Enter a username" }], {
+	username: "",
+}); // { valid: false, errors: ["Enter a username"], validated: true }
 await validateField("username", [{ rule: "required", message: "Enter a username" }], {
 	username: "jack_skellington",
 }); // { valid: true, errors: [], validated: true }
-await validateField("email", [
-	{ rule: "required", message: "Enter your email" },
-	(value) => value.includes("@") || "Enter a valid email address",
-], { email: "not-an-email" }); // { valid: false, errors: ["Enter a valid email address"], validated: true }
+await validateField(
+	"email",
+	[
+		{ rule: "required", message: "Enter your email" },
+		(value) => value.includes("@") || "Enter a valid email address",
+	],
+	{ email: "not-an-email" },
+); // { valid: false, errors: ["Enter a valid email address"], validated: true }
 ```
 
 ### `validateForm(fields: object, formData: object): Promise<{ valid, validated, results }>`
@@ -852,13 +914,16 @@ invalid.
 #### Example
 
 ```js
-await validateForm({
-	username: [{ rule: "required", message: "Enter a username" }],
-	email: [
-		{ rule: "required", message: "Enter your email" },
-		(value) => value.includes("@") || "Enter a valid email address",
-	],
-}, { username: "jack", email: "not-an-email" });
+await validateForm(
+	{
+		username: [{ rule: "required", message: "Enter a username" }],
+		email: [
+			{ rule: "required", message: "Enter your email" },
+			(value) => value.includes("@") || "Enter a valid email address",
+		],
+	},
+	{ username: "jack", email: "not-an-email" },
+);
 // {
 //   valid: false,
 //   validated: true,
@@ -1296,7 +1361,7 @@ Pick the behaviour with `options.arrayStrategy`:
 - `"replace"` (default): the source array wins, just like `deepMerge`.
 - `"concatenate"`: the two arrays are joined together, target items first.
 - `"merge"`: the arrays are combined item by item, deep-merging the ones that
-line up.
+  line up.
 
 Everything else matches `deepMerge` — objects merge recursively, class
 instances stay intact, and your inputs are never changed. The only difference
