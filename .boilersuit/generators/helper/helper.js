@@ -1,5 +1,5 @@
-import { isNonEmptyArray } from "../array/is-non-empty-array";
-import { isNonEmptyObject } from "../object/is-non-empty-object";
+import { isNonEmptyArray } from "#array/is-non-empty-array";
+import { isNonEmptyObject } from "#object/is-non-empty-object";
 
 /**
  * @helper {{ NAME | camel }}

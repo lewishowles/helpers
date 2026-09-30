@@ -29,6 +29,17 @@
 	],
 	"type": "module",
 	"sideEffects": false,
+	"imports": {
+		"#array/*": "./lib/array/*.js",
+		"#date/*": "./lib/date/*.js",
+		"#form/*": "./lib/form/*.js",
+		"#general/*": "./lib/general/*.js",
+		"#number/*": "./lib/number/*.js",
+		"#object/*": "./lib/object/*.js",
+		"#string/*": "./lib/string/*.js",
+		"#url/*": "./lib/url/*.js",
+		"#vue/*": "./lib/vue/*.js"
+	},
 	"exports": {
 		".": {
 			"types": "./types/index.d.ts",
