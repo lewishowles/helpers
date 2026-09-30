@@ -1,8 +1,3 @@
-import { describe, expect, test } from "vite-plus/test";
-import { {{ NAME | camel }} } from "./{{ NAME | kebab }}";
+import { test } from "vite-plus/test";
 
-describe("{{ NAME | kebab }}", () => {
-	test("", () => {
-		//
-	});
-});
+test.todo("{{ NAME | kebab }} behaviour");

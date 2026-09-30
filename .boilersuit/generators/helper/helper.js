@@ -1,6 +1,3 @@
-import { isNonEmptyArray } from "#array/is-non-empty-array";
-import { isNonEmptyObject } from "#object/is-non-empty-object";
-
 /**
  * @helper {{ NAME | camel }}
  * @category {{ CATEGORY | pascal }}
@@ -16,5 +13,5 @@ import { isNonEmptyObject } from "#object/is-non-empty-object";
  * {{ NAME | camel }}();
  */
 export function {{ NAME | camel }}() {
-
+	throw new Error("Implement this helper.");
 }

@@ -1,7 +1,10 @@
+import { URL, fileURLToPath } from "node:url";
 import { defineConfig } from "vite-plus";
-import { fileURLToPath, URL } from "node:url";
+
 import fmt from "./.oxfmtrc.json" with { type: "json" };
-import lint from "./.oxlintrc.json" with { type: "json" };
+import localLint from "./.oxlintrc.json" with { type: "json" };
+import baseLint from "@lewishowles/lint-config/base.json" with { type: "json" };
+import importFormat from "@lewishowles/lint-config/imports.json" with { type: "json" };
 
 export default defineConfig({
 	staged: {
@@ -9,8 +12,15 @@ export default defineConfig({
 		"{lib/**/*.js,quality.config.json}": getExportsCheckCommand,
 		"{README.md,lib/**/*.js,support/generate-readme.js}": "bun run check:readme",
 	},
-	fmt,
-	lint,
+	// The formatter settings, plus the shared import-order rules.
+	fmt: { ...fmt, ...importFormat },
+	// The lint settings. `vp lint` reads only this block, not `.oxlintrc.json`, so the shared
+	// base rules are loaded here. `.oxlintrc.json` still supplies the ignored paths, and its
+	// own `extends` keeps editors and the plain oxlint CLI on the same rules.
+	lint: {
+		...baseLint,
+		ignorePatterns: localLint.ignorePatterns,
+	},
 	build: {
 		lib: {
 			entry: getFiles([

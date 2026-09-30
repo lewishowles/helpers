@@ -4,7 +4,8 @@
 		"dist/**",
 		"dist-docs/**",
 		"PROGRESS.md",
-		"AGENTS.md"
+		"AGENTS.md",
+		"WORKSPACE.md"
 	],
 	"printWidth": 100,
 	"semi": true,

@@ -112,6 +112,7 @@
 	"devDependencies": {
 		"@arethetypeswrong/cli": "^0.18.5",
 		"@lewishowles/cli-style": "^0.11.0",
+		"@lewishowles/lint-config": "^0.7.0",
 		"@lewishowles/pkg-checks": "^0.2.2",
 		"@stylistic/eslint-plugin": "^5.10.0",
 		"globals": "^17.8.0",

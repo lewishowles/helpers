@@ -1,5 +1,5 @@
-import { describe, expect, test } from "vite-plus/test";
 import { formatReadme, parseParamTag, parseTags, renderHelperDocs } from "./generate-readme.js";
+import { describe, expect, test } from "vite-plus/test";
 
 describe("formatReadme", () => {
 	test("Formats generated Markdown with the repository formatter", () => {
@@ -75,6 +75,7 @@ describe("parseTags", () => {
 		expect(docs.params).toEqual([
 			{ type: "string", name: "needle", description: "The value to find." },
 		]);
+
 		expect(docs.note.trim()).toBe("Some note text.");
 	});
 
