@@ -11,6 +11,7 @@
 ### Fixes
 
 - Date helpers now accept and process supported Temporal values from another compatible `temporal-polyfill` copy without relying on shared constructor identity.
+- The `getSlotText` type declaration now accepts the optional `options` argument (`props` and `trim`) and a vnode array, matching what the helper already supports.
 
 ## 1.7.1: 2026-07-10
 
