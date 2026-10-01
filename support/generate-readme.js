@@ -283,8 +283,37 @@ export function parseTags(docBlock) {
 		}
 
 		if (currentTag) {
-			docs[currentTag] += `${docs[currentTag] ? "\n" : ""}${line}`;
+			// Every continuation line starts on a new line, even under a tag
+			// with no text of its own, so that the first line of a body is
+			// always the text from the tag's own line.
+			docs[currentTag] += `\n${line}`;
 		}
+	}
+
+	// The comment formatter indents the lines under a tag by four spaces.
+	// Remove the indent those lines share so the README shows them as
+	// paragraphs, not code blocks, while deeper indents in examples stay.
+	for (const [tag, body] of Object.entries(docs)) {
+		if (tag === "params" || !body.includes("\n")) {
+			continue;
+		}
+
+		// The text on the tag's own line, which has no indent, and the lines
+		// under it.
+		const [heading, ...continuation] = body.split("\n");
+		// The lines that carry text; blank lines do not limit the shared indent.
+		const nonBlankLines = continuation.filter((line) => line.trim() !== "");
+
+		// The smallest indent of any line with text.
+		const sharedIndent = nonBlankLines.length
+			? Math.min(...nonBlankLines.map((line) => line.length - line.trimStart().length))
+			: 0;
+
+		// When the tag's own line is empty, the joined body starts with a
+		// newline, which is dropped.
+		docs[tag] = [heading, ...continuation.map((line) => line.slice(sharedIndent))]
+			.join("\n")
+			.replace(/^\n/, "");
 	}
 
 	return docs;

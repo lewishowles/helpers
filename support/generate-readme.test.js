@@ -90,6 +90,34 @@ describe("parseTags", () => {
 
 		expect(parseTags(docBlock).params).toEqual([]);
 	});
+
+	test("should keep indented note paragraphs as prose", () => {
+		const docBlock = [
+			"/**",
+			" * @note",
+			" *     The first paragraph stays prose.",
+			" *",
+			" *     The second paragraph stays prose.",
+			" */",
+		].join("\n");
+
+		expect(parseTags(docBlock).note).toBe(
+			"The first paragraph stays prose.\n\nThe second paragraph stays prose.",
+		);
+	});
+
+	test("should keep extra indentation in examples", () => {
+		const docBlock = [
+			"/**",
+			" * @example",
+			" *     const value = {",
+			" *         nested: true,",
+			" *     };",
+			" */",
+		].join("\n");
+
+		expect(parseTags(docBlock).example).toBe("const value = {\n    nested: true,\n};");
+	});
 });
 
 describe("parseParamTag", () => {

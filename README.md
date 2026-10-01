@@ -38,7 +38,7 @@ arrayLength(undefined); // 0
 
 ### `chunk(array: any[], chunkSize: number)`
 
-Split an array into chunks of a specified size
+Split an array into chunks of a specified size.
 
 #### Parameters
 
@@ -94,17 +94,20 @@ countBy(
 // { York: 2, Leeds: 1 }
 ```
 
-### `ensureArray(variable: any)`
+### `ensureArray(maybeArray: any)`
 
-Ensure that the given variable is an array.
+Ensure that `maybeArray` is an array.
 
 #### Parameters
 
-- `variable` `{any}` — The value to return as an array.
+- `maybeArray` `{any}` — The value to return as an array.
 
-Arrays are returned unchanged. Any non-array value is returned as a single-item array.
+Arrays are returned unchanged. Any non-array value is returned as a
+single-item array.
 
-Note that `null` and `undefined` are preserved as values, returning `[null]` and `[undefined]`. Combine with `compact` when falsy values should be removed.
+Note that `null` and `undefined` are preserved as values, returning
+`[null]` and `[undefined]`. Combine with `compact` when falsy values
+should be removed.
 
 #### Example
 
@@ -132,20 +135,18 @@ firstDefined([undefined, undefined, "c", "d"]); // "c"
 firstDefined([]); // undefined
 ```
 
-### `firstWhere(array: any[], filters: object): any`
+### `firstWhere(array: any[], matcher: object): any`
 
-Return the first item in `array` that matches the given predicate function or
-filter object. Returns `undefined` when no item matches or the input is
-empty.
+Return the first item in `array` that matches the given predicate
+function or filter object. Returns `undefined` when no item matches or
+the input is empty.
 
 #### Parameters
 
 - `array` `{any[]}` — The array to search.
-- `predicate` `{function}` — A function called with `(item, index, array)` that returns a truthy value
-  to match.
-- `filters` `{object}` — An object of key-value pairs to match exactly using strict equality.
-  Supports dot-path notation for nested properties. All pairs must match
-  (AND logic).
+- `matcher` `{function|object}` — A predicate called with `(item, index, array)` that returns a truthy
+  value, or an object of key-value pairs to match with strict equality.
+  Object keys support dot paths, and every pair must match.
 
 #### Example
 
@@ -157,16 +158,19 @@ firstWhere(orders, { "customer.city": "York" });
 
 ### `getNextIndex(index: number, reference: any[], { reverse: boolean = false, wrap: boolean = false })`
 
-Given a starting `index`, determine the next available index in the `reference` array.
+Given a starting `index`, determine the next available index in the
+`reference` array.
 
 #### Parameters
 
 - `index` `{number}` — The starting index to move from.
 - `reference` `{any[]}` — The array that defines the valid index range.
-- `options.reverse` `{boolean}` — Whether to find the previous index instead of the next index.
-- `options.wrap` `{boolean}` — Whether to wrap around when moving beyond either end of the array.
+- `options` `{object}` — How to move at the ends of the array.
+- `[options.reverse=false]` `{boolean}` — Whether to find the previous index instead of the next index.
+- `[options.wrap=false]` `{boolean}` — Whether to wrap around when moving beyond either end of the array.
 
-If the provided index is outside of the reference array, or the provided index or reference array are unexpected, a default value of `0` is returned.
+An index outside the reference array is clamped unless wrapping is
+requested. An invalid index or reference array returns `0`.
 
 #### Example
 
@@ -226,7 +230,8 @@ head([]); // undefined
 
 ### `isNonEmptyArray(variable: any[])`
 
-Determines whether the given `variable` is both an array and has at least one item.
+Determines whether the given `variable` is both an array and has at least
+one item.
 
 #### Parameters
 
@@ -267,9 +272,10 @@ original untouched.
 - `fromIndex` `{number}` — The index of the item to move.
 - `toIndex` `{number}` — The index to move the item to.
 
-`toIndex` is read after the item has been removed, matching how drag-and-drop
-libraries report a drop. `fromIndex` must point at an existing item,
-otherwise the array is returned unchanged; `toIndex` is clamped into range.
+`toIndex` is read after the item has been removed, matching how
+drag-and-drop libraries report a drop. `fromIndex` must point at an
+existing item, otherwise the array is returned unchanged; `toIndex` is
+clamped into range.
 
 #### Example
 
@@ -298,16 +304,20 @@ partition([], () => true); // [[], []]
 
 ### `pluck(array: any[], property: string)`
 
-Retrieve an array of the `property` value from each of the objects found in `array`.
+Retrieve an array of the `property` value from each of the objects found
+in `array`.
 
 #### Parameters
 
 - `array` `{any[]}` — The array of objects to read from.
 - `property` `{string}` — The direct property key to pluck from each object.
 
-Any non-objects in `array` are ignored. Objects that don't have the given property yield `undefined` in the result. Empty or invalid input returns `[]`.
+Any non-objects in `array` are ignored. Objects that don't have the given
+property yield `undefined` in the result. Empty or invalid input returns
+`[]`.
 
-Note: `property` is a direct key only, and dot-path notation is not yet supported. Use `getPathValue` for nested access.
+Note: `property` is a direct key only, and dot-path notation is not yet
+supported. Use `getPathValue` for nested access.
 
 #### Example
 
@@ -320,14 +330,16 @@ pluck([], "property"); // []
 
 ### `range(start: number, end?: number, step?: number)`
 
-Generate a numeric array from `start` to `end`, both inclusive. When called
-with a single argument, `start` is treated as `end` and the range begins at
-`0`. Direction is inferred automatically when `start > end` and no `step` is
-given; an explicit `step` overrides it. A zero `step` returns an empty array.
+Generate a numeric array from `start` to `end`, both inclusive. When
+called with a single argument, `start` is treated as `end` and the range
+begins at `0`. Direction is inferred automatically when `start > end` and
+no `step` is given; an explicit `step` overrides it. A zero `step`
+returns an empty array.
 
 #### Parameters
 
-- `start` `{number}` — The first number in the range, or the end value when called with one argument.
+- `start` `{number}` — The first number in the range, or the end value when called with one
+  argument.
 - `end` `{number}` — The final number to include in the range.
 - `step` `{number}` — The amount to change by between each number.
 
@@ -343,16 +355,17 @@ range(5, 0, -1); // [5, 4, 3, 2, 1, 0]
 
 ### `sortByProperty(array: any[], criteria: object[])`
 
-Returns a new array containing the `array` of objects, sorted by the value at
-`property`, with optional direction. When an array of criteria objects is
-passed, sorts by each criterion in order, using the first non-zero
-comparison.
+Returns a new array containing the `array` of objects, sorted by the
+value at `property`, with optional direction. When an array of criteria
+objects is passed, sorts by each criterion in order, using the first
+non-zero comparison.
 
 #### Parameters
 
 - `array` `{any[]}` — The array of objects to sort.
 - `property` `{string}` — The property path to sort by.
-- `options.ascending` `{boolean}` — Whether to sort from lowest to highest.
+- `options` `{object}` — The direction for a single-property sort.
+- `[options.ascending=true]` `{boolean}` — Whether to sort from lowest to highest.
 - `criteria` `{object[]}` — An array of criteria objects to sort by, in priority order.
 - `criteria[].property` `{string}` — The property path to sort by.
 - `criteria[].ascending` `{boolean}` — Whether to sort from lowest to highest.
@@ -391,8 +404,8 @@ tail([]); // undefined
 
 ### `toggleItem(array: any[], item: any, comparator?: ((a: any, b: any) => boolean) | string)`
 
-Add an item to an array if it is not present, or remove all occurrences of it
-if it is. Returns a new array and does not mutate the original.
+Add an item to an array if it is not present, or remove all occurrences
+of it if it is. Returns a new array and does not mutate the original.
 
 #### Parameters
 
@@ -426,17 +439,17 @@ unique([]); // []
 
 ### `uniqueBy(array: object[], property: string)`
 
-Remove duplicate objects from an array based on a property value. Supports
-dot-path notation for nested properties. The first occurrence of each value
-is kept.
+Remove duplicate objects from an array based on a property value.
+Supports dot-path notation for nested properties. The first occurrence of
+each value is kept.
 
 #### Parameters
 
 - `array` `{object[]}` — The array of objects to reduce.
 - `property` `{string}` — The property path that identifies duplicate items.
 
-Items where the resolved value is `undefined` are treated as equal, with only
-the first occurrence kept.
+Items where the resolved value is `undefined` are treated as equal, with
+only the first occurrence kept.
 
 #### Example
 
@@ -469,9 +482,10 @@ uniqueBy([], "id");
 
 ### `addToDate(value: any, amount: number, unit: "day" | "week" | "month" | "year", options?: object)`
 
-Shift a `parseDate`-compatible value by a calendar amount and unit, returning
-a new Temporal value of the same precision as the input. Negative amounts
-subtract; `0` returns an equivalent value for the same day.
+Shift a `parseDate`-compatible value by a calendar amount and unit,
+returning a new Temporal value of the same precision as the input.
+Negative amounts subtract; `0` returns an equivalent value for the same
+day.
 
 #### Parameters
 
@@ -481,9 +495,9 @@ subtract; `0` returns an equivalent value for the same day.
 - `options` `{object}` — Per-call date helper options (passed through to `parseDate`).
 - `options.inputFormat` `{string}` — The Day.js-style token format used when parsing non-ISO strings.
 
-`Temporal.Instant` values return `null` because instants have no calendar and
-cannot accept calendar-unit arithmetic. Anchor to a timezone first if you
-need to shift an instant.
+`Temporal.Instant` values return `null` because instants have no calendar
+and cannot accept calendar-unit arithmetic. Anchor to a timezone first if
+you need to shift an instant.
 
 #### Example
 
@@ -508,18 +522,18 @@ Set project-wide defaults for date parsing and formatting.
 
 Calling this helper with no arguments returns the current configuration.
 
-Projects can override these defaults per helper call. The default locale is
-`en-GB`, the default timezone is `Europe/London`, and token formats use
-Day.js-style tokens such as `DD/MM/YYYY`.
+Projects can override these defaults per helper call. The default locale
+is `en-GB`, the default timezone is `Europe/London`, and token formats
+use Day.js-style tokens such as `DD/MM/YYYY`.
 
 The `formats` option is a map of named output formats. Each key is a name
-that can be passed to `formatDate` as the format argument, and each value is
-either a Day.js-style token string (e.g. `"DD/MM/YYYY"`) or an
+that can be passed to `formatDate` as the format argument, and each value
+is either a Day.js-style token string (e.g. `"DD/MM/YYYY"`) or an
 `Intl.DateTimeFormatOptions` object (e.g. `{ dateStyle: "medium" }`). The
-built-in named formats are `date`, `dateTime`, and `shortDate`. Projects can
-override these or add their own — `formatDate` resolves the key at call time.
-The `defaultFormat` option determines which named format is used when
-`formatDate` is called with no format argument.
+built-in named formats are `date`, `dateTime`, and `shortDate`. Projects
+can override these or add their own — `formatDate` resolves the key at
+call time. The `defaultFormat` option determines which named format is
+used when `formatDate` is called with no format argument.
 
 #### Example
 
@@ -530,8 +544,8 @@ The `defaultFormat` option determines which named format is used when
 
 ### `formatDate(value: any, format?: string|object, options?: object)`
 
-Format supported date input using a named configured format, a Day.js-style
-token string, or `Intl.DateTimeFormat` options.
+Format supported date input using a named configured format, a
+Day.js-style token string, or `Intl.DateTimeFormat` options.
 
 #### Parameters
 
@@ -554,8 +568,7 @@ formatDate("2026-06-22", { year: "numeric", month: "long", day: "2-digit" });
 
 ### `formatRelativeDate(value: any, relativeTo?: any, options?: object)`
 
-Format a supported date input as a relative date string, such as
-`3 minutes ago` or `in 2 days`.
+Show dates as `3 minutes ago` or `in 2 days`.
 
 #### Parameters
 
@@ -575,7 +588,9 @@ formatRelativeDate("2026-06-22T09:59:00", "2026-06-22T10:00:00");
 
 ### `getDateHelpersConfig()`
 
-Get a defensive copy of the active date helper configuration. Useful when building custom date helpers that should respect the same global defaults set via `configureDateHelpers`.
+Get a defensive copy of the active date helper configuration. Useful when
+building custom date helpers that should respect the same global defaults
+set via `configureDateHelpers`.
 
 #### Example
 
@@ -586,10 +601,10 @@ const config = getDateHelpersConfig();
 
 ### `getDateParts(value: any, options?: object)`
 
-Convert a `parseDate`-compatible input into `{ year, month, day }`, for use
-with `<input type="date">`-style three-field date components. Instants and
-zoned date-times are anchored to the configured or per-call timezone before
-the calendar date is read.
+Convert a `parseDate`-compatible input into `{ year, month, day }`, for
+use with `<input type="date">`-style three-field date components.
+Instants and zoned date-times are anchored to the configured or per-call
+timezone before the calendar date is read.
 
 #### Parameters
 
@@ -631,9 +646,9 @@ getRelativeDateParts("2026-06-22T10:00:00", "2026-06-22T10:01:00");
 
 ### `hasDateParts(parts: object)`
 
-Determine whether a `{ day, month, year }` object has at least one non-empty
-part. Empty strings, whitespace-only strings, `null`, and `undefined` count
-as empty.
+Determine whether a `{ day, month, year }` object has at least one
+non-empty part. Empty strings, whitespace-only strings, `null`, and
+`undefined` count as empty.
 
 #### Parameters
 
@@ -648,9 +663,9 @@ hasDateParts({ day: "", month: "", year: "" }); // false
 
 ### `isTemporalDate(value: any, type?: string)`
 
-Check whether a value is a Temporal `Instant`, `PlainDate`, `PlainDateTime`,
-or `ZonedDateTime`. An optional type restricts the check to one supported
-Temporal type.
+Check whether a value is a Temporal `Instant`, `PlainDate`,
+`PlainDateTime`, or `ZonedDateTime`. An optional type restricts the check
+to one supported Temporal type.
 
 #### Parameters
 
@@ -658,9 +673,9 @@ Temporal type.
 - `type` `{string}` — The optional Temporal type name to match.
 
 Recognition uses Temporal's standard string tags, so values from another
-compatible Temporal implementation or module copy are supported. This is a
-type check for genuine Temporal values, not validation of untrusted objects
-that deliberately imitate those tags.
+compatible Temporal implementation or module copy are supported. This is
+a type check for genuine Temporal values, not validation of untrusted
+objects that deliberately imitate those tags.
 
 #### Example
 
@@ -681,9 +696,9 @@ Temporal date value.
 - `options` `{object}` — Per-call date helper options.
 - `options.inputFormat` `{string}` — The Day.js-style token format used when parsing non-ISO strings.
 
-Token strings use Day.js-style tokens such as `DD/MM/YYYY`. Invalid or empty
-values return `null`. Parts objects are rejected (not clamped) when the
-month or day is out of range, e.g. `{ year: 2026, month: 2, day: 30 }`.
+Token strings use Day.js-style tokens such as `DD/MM/YYYY`. Invalid or
+empty values return `null`. Parts objects are rejected (not clamped) when
+the month or day is out of range, such as 30 February 2026.
 
 #### Example
 
@@ -697,9 +712,9 @@ parseDate({ year: 2026, month: 6, day: 22 }); // Temporal.PlainDate
 ### `toDateFromParts(parts: object)`
 
 Convert `<input type="date">`-style three-field parts into a
-`Temporal.PlainDate`. Parts carry no timezone information, so the result is
-always a plain date; anchor it with `toEpochMilliseconds`/`formatDate` when
-an instant is needed.
+`Temporal.PlainDate`. Parts carry no timezone information, so the result
+is always a plain date; anchor it with `toEpochMilliseconds`/`formatDate`
+when an instant is needed.
 
 #### Parameters
 
@@ -709,8 +724,9 @@ an instant is needed.
 - `parts.day` `{number|string}` — The day of the month.
 
 Only a `{ year, month, day }` plain object is accepted; strings,
-timestamps, `Date` instances, and Temporal values are rejected. String parts
-must be numeric. Missing, non-numeric, or out-of-range parts return `null`.
+timestamps, `Date` instances, and Temporal values are rejected. String
+parts must be numeric. Missing, non-numeric, or out-of-range parts return
+`null`.
 
 #### Example
 
@@ -1173,17 +1189,19 @@ validateOrFallback(5, "number", 0); // 5
 
 ## Number
 
-### `clamp(number: number, minimum: number, maximum: number)`
+### `clamp(value: number, minimum: number, maximum: number)`
 
-Ensure that the provided `number` is between `minimum` and `maximum` (inclusive). If `number` is lower than `minimum`, `minimum` is returned. If `number` is higher than maximum, `maximum` is returned.
+Ensure that the provided `value` is between `minimum` and `maximum`
+(inclusive). If `value` is lower than `minimum`, `minimum` is returned.
+If `value` is higher than `maximum`, `maximum` is returned.
 
 #### Parameters
 
-- `number` `{number}` — The number to clamp.
+- `value` `{number}` — The number to clamp.
 - `minimum` `{number}` — The lowest allowed value.
 - `maximum` `{number}` — The highest allowed value.
 
-If `number` is not a number, `minimum` is returned.
+A `value` that is not a number is treated as `0` before clamping.
 
 #### Example
 
@@ -1210,13 +1228,14 @@ isNumber(NaN); // false
 isNumber("string"); // false
 ```
 
-### `isNumeric(variable: any)`
+### `isNumeric(value: any)`
 
-Determines whether the given `variable` is a number, or a string containing a number.
+Determines whether the given `value` is a number, or a string containing
+a number.
 
 #### Parameters
 
-- `variable` `{any}` — The value to check.
+- `value` `{any}` — The value to check.
 
 #### Example
 
@@ -1228,14 +1247,15 @@ isNumeric("10e3"); // true
 isNumeric("5.6"); // true
 ```
 
-### `round(number: number, precision: number = 0)`
+### `round(value: number, decimals: number = 0)`
 
-Rounds the given `number` to the specified `precision`. If `precision` is not provided, it defaults to 0.
+Rounds the given `value` to the specified number of `decimals`. If
+`decimals` is not provided, it defaults to 0.
 
 #### Parameters
 
-- `number` `{number}` — The number to round.
-- `precision` `{number}` — The number of decimal places to keep.
+- `value` `{number}` — The number to round.
+- `decimals` `{number}` — The number of decimal places to keep.
 
 #### Example
 
@@ -1248,7 +1268,9 @@ round(4.567, -1); // 0
 
 ### `toNullableNumber(value: any)`
 
-Coerces the given `value` to a number, returning `null` for empty string, `null`, or `undefined`. Useful for form round-trips where absent numeric fields should be `null` rather than `0` or `NaN`.
+Coerces the given `value` to a number, returning `null` for empty string,
+`null`, or `undefined`. Useful for form round-trips where absent numeric
+fields should be `null` rather than `0` or `NaN`.
 
 #### Parameters
 
@@ -1265,10 +1287,11 @@ toNullableNumber(undefined); // null
 
 ### `toPercentage(value: any, total: any)`
 
-Calculates the percentage of `value` relative to `total`, returning `0` when
-`total` is zero or falsy to avoid division by zero. Non-numeric inputs are
-coerced; `NaN` or `Infinity` inputs return `0`. The result is not clamped, so
-a `value` exceeding `total` will produce a percentage above 100.
+Calculates the percentage of `value` relative to `total`, returning `0`
+when `total` is zero or falsy to avoid division by zero. Non-numeric
+inputs are coerced; `NaN` or `Infinity` inputs return `0`. The result is
+not clamped, so a `value` exceeding `total` will produce a percentage
+above 100.
 
 #### Parameters
 
