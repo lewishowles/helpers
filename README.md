@@ -1311,9 +1311,9 @@ toPercentage(10, null); // 0
 
 ### `addProperty(object: object, key: string, value: any)`
 
-Add a shallow key / value pair to an object without overwriting any existing value.
-That is, only if that key isn't already present, or if its value is undefined
-or null.
+Add a shallow key / value pair to an object without overwriting any
+existing value. That is, only if that key isn't already present, or if
+its value is undefined or null.
 
 #### Parameters
 
@@ -1337,11 +1337,11 @@ Returns a deep copy of `value`. Non-objects are returned unchanged.
 
 - `value` `{any}` — The value to copy.
 
-Uses the built-in `structuredClone` where possible, so `Date`, `Map`, `Set`,
-`RegExp`, typed arrays, and cyclic references are cloned correctly. For
-values `structuredClone` cannot handle, such as objects containing functions,
-it falls back to a recursive copy that copies functions by reference and
-preserves cyclic references via a `WeakMap`.
+Uses the built-in `structuredClone` where possible, so `Date`, `Map`,
+`Set`, `RegExp`, typed arrays, and cyclic references are cloned
+correctly. For values `structuredClone` cannot handle, such as objects
+containing functions, it falls back to a recursive copy that copies
+functions by reference and preserves cyclic references via a `WeakMap`.
 
 #### Example
 
@@ -1353,7 +1353,8 @@ deepCopy(new Date(0)); // a new Date with the same time
 
 ### `deepMerge(object: object)`
 
-Recursively merges two or more objects. The values of later objects override those of earlier objects.
+Recursively merges two or more objects. The values of later objects
+override those of earlier objects.
 
 #### Parameters
 
@@ -1369,8 +1370,8 @@ deepMerge({ key: "value", a: { b: 2 } }, { key: "modified", a: { c: 3 } }); // {
 
 ### `deepMergeWith(target: object, sources: array, options?: object)`
 
-Works like `deepMerge`, but lets you decide what happens when the same key
-holds an array in both the target and a source.
+Works like `deepMerge`, but lets you decide what happens when the same
+key holds an array in both the target and a source.
 
 #### Parameters
 
@@ -1379,17 +1380,14 @@ holds an array in both the target and a source.
 - `options` `{object}` — Merge behaviour.
 - `options.arrayStrategy` `{string}` — How arrays are combined when both objects contain arrays at the same key.
 
-Pick the behaviour with `options.arrayStrategy`:
+Set `options.arrayStrategy` to `"replace"` (the default) so the source
+array wins, just like `deepMerge`; `"concatenate"` to join both arrays
+with target items first; or `"merge"` to combine arrays position by
+position, deep-merging plain objects at the same position.
 
-- `"replace"` (default): the source array wins, just like `deepMerge`.
-- `"concatenate"`: the two arrays are joined together, target items first.
-- `"merge"`: the arrays are combined item by item, deep-merging the ones that
-  line up.
-
-Everything else matches `deepMerge` — objects merge recursively, class
-instances stay intact, and your inputs are never changed. The only difference
-is that you pass the sources as a single array (instead of one after
-another), which keeps `options` neatly at the end.
+Other values merge like `deepMerge`: objects merge recursively, class
+instances stay intact, and the inputs are not changed. Sources are passed
+as one array so `options` stays at the end.
 
 #### Example
 
@@ -1424,7 +1422,8 @@ firstDefinedPath([], ["a"]); // undefined
 
 ### `flattenObject(object: object)`
 
-Flattens a nested object into a single-level object with dot-notation keys.
+Flattens a nested object into a single-level object with dot-notation
+keys.
 
 #### Parameters
 
@@ -1485,7 +1484,8 @@ hasAnyPath({ a: { b: { c: 1 } } }, ["a.b.e", "a.b.f"]); // false
 
 ### `isNonEmptyObject(variable: any)`
 
-Determines whether the given `variable` is both an object (and not null, or an array), and has at least one property.
+Determines whether the given `variable` is both an object (and not null,
+or an array), and has at least one property.
 
 #### Parameters
 
@@ -1501,7 +1501,8 @@ isNonEmptyObject("string"); // false
 
 ### `isObject(variable: any)`
 
-Determine whether the given `variable` is an object, excluding arrays and null.
+Determine whether the given `variable` is an object, excluding arrays and
+null.
 
 #### Parameters
 
@@ -1517,8 +1518,9 @@ isObject(null); // false
 
 ### `isPlainObject(variable: any)`
 
-Determine whether the given `variable` is a plain object literal, excluding arrays, `null`,
-and non-plain objects such as `Date`, `Map`, `Set`, or class instances.
+Determine whether the given `variable` is a plain object literal,
+excluding arrays, `null`, and non-plain objects such as `Date`, `Map`,
+`Set`, or class instances.
 
 #### Parameters
 
@@ -1535,14 +1537,18 @@ isPlainObject(null); // false
 
 ### `keyBy(array: object[], key: string)`
 
-Convert the given `array` of objects into a single object, where each object in the original array is placed under the value of its given `key`.
+Convert the given `array` of objects into a single object, where each
+object in the original array is placed under the value of its given
+`key`.
 
 #### Parameters
 
 - `array` `{object[]}` — The objects to index.
 - `key` `{string}` — The property whose value becomes each output key.
 
-Objects without the given `key` are discarded. If an object has the same value `key` as a previous object, the previous object will be overwritten.
+Objects without the given `key` are discarded. If an object has the same
+value `key` as a previous object, the previous object will be
+overwritten.
 
 #### Example
 
@@ -1568,8 +1574,8 @@ keys("string"); // []
 
 ### `mapArrayProperty(object: object, property: string, mapper: Function)`
 
-Returns a shallow copy of `object` with the array at `property` replaced by
-the result of calling `mapper` over it. If `object[property]` is not a
+Returns a shallow copy of `object` with the array at `property` replaced
+by the result of calling `mapper` over it. If `object[property]` is not a
 non-empty array, `property` resolves to `[]` in the result rather than
 being omitted.
 
@@ -1591,18 +1597,21 @@ mapArrayProperty({ total: 0 }, "items", (item) => item);
 
 ### `objectContains(object: object, needle: any, { exclude: string[] = null, include: string[] = null, caseInsensitive: boolean = true, allowPartial: boolean = false })`
 
-Returns true if one of the `object`'s values is `needle`. Also works when `object` is an array.
+Returns true if one of the `object`'s values is `needle`. Also works when
+`object` is an array.
 
 #### Parameters
 
 - `object` `{object}` — The object or array to search.
 - `needle` `{any}` — The value to find.
-- `options.exclude` `{string[]}` — The object keys to omit from the search.
-- `options.include` `{string[]}` — The only object keys to search.
-- `options.caseInsensitive` `{boolean}` — Whether string comparisons ignore case.
-- `options.allowPartial` `{boolean}` — Whether string comparisons allow partial matches.
+- `options` `{object}` — The search options.
+- `[options.exclude=null]` `{string[]}` — The object keys to omit from the search.
+- `[options.include=null]` `{string[]}` — The only object keys to search.
+- `[options.caseInsensitive=true]` `{boolean}` — Whether string comparisons ignore case.
+- `[options.allowPartial=false]` `{boolean}` — Whether string comparisons allow partial matches.
 
-String `needle`s are checked case-insensitively by default, and partial matches can be enabled via option.
+String `needle`s are checked case-insensitively by default, and partial
+matches can be enabled via option.
 
 #### Example
 
@@ -1618,7 +1627,8 @@ objectContains({ length: 52 }, 5); // false
 
 ### `objectLength(object: object)`
 
-Return the number of top-level keys in `object`. Returns `0` for empty or non-objects.
+Return the number of top-level keys in `object`. Returns `0` for empty or
+non-objects.
 
 #### Parameters
 
@@ -1634,7 +1644,8 @@ objectLength("string"); // 0
 
 ### `omit(object: object, properties: string[])`
 
-Returns a new object with the specified `properties` omitted from the given `object`.
+Returns a new object with the specified `properties` omitted from the
+given `object`.
 
 #### Parameters
 
@@ -1672,8 +1683,8 @@ pick({ a: "one", b: "two", c: "three" }, ["a", "d"]); // { a: "one" }
 
 ### `pickAs(object: object, mapping: object)`
 
-Returns a new object with keys from `mapping` whose values are resolved from
-`object` at the paths given by the mapping values.
+Returns a new object with keys from `mapping` whose values are resolved
+from `object` at the paths given by the mapping values.
 
 #### Parameters
 
@@ -1682,8 +1693,8 @@ Returns a new object with keys from `mapping` whose values are resolved from
 
 Uses `getPathValue` so dot-notation paths are supported.
 
-Missing source paths resolve as `undefined` — the key is always included in
-the result.
+Missing source paths resolve as `undefined` — the key is always included
+in the result.
 
 #### Example
 
@@ -1697,14 +1708,17 @@ pickAs({ a: 1 }, { a: "a", b: "missing" });
 
 ### `pluckPathValues(array: object[], path: string)`
 
-Retrieve an array of the `path` value from each of the objects found in `array`.
+Retrieve an array of the `path` value from each of the objects found in
+`array`.
 
 #### Parameters
 
 - `array` `{object[]}` — The objects to read from.
 - `path` `{string}` — The dot-notation path to retrieve from each object.
 
-Any non-objects in `array` are ignored. Objects that don't have the given path yield `undefined` in the result. Empty or invalid input returns `[]`.
+Any non-objects in `array` are ignored. Objects that don't have the given
+path yield `undefined` in the result. Empty or invalid input returns
+`[]`.
 
 #### Example
 
@@ -1717,7 +1731,8 @@ pluckPathValues([], "user.name"); // []
 
 ### `removePathValue(object: object, path: string)`
 
-Remove an object property at `path`. This method makes a copy of the provided object to not modify the original.
+Remove an object property at `path`. This method makes a copy of the
+provided object to not modify the original.
 
 #### Parameters
 
@@ -1735,8 +1750,8 @@ removePathValue({ key: "value", one: { two: "two" } }, "one.two.three"); // { ke
 
 ### `renameProperties(object: object, mapping: object)`
 
-Returns a new object with keys renamed according to the given `mapping`, a
-plain object of `{ oldKey: newKey }` pairs. The original object is not
+Returns a new object with keys renamed according to the given `mapping`,
+a plain object of `{ oldKey: newKey }` pairs. The original object is not
 mutated. Renaming is shallow only — nested objects are not deep-renamed.
 
 #### Parameters
@@ -1744,8 +1759,9 @@ mutated. Renaming is shallow only — nested objects are not deep-renamed.
 - `object` `{object}` — The object to rename keys on.
 - `mapping` `{object}` — The existing keys and replacement keys to use.
 
-Use `pickAs` instead when you want to project or whitelist keys into a new
-shape; `renameProperties` renames keys in place while keeping all other keys.
+Use `pickAs` instead when you want to project or whitelist keys into a
+new shape; `renameProperties` renames keys in place while keeping all
+other keys.
 
 #### Example
 
@@ -1767,11 +1783,13 @@ Set an object property at `path`.
 - `path` `{string}` — The dot-notation path to set.
 - `value` `{any}` — The value to write at the path.
 
-If any part of the path dot notation chain results in a non-object, no modifications are made.
+If any part of the path dot notation chain results in a non-object, no
+modifications are made.
 
 Objects will be created as necessary to reach the path specified.
 
-This method returns a copy of the object so as to not modify the original.
+This method returns a copy of the object so as to not modify the
+original.
 
 #### Example
 
@@ -1783,7 +1801,9 @@ setPathValue({ a: 1, b: 2 }, "b.c.d", 4); // { a: 1, b: 2 }
 
 ### `unwrap(object: object)`
 
-Safely unwrap a single-key object, returning the value of that key. `null` is returned if the object contains more than one key, or the value cannot be retrieved.
+Safely unwrap a single-key object, returning the value of that key.
+`null` is returned if the object contains more than one key, or the value
+cannot be retrieved.
 
 #### Parameters
 
@@ -2126,7 +2146,8 @@ truncate(["A", "B"]); // ""
 
 ### `getCurrentUrlParameter(parameter: string)`
 
-Retrieve `parameter` from the current browser URL, returning `null` if the parameter is not present.
+Retrieve `parameter` from the current browser URL, returning `null` if
+the parameter is not present.
 
 #### Parameters
 
@@ -2143,7 +2164,8 @@ getCurrentUrlParameter("unknown"); // null
 
 ### `getSearchParameter(search: string | URLSearchParams, parameter: string)`
 
-Retrieve `parameter` from a URL search string or `URLSearchParams` instance, returning `null` when the parameter is not present.
+Retrieve `parameter` from a URL search string or `URLSearchParams`
+instance, returning `null` when the parameter is not present.
 
 #### Parameters
 
@@ -2192,7 +2214,9 @@ removeSearchParameter("?page=2", "page"); // ""
 
 ### `updateCurrentUrlParameter(parameter: string, value: string | null)`
 
-Update the current browser URL to set `parameter` to `value`, adding `parameter` if it doesn't already exist, or overwriting any current value if it doesn't. If `value` is `null`, the parameter is removed.
+Update the current browser URL to set `parameter` to `value`, adding
+`parameter` if it doesn't already exist, or overwriting any current value
+if it doesn't. If `value` is `null`, the parameter is removed.
 
 #### Parameters
 
@@ -2212,7 +2236,8 @@ updateCurrentUrlParameter("page", null); // https://duckduckgo.com
 
 ### `updateSearchParameter(search: string | URLSearchParams, parameter: string, value: string | null)`
 
-Return a search string with `parameter` set to `value`. If `value` is `null`, the parameter is removed.
+Return a search string with `parameter` set to `value`. If `value` is
+`null`, the parameter is removed.
 
 #### Parameters
 
@@ -2232,7 +2257,10 @@ updateSearchParameter("?page=3", "page", null); // ""
 
 ### `callComponentMethod(component, method: string, ...parameters: any)`
 
-If the given `component` is an object and contains a function parameter `method`, call that method with any additional `parameters` and return its result. This helper allows safe calling of a method when an object might not exist.
+If the given `component` is an object and contains a function parameter
+`method`, call that method with any additional `parameters` and return
+its result. This helper allows safe calling of a method when an object
+might not exist.
 
 #### Parameters
 
@@ -2251,14 +2279,16 @@ callComponentMethod(null); // undefined
 
 ### `getSlotText(slotReference)`
 
-Retrieve the text from the given `slotReference`. `slotReference` is a direct reference to a slot - for example `slots.default`. Text is concatenated when multiple children exist.
+Retrieve the text from the given `slotReference`. `slotReference` is a
+direct reference to a slot - for example `slots.default`. Text is
+concatenated when multiple children exist.
 
 #### Parameters
 
 - `slot` `{Function | object[]}` — The slot function or vnode array to read.
 - `options` `{object}` — Options for reading slot text.
-- `options.props` `{object}` — Props to pass when rendering a slot function.
-- `options.trim` `{boolean}` — Whether to trim whitespace from the returned text.
+- `[options.props]` `{object}` — Props to pass when rendering a slot function.
+- `[options.trim=true]` `{boolean}` — Whether to trim whitespace from the returned text.
 
 #### Example
 
@@ -2274,7 +2304,9 @@ getSlotText("string"); // ""
 
 ### `isNonEmptySlot(slotReference)`
 
-Determines whether the given `slotReference` contains content. `slotReference` is a direct reference to a slot - for example `slots.default`.
+Determines whether the given `slotReference` contains content.
+`slotReference` is a direct reference to a slot - for example
+`slots.default`.
 
 #### Parameters
 
