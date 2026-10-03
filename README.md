@@ -758,7 +758,8 @@ toEpochMilliseconds("06/22/2026", { inputFormat: "MM/DD/YYYY", timeZone: "Americ
 
 ### `validateField(fieldName: string, validationRules: object[], formData: object): Promise<ValidationResult>`
 
-Validate a field given its `fieldName`, the field's `validationRules`, and the sum total `formData`.
+Validate a field given its `fieldName`, the field's `validationRules`,
+and the sum total `formData`.
 
 #### Parameters
 
@@ -918,14 +919,14 @@ each field.
 - `formData` `{object}` — The current values of each form field.
 
 Returns `{ valid, validated, results }`. If input is invalid (non-object
-`fields` or `formData`), `validated` is `false` and the form is treated as
-valid — the same convention as `validateField`.
+`fields` or `formData`), `validated` is `false` and the form is treated
+as valid — the same convention as `validateField`.
 
-`results` contains a `validateField` result for each field that had a
-non-empty rules array. Fields with empty or non-array rules are skipped and
-omitted from `results`. The overall `valid` is `false` only when a field has
-`valid: false`. Fields with `validated: false` (skipped) don't make the form
-invalid.
+The `results` object contains a `validateField` result for each field
+that had a non-empty rules array. Fields with empty or non-array rules
+are skipped and omitted from `results`. The overall `valid` is `false`
+only when a field has `valid: false`. Fields with `validated: false`
+(skipped) don't make the form invalid.
 
 #### Example
 
@@ -965,14 +966,14 @@ have passed without another call before running.
 - `options.leading` `{boolean}` — Whether to run on the first call in a debounce window.
 - `options.trailing` `{boolean}` — Whether to run after calls stop.
 
-By default `fn` runs on the trailing edge, after calls stop, using the most
-recent call's arguments and `this`. Set `options.leading` to also run on the
-first call, or `options.trailing: false` to skip the trailing run; with both
-`false` it never runs.
+By default `fn` runs on the trailing edge, after calls stop, using the
+most recent call's arguments and `this`. Set `options.leading` to also
+run on the first call, or `options.trailing: false` to skip the trailing
+run; with both `false` it never runs.
 
 The returned function exposes `.cancel()` to discard a pending run and
-`.flush()` to run it immediately and return its result. A non-function `fn`
-returns a safe no-op, and an invalid `delay` is treated as `0`.
+`.flush()` to run it immediately and return its result. A non-function
+`fn` returns a safe no-op, and an invalid `delay` is treated as `0`.
 
 #### Example
 
@@ -982,7 +983,8 @@ const save = debounce(saveForm, 1000, { leading: true });
 
 ### `getFriendlyDisplay(variable: any)`
 
-Convert a given `variable` into a human-readable representation of its type.
+Convert a given `variable` into a human-readable representation of its
+type.
 
 #### Parameters
 
@@ -998,7 +1000,9 @@ getFriendlyDisplay("hello"); // hello <string>
 
 ### `isDefined(value: any)`
 
-Determines whether the given `value` is neither `null` nor `undefined`. Unlike a falsy check, this guard treats `0`, `""`, and `false` as defined values.
+Determines whether the given `value` is neither `null` nor `undefined`.
+Unlike a falsy check, this guard treats `0`, `""`, and `false` as defined
+values.
 
 #### Parameters
 
@@ -1015,12 +1019,14 @@ isDefined(undefined); // false
 
 ### `isEqual(a: unknown, b: unknown)`
 
-Determine whether `a` and `b` are deeply equal. Primitives are compared with SameValueZero
-semantics, so `NaN` is equal to `NaN`, and `null`/`undefined` are not equal to each other.
-Arrays are equal when they share the same length and every element is deeply equal in order.
-Plain objects are equal when they share the same set of own-enumerable keys and every value is
-deeply equal, regardless of key order. Anything else, including a type mismatch between the two
-values, or non-plain objects such as `Date`, `Map`, `Set`, or class instances, is not equal
+Determine whether `a` and `b` are deeply equal. Primitives are compared
+with SameValueZero semantics, so `NaN` is equal to `NaN`, and
+`null`/`undefined` are not equal to each other. Arrays are equal when
+they share the same length and every element is deeply equal in order.
+Plain objects are equal when they share the same set of own-enumerable
+keys and every value is deeply equal, regardless of key order. Anything
+else, including a type mismatch between the two values, or non-plain
+objects such as `Date`, `Map`, `Set`, or class instances, is not equal
 unless the two values are the same reference.
 
 #### Parameters
@@ -1055,21 +1061,23 @@ isFunction(5); // false
 
 ### `resolveOrFallback(promise: any, fallback: any | (() => any))`
 
-Resolves `promise`, returning its value, or `fallback` if it rejects. Always
-returns a promise, even for synchronous inputs, for a consistent shape.
+Resolves `promise`, returning its value, or `fallback` if it rejects.
+Always returns a promise, even for synchronous inputs, for a consistent
+shape.
 
 #### Parameters
 
 - `promise` `{any}` — The promise or value to resolve.
-- `fallback` `{any | function}` — The fallback value, or function returning one, to use when resolution fails.
+- `fallback` `{any | function}` — The fallback value, or function returning one, to use when resolution
+  fails.
 
-This is async/value recovery, not validation — see `validateOrFallback` for
-keyword-based value checks.
+This is async/value recovery, not validation — see `validateOrFallback`
+for keyword-based value checks.
 
-If `fallback` is a function it is called lazily, only on rejection, and its
-return value is used. A throwing fallback function propagates. Non-thenable
-inputs resolve as-is, except `null` / `undefined`, which resolve to the
-fallback.
+If `fallback` is a function it is called lazily, only on rejection, and
+its return value is used. A throwing fallback function propagates.
+Non-thenable inputs resolve as-is, except `null` / `undefined`, which
+resolve to the fallback.
 
 #### Example
 
@@ -1089,15 +1097,15 @@ patterns.
 
 - `promises` `{any[]}` — The promises or values to settle.
 
-Non-thenable values are treated as fulfilled and returned as-is — functions
-are never invoked. To run functions, call them first: `settle(items.map(item
-=> action(item)))`.
+Non-thenable values are treated as fulfilled and returned as-is —
+functions are never invoked. To run functions, call them first:
+`settle(items.map(item => action(item)))`.
 
-`results` includes every item in order, and each entry carries its original
-`index`, so a failure can be mapped straight back to its input — useful for
-bulk operations where you need to know exactly which calls failed. `values`
-and `errors` exclude the other outcome's gaps, for the common "everything
-that worked / failed" patterns.
+The `results` array includes every item in order, and each entry carries
+its original `index`, so a failure can be mapped straight back to its
+input — useful for bulk operations where you need to know exactly which
+calls failed. `values` and `errors` exclude the other outcome's gaps, for
+the common "everything that worked / failed" patterns.
 
 #### Example
 
@@ -1115,7 +1123,10 @@ await settle([Promise.resolve(1), Promise.reject("nope")]);
 
 ### `size(variable: any)`
 
-Determine the size of the given `variable`. For strings, the number of characters is used; for numbers, the value itself; for arrays, the length; for objects, the number of top-level properties. Returns `0` if no reasonable size can be determined.
+Determine the size of the given `variable`. For strings, the number of
+characters is used; for numbers, the value itself; for arrays, the
+length; for objects, the number of top-level properties. Returns `0` if
+no reasonable size can be determined.
 
 #### Parameters
 
@@ -1144,15 +1155,15 @@ milliseconds.
 - `options.leading` `{boolean}` — Whether to run at the start of a throttle window.
 - `options.trailing` `{boolean}` — Whether to run at the end of a throttle window.
 
-By default `fn` runs immediately on the first call, then once more at the end
-of the window if further calls arrived during it, using the latest arguments
-and `this`. Set `options.leading: false` to skip the immediate run, or
-`options.trailing: false` to skip the closing one; with both `false` it never
-runs.
+By default `fn` runs immediately on the first call, then once more at the
+end of the window if further calls arrived during it, using the latest
+arguments and `this`. Set `options.leading: false` to skip the immediate
+run, or `options.trailing: false` to skip the closing one; with both
+`false` it never runs.
 
 The returned function exposes `.cancel()` to discard a pending run and
-`.flush()` to run it immediately and return its result. A non-function `fn`
-returns a safe no-op, and an invalid `delay` is treated as `0`.
+`.flush()` to run it immediately and return its result. A non-function
+`fn` returns a safe no-op, and an invalid `delay` is treated as `0`.
 
 #### Example
 
@@ -1160,9 +1171,10 @@ returns a safe no-op, and an invalid `delay` is treated as `0`.
 const save = throttle(saveForm, 500, { leading: false });
 ```
 
-### `validateOrFallback(value: any, comparison: function | string, fallback: any)`
+### `validateOrFallback(variable: any, comparison: function | string, fallback: any)`
 
-Apply `comparison` to the provided `value`, returning `value` if `true`, and `fallback` if not.
+Apply `comparison` to the provided `variable`, returning `variable` if `true`,
+and `fallback` if not.
 
 #### Parameters
 
@@ -1839,8 +1851,8 @@ values("string"); // []
 
 Returns the string with the first character uppercased and the remaining
 characters unchanged. Handles surrogate pairs correctly by iterating code
-points rather than UTF-16 code units. Returns an empty string if the provided
-`value` is not a non-empty string.
+points rather than UTF-16 code units. Returns an empty string if the
+provided `value` is not a non-empty string.
 
 #### Parameters
 
@@ -1860,12 +1872,15 @@ capitalise("αβγ"); // "Αβγ"
 
 ### `isNonEmptyString(variable: any, { trim: boolean = false })`
 
-Determines whether the given `variable` is both a string and has at least one character. If `trim` is true, the string is trimmed of whitespace before the test is performed.
+Determines whether the given `variable` is both a string and has at least
+one character. If `trim` is true, the string is trimmed of whitespace
+before the test is performed.
 
 #### Parameters
 
 - `variable` `{any}` — The value to check.
-- `options.trim` `{boolean}` — Whether to trim whitespace before checking length.
+- `[options]` `{object}` — Settings for the check.
+- `[options.trim=false]` `{boolean}` — Whether to ignore surrounding whitespace.
 
 #### Example
 
@@ -1879,7 +1894,8 @@ isNonEmptyString("  ", { trim: true }); // false
 
 ### `ltrim(string: string, pattern: string | RegExp = "\\s")`
 
-Trim the left hand side of `string` using the provided string or RegExp `pattern`. Trims whitespace by default.
+Trim the left hand side of `string` using the provided string or RegExp
+`pattern`. Trims whitespace by default.
 
 #### Parameters
 
@@ -1896,7 +1912,8 @@ ltrim("***string***", new RegExp("\\*+")); // string***
 
 ### `rtrim(string: string, pattern: string | RegExp = "\\s")`
 
-Trim the right hand side of `string` using the provided string or RegExp `pattern`. Trims whitespace by default.
+Trim the right hand side of `string` using the provided string or RegExp
+`pattern`. Trims whitespace by default.
 
 #### Parameters
 
@@ -1913,11 +1930,15 @@ rtrim("***string***", new RegExp("\\*+")); // ***string
 
 ### `StringManipulator`
 
-`StringManipulator` can be used to chain string methods together safely. A new instance of the class is created, and then any of the string helper methods can be used in any sequence. If the input at any stage is invalid, an empty string is returned.
+`StringManipulator` can be used to chain string methods together safely.
+A new instance of the class is created, and then any of the string helper
+methods can be used in any sequence. If the input at any stage is
+invalid, an empty string is returned.
 
 #### Parameters
 
-- `value` `{any}` — The initial string value to wrap. Non-strings fall back to an empty string.
+- `value` `{any}` — The initial string value to wrap. Non-strings fall back to an empty
+  string.
 
 #### Example
 
@@ -1953,9 +1974,9 @@ toCamelCase(42); // ""
 ### `toKebabCase(value: any)`
 
 Converts a string to kebab-case (lowercase words joined by hyphens).
-Handles camelCase, PascalCase, snake_case, SCREAMING_SNAKE_CASE, and mixed
-separators. Acronyms are split correctly (APIKey → api-key). Returns an
-empty string for non-string inputs.
+Handles camelCase, PascalCase, snake_case, SCREAMING_SNAKE_CASE, and
+mixed separators. Acronyms are split correctly (APIKey → api-key).
+Returns an empty string for non-string inputs.
 
 #### Parameters
 
@@ -1974,13 +1995,14 @@ toKebabCase(""); // ""
 toKebabCase(42); // ""
 ```
 
-### `toLowerCase(variable: string)`
+### `toLowerCase(string: any)`
 
-A safe wrapper around `toLowerCase`, returning an empty string if the provided `variable` is not a string itself.
+A safe wrapper around `toLowerCase`, returning an empty string if the
+provided `string` is not a string itself.
 
 #### Parameters
 
-- `variable` `{string}` — The string to lowercase.
+- `string` `{any}` — The string to convert.
 
 #### Example
 
@@ -1992,9 +2014,9 @@ toLowerCase(["A", "B"]); // ""
 
 ### `toNullableString(value: any)`
 
-Coerces the given `value` to a string, returning an empty string for `null`
-or `undefined`. Useful for form round-trips where absent string fields should
-be `""` rather than `"null"` or `"undefined"`.
+Coerces the given `value` to a string, returning an empty string for
+`null` or `undefined`. Useful for form round-trips where absent string
+fields should be `""` rather than `"null"` or `"undefined"`.
 
 #### Parameters
 
@@ -2012,9 +2034,9 @@ toNullableString(undefined); // ""
 ### `toPascalCase(value: any)`
 
 Converts a string to PascalCase (each word capitalised, no separators).
-Handles camelCase, kebab-case, snake_case, SCREAMING_SNAKE_CASE, and mixed
-separators. Acronyms are normalised (APIKey → ApiKey). Returns an empty
-string for non-string inputs.
+Handles camelCase, kebab-case, snake_case, SCREAMING_SNAKE_CASE, and
+mixed separators. Acronyms are normalised (APIKey → ApiKey). Returns an
+empty string for non-string inputs.
 
 #### Parameters
 
@@ -2036,8 +2058,8 @@ toPascalCase(42); // ""
 
 Converts a string to SCREAMING_SNAKE_CASE (uppercase words joined by
 underscores). Handles camelCase, PascalCase, kebab-case, snake_case, and
-mixed separators. Acronyms are split correctly (APIKey → API_KEY). Returns
-an empty string for non-string inputs.
+mixed separators. Acronyms are split correctly (APIKey → API_KEY).
+Returns an empty string for non-string inputs.
 
 #### Parameters
 
@@ -2058,9 +2080,9 @@ toScreamingSnakeCase(42); // ""
 ### `toSnakeCase(value: any)`
 
 Converts a string to snake_case (lowercase words joined by underscores).
-Handles camelCase, PascalCase, kebab-case, SCREAMING_SNAKE_CASE, and mixed
-separators. Acronyms are split correctly (APIKey → api_key). Returns an
-empty string for non-string inputs.
+Handles camelCase, PascalCase, kebab-case, SCREAMING_SNAKE_CASE, and
+mixed separators. Acronyms are split correctly (APIKey → api_key).
+Returns an empty string for non-string inputs.
 
 #### Parameters
 
@@ -2078,13 +2100,14 @@ toSnakeCase(""); // ""
 toSnakeCase(42); // ""
 ```
 
-### `toUpperCase(variable: string)`
+### `toUpperCase(string: any)`
 
-A safe wrapper around `toUpperCase`, returning an empty string if the provided `variable` is not a string itself.
+A safe wrapper around `toUpperCase`, returning an empty string if the
+provided `string` is not a string itself.
 
 #### Parameters
 
-- `variable` `{string}` — The string to uppercase.
+- `string` `{any}` — The string to convert.
 
 #### Example
 
@@ -2096,7 +2119,8 @@ toUpperCase(["A", "B"]); // ""
 
 ### `trim(string, pattern: string | RegExp = "\\s")`
 
-Trim both sides of `string` using the provided string or RegExp `pattern`. Trims whitespace by default.
+Trim both sides of `string` using the provided string or RegExp
+`pattern`. Trims whitespace by default.
 
 #### Parameters
 
@@ -2114,17 +2138,19 @@ trim("***string***", new RegExp("\\*+")); // string
 
 ### `truncate(string: string, length: number = 10, { decoration: string = "…", preserveWords: boolean = false, strict: boolean = true, includeDecoration: boolean = true, position: "start" | "end" | "middle" = "end" })`
 
-Truncate a string to a given length, with various options for how the truncation occurs.
+Truncate a string to a given length, with various options for how the
+truncation occurs.
 
 #### Parameters
 
 - `string` `{string}` — The string to truncate.
 - `length` `{number}` — The length to truncate the string to.
-- `options.decoration` `{string}` — The decoration to append to the string if it is truncated.
-- `options.includeDecoration` `{boolean}` — Whether to include the length of the decoration in length calculations.
-- `options.preserveWords` `{boolean}` — Whether to avoid breaking a word during truncation.
-- `options.strict` `{boolean}` — When preserving words, if strict the resulting length will be less than the desired length.
-- `options.position` `{"start" | "end" | "middle"}` — Where to truncate: `"end"` (default), `"start"`, or `"middle"`.
+- `[options]` `{object}` — Settings for how the string is shortened.
+- `[options.decoration="…"]` `{string}` — The marker shown where text is removed.
+- `[options.includeDecoration=true]` `{boolean}` — Whether the marker counts towards the length.
+- `[options.preserveWords=false]` `{boolean}` — Whether to keep words whole.
+- `[options.strict=true]` `{boolean}` — When preserving words, whether to stay within the character budget.
+- `[options.position="end"]` `{"start" | "end" | "middle"}` — Where to remove text and show the decoration.
 
 If the provided variable is not a string, returns an empty string.
 

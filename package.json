@@ -106,22 +106,22 @@
 		"check:all": "support/run-all-checks.sh"
 	},
 	"dependencies": {
-		"dayjs": "^1.11.21",
-		"temporal-polyfill": "^1.0.2"
+		"dayjs": "^1.11.23",
+		"temporal-polyfill": "^1.0.5"
 	},
 	"devDependencies": {
 		"@arethetypeswrong/cli": "^0.18.5",
-		"@lewishowles/cli-style": "^0.11.0",
+		"@lewishowles/cli-style": "^0.16.0",
 		"@lewishowles/lint-config": "^0.7.0",
-		"@lewishowles/pkg-checks": "^0.2.2",
+		"@lewishowles/pkg-checks": "^0.2.4",
 		"@stylistic/eslint-plugin": "^5.10.0",
-		"globals": "^17.8.0",
-		"happy-dom": "^20.11.1",
-		"publint": "^0.3.22",
-		"vite": "8.2.0",
-		"vite-plus": "0.2.8",
-		"vitest": "4.1.10",
-		"vue": "^3.5.40"
+		"globals": "^17.13.0",
+		"happy-dom": "^20.14.5",
+		"publint": "^0.3.25",
+		"vite": "8.3.2",
+		"vite-plus": "1.0.0",
+		"vitest": "5.0.3",
+		"vue": "^3.5.43"
 	},
 	"peerDependencies": {
 		"vue": "^3.5.39"
