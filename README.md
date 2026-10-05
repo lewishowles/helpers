@@ -105,9 +105,9 @@ Ensure that `maybeArray` is an array.
 Arrays are returned unchanged. Any non-array value is returned as a
 single-item array.
 
-Note that `null` and `undefined` are preserved as values, returning
-`[null]` and `[undefined]`. Combine with `compact` when falsy values
-should be removed.
+Note that `null` and `undefined` are preserved as values, returning `[null]`
+and `[undefined]`. Combine with `compact` when falsy values should be
+removed.
 
 #### Example
 
@@ -137,9 +137,9 @@ firstDefined([]); // undefined
 
 ### `firstWhere(array: any[], matcher: object): any`
 
-Return the first item in `array` that matches the given predicate
-function or filter object. Returns `undefined` when no item matches or
-the input is empty.
+Return the first item in `array` that matches the given predicate function or
+filter object. Returns `undefined` when no item matches or the input is
+empty.
 
 #### Parameters
 
@@ -169,8 +169,8 @@ Given a starting `index`, determine the next available index in the
 - `[options.reverse=false]` `{boolean}` — Whether to find the previous index instead of the next index.
 - `[options.wrap=false]` `{boolean}` — Whether to wrap around when moving beyond either end of the array.
 
-An index outside the reference array is clamped unless wrapping is
-requested. An invalid index or reference array returns `0`.
+An index outside the reference array is clamped unless wrapping is requested.
+An invalid index or reference array returns `0`.
 
 #### Example
 
@@ -230,8 +230,8 @@ head([]); // undefined
 
 ### `isNonEmptyArray(variable: any[])`
 
-Determines whether the given `variable` is both an array and has at least
-one item.
+Determines whether the given `variable` is both an array and has at least one
+item.
 
 #### Parameters
 
@@ -272,10 +272,9 @@ original untouched.
 - `fromIndex` `{number}` — The index of the item to move.
 - `toIndex` `{number}` — The index to move the item to.
 
-`toIndex` is read after the item has been removed, matching how
-drag-and-drop libraries report a drop. `fromIndex` must point at an
-existing item, otherwise the array is returned unchanged; `toIndex` is
-clamped into range.
+`toIndex` is read after the item has been removed, matching how drag-and-drop
+libraries report a drop. `fromIndex` must point at an existing item,
+otherwise the array is returned unchanged; `toIndex` is clamped into range.
 
 #### Example
 
@@ -304,8 +303,8 @@ partition([], () => true); // [[], []]
 
 ### `pluck(array: any[], property: string)`
 
-Retrieve an array of the `property` value from each of the objects found
-in `array`.
+Retrieve an array of the `property` value from each of the objects found in
+`array`.
 
 #### Parameters
 
@@ -330,11 +329,10 @@ pluck([], "property"); // []
 
 ### `range(start: number, end?: number, step?: number)`
 
-Generate a numeric array from `start` to `end`, both inclusive. When
-called with a single argument, `start` is treated as `end` and the range
-begins at `0`. Direction is inferred automatically when `start > end` and
-no `step` is given; an explicit `step` overrides it. A zero `step`
-returns an empty array.
+Generate a numeric array from `start` to `end`, both inclusive. When called
+with a single argument, `start` is treated as `end` and the range begins at
+`0`. Direction is inferred automatically when `start > end` and no `step` is
+given; an explicit `step` overrides it. A zero `step` returns an empty array.
 
 #### Parameters
 
@@ -355,10 +353,10 @@ range(5, 0, -1); // [5, 4, 3, 2, 1, 0]
 
 ### `sortByProperty(array: any[], criteria: object[])`
 
-Returns a new array containing the `array` of objects, sorted by the
-value at `property`, with optional direction. When an array of criteria
-objects is passed, sorts by each criterion in order, using the first
-non-zero comparison.
+Returns a new array containing the `array` of objects, sorted by the value at
+`property`, with optional direction. When an array of criteria objects is
+passed, sorts by each criterion in order, using the first non-zero
+comparison.
 
 #### Parameters
 
@@ -404,8 +402,8 @@ tail([]); // undefined
 
 ### `toggleItem(array: any[], item: any, comparator?: ((a: any, b: any) => boolean) | string)`
 
-Add an item to an array if it is not present, or remove all occurrences
-of it if it is. Returns a new array and does not mutate the original.
+Add an item to an array if it is not present, or remove all occurrences of it
+if it is. Returns a new array and does not mutate the original.
 
 #### Parameters
 
@@ -439,17 +437,17 @@ unique([]); // []
 
 ### `uniqueBy(array: object[], property: string)`
 
-Remove duplicate objects from an array based on a property value.
-Supports dot-path notation for nested properties. The first occurrence of
-each value is kept.
+Remove duplicate objects from an array based on a property value. Supports
+dot-path notation for nested properties. The first occurrence of each value
+is kept.
 
 #### Parameters
 
 - `array` `{object[]}` — The array of objects to reduce.
 - `property` `{string}` — The property path that identifies duplicate items.
 
-Items where the resolved value is `undefined` are treated as equal, with
-only the first occurrence kept.
+Items where the resolved value is `undefined` are treated as equal, with only
+the first occurrence kept.
 
 #### Example
 
@@ -482,10 +480,9 @@ uniqueBy([], "id");
 
 ### `addToDate(value: any, amount: number, unit: "day" | "week" | "month" | "year", options?: object)`
 
-Shift a `parseDate`-compatible value by a calendar amount and unit,
-returning a new Temporal value of the same precision as the input.
-Negative amounts subtract; `0` returns an equivalent value for the same
-day.
+Shift a `parseDate`-compatible value by a calendar amount and unit, returning
+a new Temporal value of the same precision as the input. Negative amounts
+subtract; `0` returns an equivalent value for the same day.
 
 #### Parameters
 
@@ -495,9 +492,9 @@ day.
 - `options` `{object}` — Per-call date helper options (passed through to `parseDate`).
 - `options.inputFormat` `{string}` — The Day.js-style token format used when parsing non-ISO strings.
 
-`Temporal.Instant` values return `null` because instants have no calendar
-and cannot accept calendar-unit arithmetic. Anchor to a timezone first if
-you need to shift an instant.
+`Temporal.Instant` values return `null` because instants have no calendar and
+cannot accept calendar-unit arithmetic. Anchor to a timezone first if you
+need to shift an instant.
 
 #### Example
 
@@ -522,18 +519,18 @@ Set project-wide defaults for date parsing and formatting.
 
 Calling this helper with no arguments returns the current configuration.
 
-Projects can override these defaults per helper call. The default locale
-is `en-GB`, the default timezone is `Europe/London`, and token formats
-use Day.js-style tokens such as `DD/MM/YYYY`.
+Projects can override these defaults per helper call. The default locale is
+`en-GB`, the default timezone is `Europe/London`, and token formats use
+Day.js-style tokens such as `DD/MM/YYYY`.
 
 The `formats` option is a map of named output formats. Each key is a name
-that can be passed to `formatDate` as the format argument, and each value
-is either a Day.js-style token string (e.g. `"DD/MM/YYYY"`) or an
+that can be passed to `formatDate` as the format argument, and each value is
+either a Day.js-style token string (e.g. `"DD/MM/YYYY"`) or an
 `Intl.DateTimeFormatOptions` object (e.g. `{ dateStyle: "medium" }`). The
-built-in named formats are `date`, `dateTime`, and `shortDate`. Projects
-can override these or add their own — `formatDate` resolves the key at
-call time. The `defaultFormat` option determines which named format is
-used when `formatDate` is called with no format argument.
+built-in named formats are `date`, `dateTime`, and `shortDate`. Projects can
+override these or add their own — `formatDate` resolves the key at call time.
+The `defaultFormat` option determines which named format is used when
+`formatDate` is called with no format argument.
 
 #### Example
 
@@ -544,8 +541,8 @@ used when `formatDate` is called with no format argument.
 
 ### `formatDate(value: any, format?: string|object, options?: object)`
 
-Format supported date input using a named configured format, a
-Day.js-style token string, or `Intl.DateTimeFormat` options.
+Format supported date input using a named configured format, a Day.js-style
+token string, or `Intl.DateTimeFormat` options.
 
 #### Parameters
 
@@ -589,8 +586,8 @@ formatRelativeDate("2026-06-22T09:59:00", "2026-06-22T10:00:00");
 ### `getDateHelpersConfig()`
 
 Get a defensive copy of the active date helper configuration. Useful when
-building custom date helpers that should respect the same global defaults
-set via `configureDateHelpers`.
+building custom date helpers that should respect the same global defaults set
+via `configureDateHelpers`.
 
 #### Example
 
@@ -601,10 +598,10 @@ const config = getDateHelpersConfig();
 
 ### `getDateParts(value: any, options?: object)`
 
-Convert a `parseDate`-compatible input into `{ year, month, day }`, for
-use with `<input type="date">`-style three-field date components.
-Instants and zoned date-times are anchored to the configured or per-call
-timezone before the calendar date is read.
+Convert a `parseDate`-compatible input into `{ year, month, day }`, for use
+with `<input type="date">`-style three-field date components. Instants and
+zoned date-times are anchored to the configured or per-call timezone before
+the calendar date is read.
 
 #### Parameters
 
@@ -646,9 +643,9 @@ getRelativeDateParts("2026-06-22T10:00:00", "2026-06-22T10:01:00");
 
 ### `hasDateParts(parts: object)`
 
-Determine whether a `{ day, month, year }` object has at least one
-non-empty part. Empty strings, whitespace-only strings, `null`, and
-`undefined` count as empty.
+Determine whether a `{ day, month, year }` object has at least one non-empty
+part. Empty strings, whitespace-only strings, `null`, and `undefined` count
+as empty.
 
 #### Parameters
 
@@ -663,9 +660,9 @@ hasDateParts({ day: "", month: "", year: "" }); // false
 
 ### `isTemporalDate(value: any, type?: string)`
 
-Check whether a value is a Temporal `Instant`, `PlainDate`,
-`PlainDateTime`, or `ZonedDateTime`. An optional type restricts the check
-to one supported Temporal type.
+Check whether a value is a Temporal `Instant`, `PlainDate`, `PlainDateTime`,
+or `ZonedDateTime`. An optional type restricts the check to one supported
+Temporal type.
 
 #### Parameters
 
@@ -673,9 +670,9 @@ to one supported Temporal type.
 - `type` `{string}` — The optional Temporal type name to match.
 
 Recognition uses Temporal's standard string tags, so values from another
-compatible Temporal implementation or module copy are supported. This is
-a type check for genuine Temporal values, not validation of untrusted
-objects that deliberately imitate those tags.
+compatible Temporal implementation or module copy are supported. This is a
+type check for genuine Temporal values, not validation of untrusted objects
+that deliberately imitate those tags.
 
 #### Example
 
@@ -687,8 +684,8 @@ isTemporalDate(value, "PlainDate");
 ### `parseDate(value: any, options?: object)`
 
 Convert `Date`, timestamp, Temporal, ISO/RFC 9557 string, configured
-token-format string, or `{ year, month, day }` parts object into a
-Temporal date value.
+token-format string, or `{ year, month, day }` parts object into a Temporal
+date value.
 
 #### Parameters
 
@@ -696,9 +693,9 @@ Temporal date value.
 - `options` `{object}` — Per-call date helper options.
 - `options.inputFormat` `{string}` — The Day.js-style token format used when parsing non-ISO strings.
 
-Token strings use Day.js-style tokens such as `DD/MM/YYYY`. Invalid or
-empty values return `null`. Parts objects are rejected (not clamped) when
-the month or day is out of range, such as 30 February 2026.
+Token strings use Day.js-style tokens such as `DD/MM/YYYY`. Invalid or empty
+values return `null`. Parts objects are rejected (not clamped) when the month
+or day is out of range, such as 30 February 2026.
 
 #### Example
 
@@ -712,9 +709,9 @@ parseDate({ year: 2026, month: 6, day: 22 }); // Temporal.PlainDate
 ### `toDateFromParts(parts: object)`
 
 Convert `<input type="date">`-style three-field parts into a
-`Temporal.PlainDate`. Parts carry no timezone information, so the result
-is always a plain date; anchor it with `toEpochMilliseconds`/`formatDate`
-when an instant is needed.
+`Temporal.PlainDate`. Parts carry no timezone information, so the result is
+always a plain date; anchor it with `toEpochMilliseconds`/`formatDate` when
+an instant is needed.
 
 #### Parameters
 
@@ -723,10 +720,9 @@ when an instant is needed.
 - `parts.month` `{number|string}` — The month, `1`-indexed.
 - `parts.day` `{number|string}` — The day of the month.
 
-Only a `{ year, month, day }` plain object is accepted; strings,
-timestamps, `Date` instances, and Temporal values are rejected. String
-parts must be numeric. Missing, non-numeric, or out-of-range parts return
-`null`.
+Only a `{ year, month, day }` plain object is accepted; strings, timestamps,
+`Date` instances, and Temporal values are rejected. String parts must be
+numeric. Missing, non-numeric, or out-of-range parts return `null`.
 
 #### Example
 
@@ -737,8 +733,8 @@ toDateFromParts({ year: 2026, month: 2, day: 30 }); // null
 
 ### `toEpochMilliseconds(value: any, options?: object)`
 
-Convert a supported date input into epoch milliseconds. Plain dates and
-plain date-times use the configured timezone.
+Convert a supported date input into epoch milliseconds. Plain dates and plain
+date-times use the configured timezone.
 
 #### Parameters
 
@@ -758,8 +754,8 @@ toEpochMilliseconds("06/22/2026", { inputFormat: "MM/DD/YYYY", timeZone: "Americ
 
 ### `validateField(fieldName: string, validationRules: object[], formData: object): Promise<ValidationResult>`
 
-Validate a field given its `fieldName`, the field's `validationRules`,
-and the sum total `formData`.
+Validate a field given its `fieldName`, the field's `validationRules`, and
+the sum total `formData`.
 
 #### Parameters
 
@@ -767,7 +763,9 @@ and the sum total `formData`.
 - `validationRules` `{object[]}` — The rules, schemas, or validation functions to apply.
 - `formData` `{object}` — The current values of each form field.
 
-Returns `{ valid, errors, validated }`. If input is invalid (missing field name, rules, or form data), `validated` is false and the field is treated as valid.
+Returns `{ valid, errors, validated }`. If input is invalid (missing field
+name, rules, or form data), `validated` is false and the field is treated as
+valid.
 
 Available rules and properties include:
 
@@ -784,31 +782,39 @@ Requires a value to be set.
 
 `[{ rule: "email", message: "We need an email address to set up your account" }]`
 
-Perform a minimal check to see if the value contains an `@` symbol. More complex verification isn't really necessary, and the only true way to test an email address is through verification.
+Perform a minimal check to see if the value contains an `@` symbol. More
+complex verification isn't really necessary, and the only true way to test an
+email address is through verification.
 
 #### `size`
 
 `[{ rule: "size", size: 11, message: "Your phone number should be 11 digits long" }]`
 
-Ensure that the provided value is has at least size `size`. For strings, the number of characters is used, for arrays, the length of the array, for objects, the number of properties, for numbers, the number itself is used, and for numeric strings the integer value of the string is used.
+Ensure that the provided value is has at least size `size`. For strings, the
+number of characters is used, for arrays, the length of the array, for
+objects, the number of properties, for numbers, the number itself is used,
+and for numeric strings the integer value of the string is used.
 
 #### `min`
 
 `[{ rule: "min", min: 11, message: "Your phone number should be at least 11 digits long" }]`
 
-Ensure that the provided value is has at least size `min`. Values are evaluated as in the `size` rule.
+Ensure that the provided value is has at least size `min`. Values are
+evaluated as in the `size` rule.
 
 #### `max`
 
 `[{ rule: "max", max: 11, message: "Your phone number should be no more than 11 digits long" }]`
 
-Ensure that the provided value is has at most size `max`. Values are evaluated as in the `size` rule.
+Ensure that the provided value is has at most size `max`. Values are
+evaluated as in the `size` rule.
 
 #### `between`
 
 `[{ rule: "between", min: 5, max: 8, message: "Your post code should be between 5 and 8 characters" }]`
 
-Ensure that the provided value is has between `min` and `max` size. Values are evaluated as in the `size` rule.
+Ensure that the provided value is has between `min` and `max` size. Values
+are evaluated as in the `size` rule.
 
 #### `in`
 
@@ -840,11 +846,19 @@ of `required` and `required_if`.
 
 `[{ rule: "custom", validate: (value, formData) => value > formData.startDate, message: "Your end date should be after your start date" }]`
 
-The escape hatch for any rule the declarative rules can't express, including cross-field validation. `validate` receives the field's own `value` and the complete `formData`, and should return a truthy value to pass. A `custom` rule without a `validate` function always fails.
+The escape hatch for any rule the declarative rules can't express, including
+cross-field validation. `validate` receives the field's own `value` and the
+complete `formData`, and should return a truthy value to pass. A `custom`
+rule without a `validate` function always fails.
 
 #### Standard Schema
 
-Any object with a `~standard` property (Zod, Valibot, ArkType schemas) is detected and validated through the [Standard Schema](https://github.com/standard-schema/standard-schema) interface. The schema's `~standard.validate(value)` is called, and any returned issues are mapped to error strings. Schemas can return results synchronously or asynchronously.
+Any object with a `~standard` property (Zod, Valibot, ArkType schemas) is
+detected and validated through the [Standard
+Schema](https://github.com/standard-schema/standard-schema) interface. The
+schema's `~standard.validate(value)` is called, and any returned issues are
+mapped to error strings. Schemas can return results synchronously or
+asynchronously.
 
 ```js
 import { z } from "zod";
@@ -853,13 +867,17 @@ validateField("email", [schema], { email: "not-an-email" });
 // { valid: false, errors: ["Enter a valid email address"], validated: true }
 ```
 
-Schemas, object rules, and function shorthand can be freely mixed in the same rules array.
+Schemas, object rules, and function shorthand can be freely mixed in the same
+rules array.
 
 #### Function shorthand
 
 `[(value, formData) => value.includes("@") || "Enter a valid email address"]`
 
-A bare function in the rules array is a shorthand for `custom` validation without a separate `message` property. The function receives the field's own `value` and the complete `formData`, and its return value determines the outcome:
+A bare function in the rules array is a shorthand for `custom` validation
+without a separate `message` property. The function receives the field's own
+`value` and the complete `formData`, and its return value determines the
+outcome:
 
 | Return value                         | Result                                                    |
 | ------------------------------------ | --------------------------------------------------------- |
@@ -867,13 +885,20 @@ A bare function in the rules array is a shorthand for `custom` validation withou
 | Non-empty array of non-empty strings | Multiple errors — each string is a separate error message |
 | Any other value                      | Valid — no error                                          |
 
-This mirrors the `custom` rule's `(value, formData)` signature, but inverts the convention: instead of returning a boolean and reading the message from the rule object, the function returns the error message(s) directly when validation fails. Functions and object rules can be freely mixed in the same rules array.
+This mirrors the `custom` rule's `(value, formData)` signature, but inverts
+the convention: instead of returning a boolean and reading the message from
+the rule object, the function returns the error message(s) directly when
+validation fails. Functions and object rules can be freely mixed in the same
+rules array.
 
 #### `required_if`
 
 `[{ rule: "required_if", field: "wantsNewsletter", value: true, message: "Enter an email address to receive the newsletter" }]`
 
-Requires a value to be set, but only when another field's value meets a condition. When `value` is provided, the condition is met when `formData[field]` strictly equals it. When `value` is omitted, the condition is met when `formData[field]` has a value.
+Requires a value to be set, but only when another field's value meets a
+condition. When `value` is provided, the condition is met when
+`formData[field]` strictly equals it. When `value` is omitted, the condition
+is met when `formData[field]` has a value.
 
 #### `same`
 
@@ -919,14 +944,14 @@ each field.
 - `formData` `{object}` — The current values of each form field.
 
 Returns `{ valid, validated, results }`. If input is invalid (non-object
-`fields` or `formData`), `validated` is `false` and the form is treated
-as valid — the same convention as `validateField`.
+`fields` or `formData`), `validated` is `false` and the form is treated as
+valid — the same convention as `validateField`.
 
-The `results` object contains a `validateField` result for each field
-that had a non-empty rules array. Fields with empty or non-array rules
-are skipped and omitted from `results`. The overall `valid` is `false`
-only when a field has `valid: false`. Fields with `validated: false`
-(skipped) don't make the form invalid.
+The `results` object contains a `validateField` result for each field that
+had a non-empty rules array. Fields with empty or non-array rules are skipped
+and omitted from `results`. The overall `valid` is `false` only when a field
+has `valid: false`. Fields with `validated: false` (skipped) don't make the
+form invalid.
 
 #### Example
 
@@ -966,14 +991,14 @@ have passed without another call before running.
 - `options.leading` `{boolean}` — Whether to run on the first call in a debounce window.
 - `options.trailing` `{boolean}` — Whether to run after calls stop.
 
-By default `fn` runs on the trailing edge, after calls stop, using the
-most recent call's arguments and `this`. Set `options.leading` to also
-run on the first call, or `options.trailing: false` to skip the trailing
-run; with both `false` it never runs.
+By default `fn` runs on the trailing edge, after calls stop, using the most
+recent call's arguments and `this`. Set `options.leading` to also run on the
+first call, or `options.trailing: false` to skip the trailing run; with both
+`false` it never runs.
 
 The returned function exposes `.cancel()` to discard a pending run and
-`.flush()` to run it immediately and return its result. A non-function
-`fn` returns a safe no-op, and an invalid `delay` is treated as `0`.
+`.flush()` to run it immediately and return its result. A non-function `fn`
+returns a safe no-op, and an invalid `delay` is treated as `0`.
 
 #### Example
 
@@ -983,8 +1008,7 @@ const save = debounce(saveForm, 1000, { leading: true });
 
 ### `getFriendlyDisplay(variable: any)`
 
-Convert a given `variable` into a human-readable representation of its
-type.
+Convert a given `variable` into a human-readable representation of its type.
 
 #### Parameters
 
@@ -1019,15 +1043,14 @@ isDefined(undefined); // false
 
 ### `isEqual(a: unknown, b: unknown)`
 
-Determine whether `a` and `b` are deeply equal. Primitives are compared
-with SameValueZero semantics, so `NaN` is equal to `NaN`, and
-`null`/`undefined` are not equal to each other. Arrays are equal when
-they share the same length and every element is deeply equal in order.
-Plain objects are equal when they share the same set of own-enumerable
-keys and every value is deeply equal, regardless of key order. Anything
-else, including a type mismatch between the two values, or non-plain
-objects such as `Date`, `Map`, `Set`, or class instances, is not equal
-unless the two values are the same reference.
+Determine whether `a` and `b` are deeply equal. Primitives are compared with
+SameValueZero semantics, so `NaN` is equal to `NaN`, and `null`/`undefined`
+are not equal to each other. Arrays are equal when they share the same length
+and every element is deeply equal in order. Plain objects are equal when they
+share the same set of own-enumerable keys and every value is deeply equal,
+regardless of key order. Anything else, including a type mismatch between the
+two values, or non-plain objects such as `Date`, `Map`, `Set`, or class
+instances, is not equal unless the two values are the same reference.
 
 #### Parameters
 
@@ -1061,9 +1084,8 @@ isFunction(5); // false
 
 ### `resolveOrFallback(promise: any, fallback: any | (() => any))`
 
-Resolves `promise`, returning its value, or `fallback` if it rejects.
-Always returns a promise, even for synchronous inputs, for a consistent
-shape.
+Resolves `promise`, returning its value, or `fallback` if it rejects. Always
+returns a promise, even for synchronous inputs, for a consistent shape.
 
 #### Parameters
 
@@ -1071,13 +1093,13 @@ shape.
 - `fallback` `{any | function}` — The fallback value, or function returning one, to use when resolution
   fails.
 
-This is async/value recovery, not validation — see `validateOrFallback`
-for keyword-based value checks.
+This is async/value recovery, not validation — see `validateOrFallback` for
+keyword-based value checks.
 
-If `fallback` is a function it is called lazily, only on rejection, and
-its return value is used. A throwing fallback function propagates.
-Non-thenable inputs resolve as-is, except `null` / `undefined`, which
-resolve to the fallback.
+If `fallback` is a function it is called lazily, only on rejection, and its
+return value is used. A throwing fallback function propagates. Non-thenable
+inputs resolve as-is, except `null` / `undefined`, which resolve to the
+fallback.
 
 #### Example
 
@@ -1097,15 +1119,15 @@ patterns.
 
 - `promises` `{any[]}` — The promises or values to settle.
 
-Non-thenable values are treated as fulfilled and returned as-is —
-functions are never invoked. To run functions, call them first:
+Non-thenable values are treated as fulfilled and returned as-is — functions
+are never invoked. To run functions, call them first:
 `settle(items.map(item => action(item)))`.
 
-The `results` array includes every item in order, and each entry carries
-its original `index`, so a failure can be mapped straight back to its
-input — useful for bulk operations where you need to know exactly which
-calls failed. `values` and `errors` exclude the other outcome's gaps, for
-the common "everything that worked / failed" patterns.
+The `results` array includes every item in order, and each entry carries its
+original `index`, so a failure can be mapped straight back to its input —
+useful for bulk operations where you need to know exactly which calls failed.
+`values` and `errors` exclude the other outcome's gaps, for the common
+"everything that worked / failed" patterns.
 
 #### Example
 
@@ -1124,9 +1146,9 @@ await settle([Promise.resolve(1), Promise.reject("nope")]);
 ### `size(variable: any)`
 
 Determine the size of the given `variable`. For strings, the number of
-characters is used; for numbers, the value itself; for arrays, the
-length; for objects, the number of top-level properties. Returns `0` if
-no reasonable size can be determined.
+characters is used; for numbers, the value itself; for arrays, the length;
+for objects, the number of top-level properties. Returns `0` if no reasonable
+size can be determined.
 
 #### Parameters
 
@@ -1155,15 +1177,15 @@ milliseconds.
 - `options.leading` `{boolean}` — Whether to run at the start of a throttle window.
 - `options.trailing` `{boolean}` — Whether to run at the end of a throttle window.
 
-By default `fn` runs immediately on the first call, then once more at the
-end of the window if further calls arrived during it, using the latest
-arguments and `this`. Set `options.leading: false` to skip the immediate
-run, or `options.trailing: false` to skip the closing one; with both
-`false` it never runs.
+By default `fn` runs immediately on the first call, then once more at the end
+of the window if further calls arrived during it, using the latest arguments
+and `this`. Set `options.leading: false` to skip the immediate run, or
+`options.trailing: false` to skip the closing one; with both `false` it never
+runs.
 
 The returned function exposes `.cancel()` to discard a pending run and
-`.flush()` to run it immediately and return its result. A non-function
-`fn` returns a safe no-op, and an invalid `delay` is treated as `0`.
+`.flush()` to run it immediately and return its result. A non-function `fn`
+returns a safe no-op, and an invalid `delay` is treated as `0`.
 
 #### Example
 
@@ -1173,8 +1195,8 @@ const save = throttle(saveForm, 500, { leading: false });
 
 ### `validateOrFallback(variable: any, comparison: function | string, fallback: any)`
 
-Apply `comparison` to the provided `variable`, returning `variable` if `true`,
-and `fallback` if not.
+Apply `comparison` to the provided `variable`, returning `variable` if
+`true`, and `fallback` if not.
 
 #### Parameters
 
@@ -1204,8 +1226,8 @@ validateOrFallback(5, "number", 0); // 5
 ### `clamp(value: number, minimum: number, maximum: number)`
 
 Ensure that the provided `value` is between `minimum` and `maximum`
-(inclusive). If `value` is lower than `minimum`, `minimum` is returned.
-If `value` is higher than `maximum`, `maximum` is returned.
+(inclusive). If `value` is lower than `minimum`, `minimum` is returned. If
+`value` is higher than `maximum`, `maximum` is returned.
 
 #### Parameters
 
@@ -1242,8 +1264,8 @@ isNumber("string"); // false
 
 ### `isNumeric(value: any)`
 
-Determines whether the given `value` is a number, or a string containing
-a number.
+Determines whether the given `value` is a number, or a string containing a
+number.
 
 #### Parameters
 
@@ -1261,8 +1283,8 @@ isNumeric("5.6"); // true
 
 ### `round(value: number, decimals: number = 0)`
 
-Rounds the given `value` to the specified number of `decimals`. If
-`decimals` is not provided, it defaults to 0.
+Rounds the given `value` to the specified number of `decimals`. If `decimals`
+is not provided, it defaults to 0.
 
 #### Parameters
 
@@ -1299,11 +1321,10 @@ toNullableNumber(undefined); // null
 
 ### `toPercentage(value: any, total: any)`
 
-Calculates the percentage of `value` relative to `total`, returning `0`
-when `total` is zero or falsy to avoid division by zero. Non-numeric
-inputs are coerced; `NaN` or `Infinity` inputs return `0`. The result is
-not clamped, so a `value` exceeding `total` will produce a percentage
-above 100.
+Calculates the percentage of `value` relative to `total`, returning `0` when
+`total` is zero or falsy to avoid division by zero. Non-numeric inputs are
+coerced; `NaN` or `Infinity` inputs return `0`. The result is not clamped, so
+a `value` exceeding `total` will produce a percentage above 100.
 
 #### Parameters
 
@@ -1323,9 +1344,9 @@ toPercentage(10, null); // 0
 
 ### `addProperty(object: object, key: string, value: any)`
 
-Add a shallow key / value pair to an object without overwriting any
-existing value. That is, only if that key isn't already present, or if
-its value is undefined or null.
+Add a shallow key / value pair to an object without overwriting any existing
+value. That is, only if that key isn't already present, or if its value is
+undefined or null.
 
 #### Parameters
 
@@ -1349,11 +1370,11 @@ Returns a deep copy of `value`. Non-objects are returned unchanged.
 
 - `value` `{any}` — The value to copy.
 
-Uses the built-in `structuredClone` where possible, so `Date`, `Map`,
-`Set`, `RegExp`, typed arrays, and cyclic references are cloned
-correctly. For values `structuredClone` cannot handle, such as objects
-containing functions, it falls back to a recursive copy that copies
-functions by reference and preserves cyclic references via a `WeakMap`.
+Uses the built-in `structuredClone` where possible, so `Date`, `Map`, `Set`,
+`RegExp`, typed arrays, and cyclic references are cloned correctly. For
+values `structuredClone` cannot handle, such as objects containing functions,
+it falls back to a recursive copy that copies functions by reference and
+preserves cyclic references via a `WeakMap`.
 
 #### Example
 
@@ -1365,8 +1386,8 @@ deepCopy(new Date(0)); // a new Date with the same time
 
 ### `deepMerge(object: object)`
 
-Recursively merges two or more objects. The values of later objects
-override those of earlier objects.
+Recursively merges two or more objects. The values of later objects override
+those of earlier objects.
 
 #### Parameters
 
@@ -1382,8 +1403,8 @@ deepMerge({ key: "value", a: { b: 2 } }, { key: "modified", a: { c: 3 } }); // {
 
 ### `deepMergeWith(target: object, sources: array, options?: object)`
 
-Works like `deepMerge`, but lets you decide what happens when the same
-key holds an array in both the target and a source.
+Works like `deepMerge`, but lets you decide what happens when the same key
+holds an array in both the target and a source.
 
 #### Parameters
 
@@ -1392,14 +1413,14 @@ key holds an array in both the target and a source.
 - `options` `{object}` — Merge behaviour.
 - `options.arrayStrategy` `{string}` — How arrays are combined when both objects contain arrays at the same key.
 
-Set `options.arrayStrategy` to `"replace"` (the default) so the source
-array wins, just like `deepMerge`; `"concatenate"` to join both arrays
-with target items first; or `"merge"` to combine arrays position by
-position, deep-merging plain objects at the same position.
+Set `options.arrayStrategy` to `"replace"` (the default) so the source array
+wins, just like `deepMerge`; `"concatenate"` to join both arrays with target
+items first; or `"merge"` to combine arrays position by position,
+deep-merging plain objects at the same position.
 
 Other values merge like `deepMerge`: objects merge recursively, class
-instances stay intact, and the inputs are not changed. Sources are passed
-as one array so `options` stays at the end.
+instances stay intact, and the inputs are not changed. Sources are passed as
+one array so `options` stays at the end.
 
 #### Example
 
@@ -1413,8 +1434,8 @@ deepMergeWith({ a: { b: 1 } }, [{ a: { c: 2 } }]);
 Try each dot-notation `path` in turn, returning the first defined value
 found. Values that are `null` or `undefined` are skipped, so a path that
 exists but holds `null` does not short-circuit the search. Returns
-`undefined` when no path yields a defined value, or when the input is not
-a non-empty object with a non-empty `paths` array.
+`undefined` when no path yields a defined value, or when the input is not a
+non-empty object with a non-empty `paths` array.
 
 #### Parameters
 
@@ -1434,8 +1455,7 @@ firstDefinedPath([], ["a"]); // undefined
 
 ### `flattenObject(object: object)`
 
-Flattens a nested object into a single-level object with dot-notation
-keys.
+Flattens a nested object into a single-level object with dot-notation keys.
 
 #### Parameters
 
@@ -1496,8 +1516,8 @@ hasAnyPath({ a: { b: { c: 1 } } }, ["a.b.e", "a.b.f"]); // false
 
 ### `isNonEmptyObject(variable: any)`
 
-Determines whether the given `variable` is both an object (and not null,
-or an array), and has at least one property.
+Determines whether the given `variable` is both an object (and not null, or
+an array), and has at least one property.
 
 #### Parameters
 
@@ -1530,9 +1550,9 @@ isObject(null); // false
 
 ### `isPlainObject(variable: any)`
 
-Determine whether the given `variable` is a plain object literal,
-excluding arrays, `null`, and non-plain objects such as `Date`, `Map`,
-`Set`, or class instances.
+Determine whether the given `variable` is a plain object literal, excluding
+arrays, `null`, and non-plain objects such as `Date`, `Map`, `Set`, or class
+instances.
 
 #### Parameters
 
@@ -1549,9 +1569,8 @@ isPlainObject(null); // false
 
 ### `keyBy(array: object[], key: string)`
 
-Convert the given `array` of objects into a single object, where each
-object in the original array is placed under the value of its given
-`key`.
+Convert the given `array` of objects into a single object, where each object
+in the original array is placed under the value of its given `key`.
 
 #### Parameters
 
@@ -1559,8 +1578,7 @@ object in the original array is placed under the value of its given
 - `key` `{string}` — The property whose value becomes each output key.
 
 Objects without the given `key` are discarded. If an object has the same
-value `key` as a previous object, the previous object will be
-overwritten.
+value `key` as a previous object, the previous object will be overwritten.
 
 #### Example
 
@@ -1586,10 +1604,10 @@ keys("string"); // []
 
 ### `mapArrayProperty(object: object, property: string, mapper: Function)`
 
-Returns a shallow copy of `object` with the array at `property` replaced
-by the result of calling `mapper` over it. If `object[property]` is not a
-non-empty array, `property` resolves to `[]` in the result rather than
-being omitted.
+Returns a shallow copy of `object` with the array at `property` replaced by
+the result of calling `mapper` over it. If `object[property]` is not a
+non-empty array, `property` resolves to `[]` in the result rather than being
+omitted.
 
 #### Parameters
 
@@ -1656,8 +1674,8 @@ objectLength("string"); // 0
 
 ### `omit(object: object, properties: string[])`
 
-Returns a new object with the specified `properties` omitted from the
-given `object`.
+Returns a new object with the specified `properties` omitted from the given
+`object`.
 
 #### Parameters
 
@@ -1695,8 +1713,8 @@ pick({ a: "one", b: "two", c: "three" }, ["a", "d"]); // { a: "one" }
 
 ### `pickAs(object: object, mapping: object)`
 
-Returns a new object with keys from `mapping` whose values are resolved
-from `object` at the paths given by the mapping values.
+Returns a new object with keys from `mapping` whose values are resolved from
+`object` at the paths given by the mapping values.
 
 #### Parameters
 
@@ -1705,8 +1723,8 @@ from `object` at the paths given by the mapping values.
 
 Uses `getPathValue` so dot-notation paths are supported.
 
-Missing source paths resolve as `undefined` — the key is always included
-in the result.
+Missing source paths resolve as `undefined` — the key is always included in
+the result.
 
 #### Example
 
@@ -1729,8 +1747,7 @@ Retrieve an array of the `path` value from each of the objects found in
 - `path` `{string}` — The dot-notation path to retrieve from each object.
 
 Any non-objects in `array` are ignored. Objects that don't have the given
-path yield `undefined` in the result. Empty or invalid input returns
-`[]`.
+path yield `undefined` in the result. Empty or invalid input returns `[]`.
 
 #### Example
 
@@ -1743,8 +1760,8 @@ pluckPathValues([], "user.name"); // []
 
 ### `removePathValue(object: object, path: string)`
 
-Remove an object property at `path`. This method makes a copy of the
-provided object to not modify the original.
+Remove an object property at `path`. This method makes a copy of the provided
+object to not modify the original.
 
 #### Parameters
 
@@ -1762,8 +1779,8 @@ removePathValue({ key: "value", one: { two: "two" } }, "one.two.three"); // { ke
 
 ### `renameProperties(object: object, mapping: object)`
 
-Returns a new object with keys renamed according to the given `mapping`,
-a plain object of `{ oldKey: newKey }` pairs. The original object is not
+Returns a new object with keys renamed according to the given `mapping`, a
+plain object of `{ oldKey: newKey }` pairs. The original object is not
 mutated. Renaming is shallow only — nested objects are not deep-renamed.
 
 #### Parameters
@@ -1771,9 +1788,8 @@ mutated. Renaming is shallow only — nested objects are not deep-renamed.
 - `object` `{object}` — The object to rename keys on.
 - `mapping` `{object}` — The existing keys and replacement keys to use.
 
-Use `pickAs` instead when you want to project or whitelist keys into a
-new shape; `renameProperties` renames keys in place while keeping all
-other keys.
+Use `pickAs` instead when you want to project or whitelist keys into a new
+shape; `renameProperties` renames keys in place while keeping all other keys.
 
 #### Example
 
@@ -1800,8 +1816,7 @@ modifications are made.
 
 Objects will be created as necessary to reach the path specified.
 
-This method returns a copy of the object so as to not modify the
-original.
+This method returns a copy of the object so as to not modify the original.
 
 #### Example
 
@@ -1813,9 +1828,9 @@ setPathValue({ a: 1, b: 2 }, "b.c.d", 4); // { a: 1, b: 2 }
 
 ### `unwrap(object: object)`
 
-Safely unwrap a single-key object, returning the value of that key.
-`null` is returned if the object contains more than one key, or the value
-cannot be retrieved.
+Safely unwrap a single-key object, returning the value of that key. `null` is
+returned if the object contains more than one key, or the value cannot be
+retrieved.
 
 #### Parameters
 
@@ -1851,8 +1866,8 @@ values("string"); // []
 
 Returns the string with the first character uppercased and the remaining
 characters unchanged. Handles surrogate pairs correctly by iterating code
-points rather than UTF-16 code units. Returns an empty string if the
-provided `value` is not a non-empty string.
+points rather than UTF-16 code units. Returns an empty string if the provided
+`value` is not a non-empty string.
 
 #### Parameters
 
@@ -1872,9 +1887,9 @@ capitalise("αβγ"); // "Αβγ"
 
 ### `isNonEmptyString(variable: any, { trim: boolean = false })`
 
-Determines whether the given `variable` is both a string and has at least
-one character. If `trim` is true, the string is trimmed of whitespace
-before the test is performed.
+Determines whether the given `variable` is both a string and has at least one
+character. If `trim` is true, the string is trimmed of whitespace before the
+test is performed.
 
 #### Parameters
 
@@ -1930,10 +1945,10 @@ rtrim("***string***", new RegExp("\\*+")); // ***string
 
 ### `StringManipulator`
 
-`StringManipulator` can be used to chain string methods together safely.
-A new instance of the class is created, and then any of the string helper
-methods can be used in any sequence. If the input at any stage is
-invalid, an empty string is returned.
+`StringManipulator` can be used to chain string methods together safely. A
+new instance of the class is created, and then any of the string helper
+methods can be used in any sequence. If the input at any stage is invalid, an
+empty string is returned.
 
 #### Parameters
 
@@ -1952,8 +1967,8 @@ const userIdPreview = new StringManipulator(userId).toLowerCase().truncate(15).v
 
 Converts a string to camelCase (first word lowercase, subsequent words
 capitalised, no separators). Handles kebab-case, PascalCase, snake_case,
-SCREAMING_SNAKE_CASE, and mixed separators. Acronyms are normalised
-(APIKey → apiKey). Returns an empty string for non-string inputs.
+SCREAMING_SNAKE_CASE, and mixed separators. Acronyms are normalised (APIKey →
+apiKey). Returns an empty string for non-string inputs.
 
 #### Parameters
 
@@ -1973,10 +1988,10 @@ toCamelCase(42); // ""
 
 ### `toKebabCase(value: any)`
 
-Converts a string to kebab-case (lowercase words joined by hyphens).
-Handles camelCase, PascalCase, snake_case, SCREAMING_SNAKE_CASE, and
-mixed separators. Acronyms are split correctly (APIKey → api-key).
-Returns an empty string for non-string inputs.
+Converts a string to kebab-case (lowercase words joined by hyphens). Handles
+camelCase, PascalCase, snake_case, SCREAMING_SNAKE_CASE, and mixed
+separators. Acronyms are split correctly (APIKey → api-key). Returns an empty
+string for non-string inputs.
 
 #### Parameters
 
@@ -2014,9 +2029,9 @@ toLowerCase(["A", "B"]); // ""
 
 ### `toNullableString(value: any)`
 
-Coerces the given `value` to a string, returning an empty string for
-`null` or `undefined`. Useful for form round-trips where absent string
-fields should be `""` rather than `"null"` or `"undefined"`.
+Coerces the given `value` to a string, returning an empty string for `null`
+or `undefined`. Useful for form round-trips where absent string fields should
+be `""` rather than `"null"` or `"undefined"`.
 
 #### Parameters
 
@@ -2034,9 +2049,9 @@ toNullableString(undefined); // ""
 ### `toPascalCase(value: any)`
 
 Converts a string to PascalCase (each word capitalised, no separators).
-Handles camelCase, kebab-case, snake_case, SCREAMING_SNAKE_CASE, and
-mixed separators. Acronyms are normalised (APIKey → ApiKey). Returns an
-empty string for non-string inputs.
+Handles camelCase, kebab-case, snake_case, SCREAMING_SNAKE_CASE, and mixed
+separators. Acronyms are normalised (APIKey → ApiKey). Returns an empty
+string for non-string inputs.
 
 #### Parameters
 
@@ -2058,8 +2073,8 @@ toPascalCase(42); // ""
 
 Converts a string to SCREAMING_SNAKE_CASE (uppercase words joined by
 underscores). Handles camelCase, PascalCase, kebab-case, snake_case, and
-mixed separators. Acronyms are split correctly (APIKey → API_KEY).
-Returns an empty string for non-string inputs.
+mixed separators. Acronyms are split correctly (APIKey → API_KEY). Returns an
+empty string for non-string inputs.
 
 #### Parameters
 
@@ -2080,9 +2095,9 @@ toScreamingSnakeCase(42); // ""
 ### `toSnakeCase(value: any)`
 
 Converts a string to snake_case (lowercase words joined by underscores).
-Handles camelCase, PascalCase, kebab-case, SCREAMING_SNAKE_CASE, and
-mixed separators. Acronyms are split correctly (APIKey → api_key).
-Returns an empty string for non-string inputs.
+Handles camelCase, PascalCase, kebab-case, SCREAMING_SNAKE_CASE, and mixed
+separators. Acronyms are split correctly (APIKey → api_key). Returns an empty
+string for non-string inputs.
 
 #### Parameters
 
@@ -2119,8 +2134,8 @@ toUpperCase(["A", "B"]); // ""
 
 ### `trim(string, pattern: string | RegExp = "\\s")`
 
-Trim both sides of `string` using the provided string or RegExp
-`pattern`. Trims whitespace by default.
+Trim both sides of `string` using the provided string or RegExp `pattern`.
+Trims whitespace by default.
 
 #### Parameters
 
@@ -2172,8 +2187,8 @@ truncate(["A", "B"]); // ""
 
 ### `getCurrentUrlParameter(parameter: string)`
 
-Retrieve `parameter` from the current browser URL, returning `null` if
-the parameter is not present.
+Retrieve `parameter` from the current browser URL, returning `null` if the
+parameter is not present.
 
 #### Parameters
 
@@ -2190,8 +2205,8 @@ getCurrentUrlParameter("unknown"); // null
 
 ### `getSearchParameter(search: string | URLSearchParams, parameter: string)`
 
-Retrieve `parameter` from a URL search string or `URLSearchParams`
-instance, returning `null` when the parameter is not present.
+Retrieve `parameter` from a URL search string or `URLSearchParams` instance,
+returning `null` when the parameter is not present.
 
 #### Parameters
 
@@ -2241,8 +2256,8 @@ removeSearchParameter("?page=2", "page"); // ""
 ### `updateCurrentUrlParameter(parameter: string, value: string | null)`
 
 Update the current browser URL to set `parameter` to `value`, adding
-`parameter` if it doesn't already exist, or overwriting any current value
-if it doesn't. If `value` is `null`, the parameter is removed.
+`parameter` if it doesn't already exist, or overwriting any current value if
+it doesn't. If `value` is `null`, the parameter is removed.
 
 #### Parameters
 
@@ -2262,8 +2277,8 @@ updateCurrentUrlParameter("page", null); // https://duckduckgo.com
 
 ### `updateSearchParameter(search: string | URLSearchParams, parameter: string, value: string | null)`
 
-Return a search string with `parameter` set to `value`. If `value` is
-`null`, the parameter is removed.
+Return a search string with `parameter` set to `value`. If `value` is `null`,
+the parameter is removed.
 
 #### Parameters
 
@@ -2284,9 +2299,9 @@ updateSearchParameter("?page=3", "page", null); // ""
 ### `callComponentMethod(component, method: string, ...parameters: any)`
 
 If the given `component` is an object and contains a function parameter
-`method`, call that method with any additional `parameters` and return
-its result. This helper allows safe calling of a method when an object
-might not exist.
+`method`, call that method with any additional `parameters` and return its
+result. This helper allows safe calling of a method when an object might not
+exist.
 
 #### Parameters
 
@@ -2305,9 +2320,9 @@ callComponentMethod(null); // undefined
 
 ### `getSlotText(slotReference)`
 
-Retrieve the text from the given `slotReference`. `slotReference` is a
-direct reference to a slot - for example `slots.default`. Text is
-concatenated when multiple children exist.
+Retrieve the text from the given `slotReference`. `slotReference` is a direct
+reference to a slot - for example `slots.default`. Text is concatenated when
+multiple children exist.
 
 #### Parameters
 
