@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 // Search public helpers from structured JSDoc.
-
 import { spawnSync } from "node:child_process";
 
 import fs from "node:fs";
@@ -11,7 +10,8 @@ import process from "node:process";
 const repoRoot = path.resolve(import.meta.dirname, "..");
 // Search text passed from the command line.
 const query = process.argv.slice(2).join(" ").trim().toLowerCase();
-// A hidden separator used to pass helper data through fzf without colliding with descriptions.
+// A hidden separator used to pass helper data through fzf without colliding
+// with descriptions.
 const fieldSeparator = "\u001f";
 // ANSI escape for dim terminal text.
 const dim = "\u001b[2m";
@@ -22,6 +22,7 @@ const reset = "\u001b[0m";
  * Search helper docs and print matching helpers.
  */
 function searchHelpers() {
+	// The public helpers available to search.
 	const helpers = loadHelpers();
 
 	if (!query && process.stdin.isTTY && process.stdout.isTTY && hasFzf()) {
@@ -30,6 +31,7 @@ function searchHelpers() {
 		return;
 	}
 
+	// The helpers matching the search text.
 	const matches = query ? helpers.filter((helper) => helper.searchText.includes(query)) : helpers;
 
 	if (matches.length === 0) {
@@ -45,20 +47,31 @@ function searchHelpers() {
 
 /**
  * Load helper docs for every public category export.
+ *
+ * @returns  {object[]}
+ *     The searchable public helpers.
  */
 function loadHelpers() {
 	return getCategories()
 		.flatMap((category) => {
+			// The public barrel file for this category.
 			const barrelPath = path.join(repoRoot, "lib", category, `${category}.js`);
+			// The category barrel source.
 			const barrel = fs.readFileSync(barrelPath, "utf8");
+			// The helper source files exported by the barrel.
 			const helperFiles = [...barrel.matchAll(/from "\.\/([^"]+)\.js"/g)].map((match) => match[1]);
 
 			return helperFiles.map((helperFile) => {
+				// The source file for this helper.
 				const sourcePath = path.join(repoRoot, "lib", category, `${helperFile}.js`);
+				// The helper source containing its JSDoc.
 				const source = fs.readFileSync(sourcePath, "utf8");
+				// The structured docs parsed from the helper.
 				const docs = parseDocs(source);
+				// The helper description as searchable text.
 				const description = docs.description.replace(/\s+/g, " ").trim();
 
+				// The combined text used to match queries.
 				const searchText = [docs.helper, docs.category, docs.signature, description]
 					.join(" ")
 					.toLowerCase();
@@ -78,6 +91,9 @@ function loadHelpers() {
 
 /**
  * Return public category folder names.
+ *
+ * @returns  {string[]}
+ *     The names of public categories.
  */
 function getCategories() {
 	return fs
@@ -93,11 +109,17 @@ function getCategories() {
  *
  * @param  {string}  source
  *     The helper source.
+ *
+ * @returns  {object}
+ *     The structured helper docs.
  */
 function parseDocs(source) {
+	// The first JSDoc block in the helper source.
 	const block = source.match(/\/\*\*([\s\S]*?)\*\//)?.[1] ?? "";
+	// The JSDoc lines without comment markers.
 	const lines = block.split("\n").map((line) => line.replace(/^\s*\*\s?/, ""));
 
+	// The structured fields read from this JSDoc block.
 	const docs = {
 		category: getTag(lines, "category"),
 		description: getDescription(lines),
@@ -115,9 +137,14 @@ function parseDocs(source) {
  *     Parsed JSDoc lines.
  * @param  {string}  tag
  *     The tag name to read.
+ *
+ * @returns  {string}
+ *     The tag value, or an empty string.
  */
 function getTag(lines, tag) {
+	// The tag prefix to find.
 	const prefix = `@${tag} `;
+	// The line containing the requested tag.
 	const line = lines.find((candidate) => candidate.startsWith(prefix));
 
 	return line ? line.slice(prefix.length).trim() : "";
@@ -128,14 +155,19 @@ function getTag(lines, tag) {
  *
  * @param  {string[]}  lines
  *     Parsed JSDoc lines.
+ *
+ * @returns  {string}
+ *     The first description paragraph.
  */
 function getDescription(lines) {
+	// The position of the `@description` tag line.
 	const start = lines.findIndex((line) => line === "@description");
 
 	if (start === -1) {
 		return "";
 	}
 
+	// The description lines before the next tag or paragraph.
 	const description = [];
 
 	for (const line of lines.slice(start + 1)) {
@@ -157,6 +189,9 @@ function getDescription(lines) {
 
 /**
  * Return true when fzf is available.
+ *
+ * @returns  {boolean}
+ *     Whether fzf is available.
  */
 function hasFzf() {
 	return spawnSync("fzf", ["--version"], { stdio: "ignore" }).status === 0;
@@ -169,8 +204,10 @@ function hasFzf() {
  *     The helpers to search.
  */
 function runFzf(helpers) {
+	// The width needed to align helper names in the chooser.
 	const helperWidth = Math.max(...helpers.map((helper) => helper.helper.length));
 
+	// The helper rows passed to fzf.
 	const rows = helpers
 		.map((helper) =>
 			[
@@ -184,6 +221,7 @@ function runFzf(helpers) {
 		)
 		.join("\n");
 
+	// The result of the interactive fzf search.
 	const result = spawnSync(
 		"fzf",
 		[
@@ -210,6 +248,7 @@ function runFzf(helpers) {
 		return;
 	}
 
+	// The selected helper fields from fzf.
 	const [helper, category, signature, description] = result.stdout.trim().split(fieldSeparator);
 
 	printHelper({ category, description, helper, signature });
@@ -219,6 +258,7 @@ function runFzf(helpers) {
  * Print an fzf preview for one helper.
  */
 function printPreview() {
+	// The helper fields passed to the preview command.
 	const [, , , helper, category, signature, description, key] = process.argv;
 
 	console.log("");
@@ -243,11 +283,17 @@ function printPreview() {
  *     The text to wrap.
  * @param  {number}  width
  *     The maximum line width.
+ *
+ * @returns  {string[]}
+ *     The wrapped lines.
  */
 function wrapText(text, width) {
+	// The words to wrap into lines.
 	const words = text.split(/\s+/).filter(Boolean);
+	// The wrapped output lines.
 	const lines = [];
 
+	// The line currently being filled.
 	let line = "";
 
 	for (const word of words) {

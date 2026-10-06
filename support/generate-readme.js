@@ -2,7 +2,6 @@
 
 // Automatically generate helper references from their JSDoc in README,
 // replacing content between two markers.
-
 import { spawnSync } from "node:child_process";
 
 import fs from "node:fs";
@@ -24,6 +23,7 @@ const shouldCheckReadme = process.argv.includes("--check");
  * Generate the helper reference in README.md from structured helper JSDoc.
  */
 function generateReadme() {
+	// The current README and its generated replacement.
 	const { nextReadme, readme, readmePath } = getGeneratedReadme();
 
 	if (shouldCheckReadme) {
@@ -37,12 +37,20 @@ function generateReadme() {
 
 /**
  * Get the current and generated README content.
+ *
+ * @returns  {object}
+ *     The current README, its generated replacement, and the README path.
  */
 function getGeneratedReadme() {
+	// The README file to read or update.
 	const readmePath = path.join(repoRoot, "README.md");
+	// The current README content.
 	const readme = fs.readFileSync(readmePath, "utf8");
+	// The reference built from public helper docs.
 	const reference = renderHelperReference(loadHelperDocs());
+	// The README with its reference replaced.
 	const generatedReadme = replaceGeneratedReference(readme, reference);
+	// The formatted README ready to compare or write.
 	const nextReadme = formatReadme(generatedReadme);
 
 	return { nextReadme, readme, readmePath };
@@ -53,9 +61,16 @@ function getGeneratedReadme() {
  *
  * @param  {string}  readme
  *     The generated README content.
+ *
+ * @throws  {Error}
+ *     If the formatter fails.
+ *
+ * @returns  {string}
+ *     The formatted README content.
  */
 export function formatReadme(readme) {
-	// The local formatter keeps generated content identical to lint output.
+	// The output of the project formatter, which keeps the generated README
+	// identical to what lint expects.
 	const result = spawnSync("bunx", ["vp", "fmt", "--stdin-filepath=README.md"], {
 		cwd: repoRoot,
 		encoding: "utf8",
@@ -88,7 +103,11 @@ function checkReadme(readme, nextReadme) {
 }
 
 /**
- * Load structured JSDoc for every helper exported from a public category barrel.
+ * Load structured JSDoc for every helper exported from a public category
+ * barrel.
+ *
+ * @returns  {object[]}
+ *     The public categories and their helper docs.
  */
 function loadHelperDocs() {
 	return getPublicCategories().map((category) => ({
@@ -99,6 +118,9 @@ function loadHelperDocs() {
 
 /**
  * Get every category with a public barrel file.
+ *
+ * @returns  {string[]}
+ *     The names of public categories.
  */
 function getPublicCategories() {
 	return fs
@@ -114,21 +136,34 @@ function getPublicCategories() {
  *
  * @param  {string}  category
  *     The category folder to load docs for.
+ *
+ * @throws  {Error}
+ *     If the category barrel is missing, or a helper's docs are missing or name
+ *     another category.
+ *
+ * @returns  {object[]}
+ *     The documented helpers in the category.
  */
 function loadCategoryDocs(category) {
+	// The public barrel file for this category.
 	const barrelPath = path.join(repoRoot, "lib", category, `${category}.js`);
 
 	if (!fs.existsSync(barrelPath)) {
 		throw new Error(`Missing category barrel: lib/${category}/${category}.js`);
 	}
 
+	// The category barrel source.
 	const barrel = fs.readFileSync(barrelPath, "utf8");
+	// The helpers exported by the category barrel.
 	const exports = getBarrelExports(barrel);
 
 	return exports
 		.map(({ helperFile, helperName }) => {
+			// The source file for this exported helper.
 			const helperPath = path.join(repoRoot, "lib", category, `${helperFile}.js`);
+			// The helper source containing its JSDoc.
 			const source = fs.readFileSync(helperPath, "utf8");
+			// The helper docs parsed from its source.
 			const docs = parseHelperDocs(source, helperName, `lib/${category}/${helperFile}.js`);
 
 			if (docs.category.toLowerCase() !== category) {
@@ -145,6 +180,9 @@ function loadCategoryDocs(category) {
  *
  * @param  {string}  barrel
  *     The category barrel source.
+ *
+ * @returns  {object[]}
+ *     The helper names and source file names.
  */
 function getBarrelExports(barrel) {
 	return barrel
@@ -152,8 +190,11 @@ function getBarrelExports(barrel) {
 		.map((line) => line.trim())
 		.filter((line) => line.startsWith("export { "))
 		.map((line) => {
+			// The export name and import path from the barrel line.
 			const [exportClause, importPath] = line.split(" from ");
+			// The name exported by this barrel line.
 			const helperName = exportClause.replace("export { ", "").replace(" }", "");
+			// The helper source file name without its extension.
 			const helperFile = importPath.replace('"./', "").replace('.js";', "");
 
 			return { helperFile, helperName };
@@ -169,18 +210,29 @@ function getBarrelExports(barrel) {
  *     The exported helper name.
  * @param  {string}  helperPath
  *     The helper path for error messages.
+ *
+ * @throws  {Error}
+ *     If required structured docs are missing or name another helper.
+ *
+ * @returns  {object}
+ *     The structured docs for the helper.
  */
 function parseHelperDocs(source, helperName, helperPath) {
+	// The helper source split into lines.
 	const lines = source.split("\n");
+	// The index of the helper export line.
 	const exportLineIndex = findExportLine(lines, helperName);
+	// The JSDoc block preceding the export.
 	const docBlock = getDocBlockBeforeLine(lines, exportLineIndex);
 
 	if (!docBlock) {
 		throw new Error(`${helperPath} is missing structured docs for ${helperName}`);
 	}
 
+	// The structured tags parsed from JSDoc.
 	const docs = parseTags(docBlock);
 
+	// The required tags that have no value.
 	const missing = ["helper", "category", "signature", "description"].filter(
 		(tag) => !docs[tag] || docs[tag].trim() === "",
 	);
@@ -203,6 +255,9 @@ function parseHelperDocs(source, helperName, helperPath) {
  *     The helper source lines.
  * @param  {string}  helperName
  *     The exported helper name.
+ *
+ * @returns  {number}
+ *     The export line index, or -1 if absent.
  */
 function findExportLine(lines, helperName) {
 	return lines.findIndex((line) =>
@@ -222,12 +277,16 @@ function findExportLine(lines, helperName) {
  *     The helper source lines.
  * @param  {number}  lineIndex
  *     The export line index.
+ *
+ * @returns  {string}
+ *     The preceding JSDoc block, or an empty string.
  */
 function getDocBlockBeforeLine(lines, lineIndex) {
 	if (lineIndex <= 0 || lines[lineIndex - 1] !== " */") {
 		return "";
 	}
 
+	// The start of the JSDoc block preceding the export.
 	const blockStart = lines.lastIndexOf("/**", lineIndex - 1);
 
 	if (blockStart === -1) {
@@ -242,16 +301,23 @@ function getDocBlockBeforeLine(lines, lineIndex) {
  *
  * @param  {string}  docBlock
  *     The raw JSDoc block.
+ *
+ * @returns  {object}
+ *     The parsed structured tags.
  */
 export function parseTags(docBlock) {
+	// The structured tags collected from this block.
 	const docs = { params: [] };
 
+	// The tag receiving continuation lines.
 	let currentTag = null;
 
+	// The JSDoc body lines without comment markers.
 	const lines = docBlock.split("\n").slice(1, -1).map(cleanJSDocLine);
 
 	for (const line of lines) {
 		if (line.startsWith("@")) {
+			// The boundary between the tag name and its first value.
 			const tagNameEnd = line.indexOf(" ");
 
 			if (tagNameEnd === -1) {
@@ -276,6 +342,7 @@ export function parseTags(docBlock) {
 				continue;
 			}
 
+			// The parameter receiving this description line.
 			const param = docs.params.at(-1);
 
 			param.description += `${param.description ? "\n" : ""}${line.trim()}`;
@@ -301,7 +368,8 @@ export function parseTags(docBlock) {
 		// The text on the tag's own line, which has no indent, and the lines
 		// under it.
 		const [heading, ...continuation] = body.split("\n");
-		// The lines that carry text; blank lines do not limit the shared indent.
+		// The lines that carry text; blank lines do not limit the shared
+		// indent.
 		const nonBlankLines = continuation.filter((line) => line.trim() !== "");
 
 		// The smallest indent of any line with text.
@@ -324,8 +392,12 @@ export function parseTags(docBlock) {
  *
  * @param  {string}  header
  *     The `@param` line content after the tag name, e.g. `{string}  readme`.
+ *
+ * @returns  {object}
+ *     The parameter type, name and empty description.
  */
 export function parseParamTag(header) {
+	// The type and name from the parameter header.
 	const [, type, name] = header.trim().match(/^\{(.+?)\}\s+(\S+)/) ?? [undefined, "", ""];
 
 	return { type, name, description: "" };
@@ -336,6 +408,9 @@ export function parseParamTag(header) {
  *
  * @param  {string}  line
  *     The raw JSDoc line.
+ *
+ * @returns  {string}
+ *     The line without its JSDoc marker.
  */
 function cleanJSDocLine(line) {
 	if (line === " *") {
@@ -354,10 +429,16 @@ function cleanJSDocLine(line) {
  *
  * @param  {object[]}  categories
  *     The category docs to render.
+ *
+ * @returns  {string}
+ *     The complete generated reference section.
  */
 function renderHelperReference(categories) {
+	// The README section for each public category.
 	const sections = categories.map(({ category, docs }) => {
+		// The rendered helper entries for this category.
 		const helpers = docs.map(renderHelperDocs).join("\n\n");
+		// The heading label for this category.
 		const categoryTitle = categoryTitles[category] ?? toTitleCase(category);
 
 		return [`## ${categoryTitle}`, helpers].join("\n\n");
@@ -371,11 +452,16 @@ function renderHelperReference(categories) {
  *
  * @param  {object}  docs
  *     The structured docs for a helper.
+ *
+ * @returns  {string}
+ *     The README section for one helper.
  */
 export function renderHelperDocs(docs) {
+	// The heading and description for this helper.
 	const parts = [`### \`${docs.signature.trim()}\``, docs.description.trim()];
 
 	if (docs.params.length) {
+		// The rendered parameter descriptions.
 		const parameters = docs.params
 			.map(({ description, name, type }) => `- \`${name}\` \`{${type}}\` — ${description}`)
 			.join("\n");
@@ -388,6 +474,7 @@ export function renderHelperDocs(docs) {
 	}
 
 	if (docs.example?.trim()) {
+		// The helper example inside a JavaScript code fence.
 		const fencedExample = ["```js", docs.example.trim(), "```"].join("\n");
 
 		parts.push(["#### Example", fencedExample].join("\n\n"));
@@ -403,18 +490,29 @@ export function renderHelperDocs(docs) {
  *     The current README content.
  * @param  {string}  reference
  *     The generated helper reference.
+ *
+ * @throws  {Error}
+ *     If the README has no generated section or Array heading.
+ *
+ * @returns  {string}
+ *     The README with its generated section replaced.
  */
 function replaceGeneratedReference(readme, reference) {
+	// The start of the generated README section.
 	const startIndex = readme.indexOf(readmeStartMarker);
+	// The end of the generated README section.
 	const endIndex = readme.indexOf(readmeEndMarker);
 
 	if (startIndex !== -1 && endIndex !== -1) {
+		// The README content before the generated section.
 		const beforeReference = readme.slice(0, startIndex).trimEnd();
+		// The README content after the generated section.
 		const afterReference = readme.slice(endIndex + readmeEndMarker.length).trimStart();
 
 		return `${beforeReference}\n\n${reference}\n${afterReference}`.trimEnd() + "\n";
 	}
 
+	// The first legacy category heading when markers are absent.
 	const firstCategoryIndex = findHeadingIndex(readme, "## Array");
 
 	if (firstCategoryIndex === -1) {
@@ -431,10 +529,15 @@ function replaceGeneratedReference(readme, reference) {
  *     The Markdown content to search.
  * @param  {string}  heading
  *     The exact heading to find.
+ *
+ * @returns  {number}
+ *     The character offset where the heading starts, or -1 if absent.
  */
 function findHeadingIndex(content, heading) {
+	// The document split into lines.
 	const lines = content.split("\n");
 
+	// The character offset of the current line.
 	let offset = 0;
 
 	for (const line of lines) {
@@ -455,6 +558,9 @@ function findHeadingIndex(content, heading) {
  *     The first value to compare.
  * @param  {string}  right
  *     The second value to compare.
+ *
+ * @returns  {number}
+ *     A negative, zero or positive number for sorting.
  */
 function compareAlphabetically(left, right) {
 	return left.localeCompare(right, undefined, { sensitivity: "base" });
@@ -465,6 +571,9 @@ function compareAlphabetically(left, right) {
  *
  * @param  {string}  value
  *     The folder name to convert.
+ *
+ * @returns  {string}
+ *     The category heading label.
  */
 function toTitleCase(value) {
 	return value.charAt(0).toUpperCase() + value.slice(1);

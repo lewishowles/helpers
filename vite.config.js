@@ -4,6 +4,7 @@ import { defineConfig } from "vite-plus";
 import fmt from "./.oxfmtrc.json" with { type: "json" };
 import localLint from "./.oxlintrc.json" with { type: "json" };
 import baseLint from "@lewishowles/lint-config/base.json" with { type: "json" };
+import commentsLint from "@lewishowles/lint-config/comments.json" with { type: "json" };
 import importFormat from "@lewishowles/lint-config/imports.json" with { type: "json" };
 
 export default defineConfig({
@@ -14,11 +15,15 @@ export default defineConfig({
 	},
 	// The formatter settings, plus the shared import-order rules.
 	fmt: { ...fmt, ...importFormat },
-	// The lint settings. `vp lint` reads only this block, not `.oxlintrc.json`, so the shared
-	// base rules are loaded here. `.oxlintrc.json` still supplies the ignored paths, and its
-	// own `extends` keeps editors and the plain oxlint CLI on the same rules.
+	// The lint settings. `vp lint` reads only this block, not `.oxlintrc.json`,
+	// so the shared base and comments rules are merged here. `.oxlintrc.json`
+	// still supplies the ignored paths, and its own `extends` keeps editors and
+	// the plain oxlint CLI on the same rules.
 	lint: {
 		...baseLint,
+		jsPlugins: [...baseLint.jsPlugins, ...commentsLint.jsPlugins],
+		rules: { ...baseLint.rules, ...commentsLint.rules },
+		overrides: [...baseLint.overrides, ...commentsLint.overrides],
 		ignorePatterns: localLint.ignorePatterns,
 	},
 	build: {
@@ -60,7 +65,7 @@ export default defineConfig({
 /**
  * Run the exports check without staged file arguments.
  *
- * @returns {string}
+ * @returns  {string}
  *     Package script command.
  */
 function getExportsCheckCommand() {
@@ -72,6 +77,9 @@ function getExportsCheckCommand() {
  *
  * @param  {string[]}  folderNames
  *     The names of the folders to retrieve.
+ *
+ * @returns  {string[]}
+ *     The absolute paths to the category entry files.
  */
 function getFiles(folderNames) {
 	return folderNames.map((folderName) => getFile(folderName));
@@ -82,6 +90,9 @@ function getFiles(folderNames) {
  *
  * @param  {string}  folderName
  *     The name of the folder to retrieve.
+ *
+ * @returns  {string}
+ *     The absolute path to the category entry file.
  */
 function getFile(folderName) {
 	if (folderName === "index") {

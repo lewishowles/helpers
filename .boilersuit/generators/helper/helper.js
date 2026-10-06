@@ -11,6 +11,9 @@
  *
  * @example
  * {{ NAME | camel }}();
+ *
+ * @throws  {Error}
+ *     The helper has not been implemented.
  */
 export function {{ NAME | camel }}() {
 	throw new Error("Implement this helper.");
