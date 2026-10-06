@@ -2,13 +2,15 @@ import { formatReadme, parseParamTag, parseTags, renderHelperDocs } from "./gene
 import { describe, expect, test } from "vite-plus/test";
 
 describe("formatReadme", () => {
+	// The formatter runs as a separate process, which can take longer than the
+	// default 5-second limit while the rest of the suite runs in parallel.
 	test("Formats generated Markdown with the repository formatter", () => {
 		const readme = ["# Test", "", "```js", "const items=[1,2]", "```", ""].join("\n");
 
 		expect(formatReadme(readme)).toBe(
 			["# Test", "", "```js", "const items = [1, 2];", "```", ""].join("\n"),
 		);
-	});
+	}, 20_000);
 });
 
 describe("parseTags", () => {
