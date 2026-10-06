@@ -19,6 +19,9 @@ jobs:
         env:
           BUN_AUTH_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
 
+      - name: Run lint
+        run: bun run lint
+
       - name: Run tests
         run: bun run test:unit:run
 
