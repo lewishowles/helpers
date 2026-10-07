@@ -10,6 +10,7 @@
 
 ### Fixes
 
+- `getNextIndex` now keeps wrapped indices within the array, including reverse movement through a one-item array or from a negative exact multiple. Non-whole indices return `0`.
 - Date helpers now accept and process supported Temporal values from another compatible `temporal-polyfill` copy without relying on shared constructor identity.
 - The `getSlotText` type declaration now accepts the optional `options` argument (`props` and `trim`) and a vnode array, matching what the helper already supports.
 

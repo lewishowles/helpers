@@ -163,14 +163,14 @@ Given a starting `index`, determine the next available index in the
 
 #### Parameters
 
-- `index` `{number}` — The starting index to move from.
+- `index` `{number}` — The whole-number index to move from.
 - `reference` `{any[]}` — The array that defines the valid index range.
 - `options` `{object}` — How to move at the ends of the array.
 - `[options.reverse=false]` `{boolean}` — Whether to find the previous index instead of the next index.
 - `[options.wrap=false]` `{boolean}` — Whether to wrap around when moving beyond either end of the array.
 
 An index outside the reference array is clamped unless wrapping is requested.
-An invalid index or reference array returns `0`.
+A non-whole index, or a reference that is not a non-empty array, returns `0`.
 
 #### Example
 
@@ -178,6 +178,7 @@ An invalid index or reference array returns `0`.
 getNextIndex(3, ["A", "B", "C", "D"]); // 3
 getNextIndex(3, ["A", "B", "C", "D"], { wrap: true }); // 0
 getNextIndex(3, ["A", "B", "C", "D"], { reverse: true }); // 2
+getNextIndex(-2, ["A", "B", "C"], { reverse: true, wrap: true }); // 0
 ```
 
 ### `groupBy(array: object[], property: string)`
