@@ -51,6 +51,7 @@ Split an array into chunks of a specified size.
 chunk([1, 2, 3], 2); // [[1, 2], [3]]
 chunk([1, 2, 3], 1); // [[1], [2], [3]]
 chunk([1, 2, 3], 5); // [[1, 2, 3]]
+chunk([1, 2, 3], 0); // []
 ```
 
 ### `compact(array: any[])`
