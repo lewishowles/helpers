@@ -10,6 +10,7 @@
 
 ### Fixes
 
+- `groupBy` now groups items whose value is a built-in property name, such as `constructor`, `toString` or `__proto__`, under their own keys instead of throwing or changing the result's prototype.
 - `toggleItem` now adds the item to an empty array instead of returning an empty array.
 - `round` now rounds to zero decimal places when decimals are omitted or explicitly `undefined`.
 - `chunk` now returns an empty array for zero, negative, fractional, non-finite, or non-number sizes instead of looping or returning the original array.

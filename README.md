@@ -193,7 +193,8 @@ Group the given `array` of objects into sub-arrays keyed by the value at
 - `property` `{string}` — The property path to group items by.
 
 Items where `property` resolves to `undefined` are grouped under the key
-`"undefined"`.
+`"undefined"`. All keys, including built-in property names such as
+`__proto__`, are own, enumerable properties on an ordinary object.
 
 #### Example
 
