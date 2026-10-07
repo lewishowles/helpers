@@ -80,7 +80,8 @@ Supports dot-path notation for nested properties.
 - `property` `{string}` — The property path to count items by. Dot paths are supported.
 
 Items where `property` resolves to `undefined` are counted under the key
-`"undefined"`.
+`"undefined"`. All keys, including built-in property names such as
+`__proto__`, are own, enumerable properties on an ordinary object.
 
 #### Example
 

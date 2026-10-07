@@ -10,6 +10,7 @@
 
 ### Fixes
 
+- `countBy` now counts items whose value is a built-in property name, such as `constructor`, `toString` or `__proto__`, under their own keys instead of returning incorrect counts or dropping them.
 - `groupBy` now groups items whose value is a built-in property name, such as `constructor`, `toString` or `__proto__`, under their own keys instead of throwing or changing the result's prototype.
 - `toggleItem` now adds the item to an empty array instead of returning an empty array.
 - `round` now rounds to zero decimal places when decimals are omitted or explicitly `undefined`.
