@@ -10,6 +10,7 @@
 
 ### Fixes
 
+- `round` now rounds to zero decimal places when decimals are omitted or explicitly `undefined`.
 - `chunk` now returns an empty array for zero, negative, fractional, non-finite, or non-number sizes instead of looping or returning the original array.
 - `getNextIndex` now keeps wrapped indices within the array, including reverse movement through a one-item array or from a negative exact multiple. Non-whole indices return `0`.
 - Date helpers now accept and process supported Temporal values from another compatible `temporal-polyfill` copy without relying on shared constructor identity.
