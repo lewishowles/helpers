@@ -62,5 +62,18 @@ export declare function renameProperties<T extends object>(
 	mapping: Record<string, string>,
 ): Record<string, any>;
 export declare function setPathValue<T extends object>(object: T, path: string, value: any): T;
+export declare function transformProperties<
+	T extends object,
+	Transforms extends Partial<{ [Key in keyof T]: (value: T[Key]) => unknown }>,
+>(
+	object: T,
+	transforms?: Transforms,
+): {
+	[Key in keyof T]: Key extends keyof Transforms
+		? Transforms[Key] extends (value: T[Key]) => infer Result
+			? Result
+			: T[Key]
+		: T[Key];
+};
 export declare function unwrap(object: object): any | null;
 export declare function values(object: object): any[];

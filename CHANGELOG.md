@@ -8,6 +8,10 @@
 
 - Added `isTemporalDate`: recognises supported Temporal date values across compatible module copies, with an optional type-specific check.
 
+#### object
+
+- Added `transformProperties`: returns a shallow copy with selected own property values transformed, leaving other properties in place.
+
 ### Fixes
 
 - `isDefined` now narrows its argument in TypeScript and editors: after a true result, `null` and `undefined` are removed from the value's type, so `items.filter(isDefined)` returns an array without them.

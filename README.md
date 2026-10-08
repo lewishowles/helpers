@@ -2218,6 +2218,32 @@ setPathValue({ a: 1 }, "b.c.d", 2); // { a: 1, b: { c: { d: 2 } } }
 setPathValue({ a: 1, b: 2 }, "b.c.d", 4); // { a: 1, b: 2 }
 ```
 
+### `transformProperties(object: object, transforms: object)`
+
+Returns a shallow copy of an object with the values of named own properties
+replaced by the results of their transform functions. Other properties and
+their order stay the same. The original object is not mutated.
+
+#### Parameters
+
+- `object` `{object}` — The object whose property values to transform.
+- `transforms` `{object}` — Property names mapped to functions that take the current value and return
+  the new one.
+
+#### Returns
+
+`{object}` — A copy with the named property values transformed.
+
+Only existing properties are transformed, and entries that are not functions
+are ignored. A non-plain input is returned as-is.
+
+#### Example
+
+```js
+transformProperties({ date: "2026-01-01", page: 2 }, { date: Date.parse });
+// { date: 1767225600000, page: 2 }
+```
+
 ### `unwrap(object: object)`
 
 Safely unwrap a single-key object, returning the value of that key. `null` is
