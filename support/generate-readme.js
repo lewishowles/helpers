@@ -303,11 +303,12 @@ function getDocBlockBeforeLine(lines, lineIndex) {
  *     The raw JSDoc block.
  *
  * @returns  {object}
- *     The parsed structured tags.
+ *     The parsed tags, keyed by tag name. Parameters, exceptions, and examples
+ *     are lists in source order; every other tag is text.
  */
 export function parseTags(docBlock) {
 	// The structured tags collected from this block.
-	const docs = { params: [] };
+	const docs = { params: [], throws: [], examples: [] };
 
 	// The tag receiving continuation lines.
 	let currentTag = null;
@@ -319,21 +320,27 @@ export function parseTags(docBlock) {
 		if (line.startsWith("@")) {
 			// The boundary between the tag name and its first value.
 			const tagNameEnd = line.indexOf(" ");
+			// The tag's name without the leading "@".
+			const tagName = tagNameEnd === -1 ? line.slice(1) : line.slice(1, tagNameEnd);
+			// The text on the tag's own line, if it has any, without the spaces
+			// that align it after the tag name.
+			const tagValue = tagNameEnd === -1 ? "" : line.slice(tagNameEnd + 1).trimStart();
 
-			if (tagNameEnd === -1) {
-				currentTag = line.slice(1);
-				docs[currentTag] = "";
-				continue;
-			}
-
-			currentTag = line.slice(1, tagNameEnd);
+			// The list of examples takes a plural name, like params; throws
+			// already reads as plural.
+			currentTag = tagName === "example" ? "examples" : tagName;
 
 			if (currentTag === "param") {
-				docs.params.push(parseParamTag(line.slice(tagNameEnd + 1)));
+				docs.params.push(parseParamTag(tagValue));
 				continue;
 			}
 
-			docs[currentTag] = line.slice(tagNameEnd + 1);
+			if (currentTag === "throws" || currentTag === "examples") {
+				docs[currentTag].push(tagValue);
+				continue;
+			}
+
+			docs[currentTag] = tagValue;
 			continue;
 		}
 
@@ -350,6 +357,14 @@ export function parseTags(docBlock) {
 		}
 
 		if (currentTag) {
+			if (currentTag === "throws" || currentTag === "examples") {
+				// The most recent block receives this continuation line.
+				const lastIndex = docs[currentTag].length - 1;
+
+				docs[currentTag][lastIndex] += `\n${line}`;
+				continue;
+			}
+
 			// Every continuation line starts on a new line, even under a tag
 			// with no text of its own, so that the first line of a body is
 			// always the text from the tag's own line.
@@ -361,27 +376,43 @@ export function parseTags(docBlock) {
 	// Remove the indent those lines share so the README shows them as
 	// paragraphs, not code blocks, while deeper indents in examples stay.
 	for (const [tag, body] of Object.entries(docs)) {
-		if (tag === "params" || !body.includes("\n")) {
+		if (tag === "params") {
 			continue;
 		}
 
-		// The text on the tag's own line, which has no indent, and the lines
-		// under it.
-		const [heading, ...continuation] = body.split("\n");
-		// The lines that carry text; blank lines do not limit the shared
-		// indent.
-		const nonBlankLines = continuation.filter((line) => line.trim() !== "");
+		// Repeated tags are formatted one block at a time so each block keeps
+		// its own Markdown indentation.
+		const bodies = Array.isArray(body) ? body : [body];
 
-		// The smallest indent of any line with text.
-		const sharedIndent = nonBlankLines.length
-			? Math.min(...nonBlankLines.map((line) => line.length - line.trimStart().length))
-			: 0;
+		docs[tag] = bodies.map((entry) => {
+			if (!entry.includes("\n")) {
+				return entry;
+			}
 
-		// When the tag's own line is empty, the joined body starts with a
-		// newline, which is dropped.
-		docs[tag] = [heading, ...continuation.map((line) => line.slice(sharedIndent))]
-			.join("\n")
-			.replace(/^\n/, "");
+			// The text on the tag's own line, which has no indent, and the
+			// lines under it.
+			const [heading, ...continuation] = entry.split("\n");
+			// The lines that carry text; blank lines do not limit the shared
+			// indent.
+			const nonBlankLines = continuation.filter((line) => line.trim() !== "");
+
+			// The smallest indent of any line with text.
+			const sharedIndent = nonBlankLines.length
+				? Math.min(...nonBlankLines.map((line) => line.length - line.trimStart().length))
+				: 0;
+
+			// When the tag's own line is empty, the joined body starts with a
+			// newline, which is dropped.
+			return [heading, ...continuation.map((line) => line.slice(sharedIndent))]
+				.join("\n")
+				.replace(/^\n/, "");
+		});
+
+		// Tags other than parameters, exceptions and examples go back to plain
+		// text.
+		if (!Array.isArray(body)) {
+			docs[tag] = docs[tag][0];
+		}
 	}
 
 	return docs;
@@ -473,9 +504,12 @@ export function renderHelperDocs(docs) {
 		parts.push(docs.note.trim());
 	}
 
-	if (docs.example?.trim()) {
+	// The README shows only the last example of each helper.
+	const example = docs.examples?.at(-1)?.trim();
+
+	if (example) {
 		// The helper example inside a JavaScript code fence.
-		const fencedExample = ["```js", docs.example.trim(), "```"].join("\n");
+		const fencedExample = ["```js", example, "```"].join("\n");
 
 		parts.push(["#### Example", fencedExample].join("\n\n"));
 	}

@@ -91,6 +91,24 @@ describe("parseTags", () => {
 		].join("\n");
 
 		expect(parseTags(docBlock).params).toEqual([]);
+		expect(parseTags(docBlock).throws).toEqual([]);
+		expect(parseTags(docBlock).examples).toEqual([]);
+	});
+
+	test("should preserve order and descriptions across repeated @throws tags", () => {
+		const docBlock = [
+			"/**",
+			" * @throws  {TypeError}",
+			" *     If the input is invalid.",
+			" * @throws  {RangeError}",
+			" *     If the number is outside the supported range.",
+			" */",
+		].join("\n");
+
+		expect(parseTags(docBlock).throws).toEqual([
+			"{TypeError}\nIf the input is invalid.",
+			"{RangeError}\nIf the number is outside the supported range.",
+		]);
 	});
 
 	test("should keep indented note paragraphs as prose", () => {
@@ -118,7 +136,27 @@ describe("parseTags", () => {
 			" */",
 		].join("\n");
 
-		expect(parseTags(docBlock).example).toBe("const value = {\n    nested: true,\n};");
+		expect(parseTags(docBlock).examples).toEqual(["const value = {\n    nested: true,\n};"]);
+	});
+
+	test("should preserve order and Markdown indentation across repeated @example tags", () => {
+		const docBlock = [
+			"/**",
+			" * @example",
+			" *     const first = {",
+			" *         nested: true,",
+			" *     };",
+			" * @example",
+			" *     const second = 2;",
+			" *",
+			" *     console.log(second);",
+			" */",
+		].join("\n");
+
+		expect(parseTags(docBlock).examples).toEqual([
+			"const first = {\n    nested: true,\n};",
+			"const second = 2;\n\nconsole.log(second);",
+		]);
 	});
 });
 
@@ -153,5 +191,17 @@ describe("renderHelperDocs", () => {
 		};
 
 		expect(renderHelperDocs(docs)).not.toContain("#### Parameters");
+	});
+
+	test("should render only the last example", () => {
+		const docs = {
+			signature: "example()",
+			description: "Do a thing.",
+			params: [],
+			examples: ["const first = 1;", "const second = 2;"],
+		};
+
+		expect(renderHelperDocs(docs)).toContain("#### Example\n\n```js\nconst second = 2;\n```");
+		expect(renderHelperDocs(docs)).not.toContain("const first = 1;");
 	});
 });
