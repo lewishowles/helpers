@@ -1,4 +1,3 @@
-import { URL, fileURLToPath } from "node:url";
 import { defineConfig } from "vite-plus";
 
 import fmt from "./.oxfmtrc.json" with { type: "json" };
@@ -26,26 +25,51 @@ export default defineConfig({
 		overrides: [...baseLint.overrides, ...commentsLint.overrides],
 		ignorePatterns: localLint.ignorePatterns,
 	},
-	build: {
-		lib: {
-			entry: getFiles([
-				"index",
-				"array",
-				"date",
-				"form",
-				"general",
-				"number",
-				"object",
-				"string",
-				"vue",
-				"url",
-			]),
-			name: "helpers",
-			fileName: "[name]",
-			formats: ["es"],
+	// The library build for `vp pack`. Each entry name becomes
+	// `dist/<name>.js`, which the `exports` map in `package.json` points to.
+	pack: {
+		entry: {
+			index: "./lib/index.js",
+			array: "./lib/array/array.js",
+			date: "./lib/date/date.js",
+			form: "./lib/form/form.js",
+			general: "./lib/general/general.js",
+			number: "./lib/number/number.js",
+			object: "./lib/object/object.js",
+			string: "./lib/string/string.js",
+			vue: "./lib/vue/vue.js",
+			url: "./lib/url/url.js",
 		},
-		rollupOptions: {
-			external: [
+		format: ["esm"],
+		outDir: "dist",
+		// The helpers run in browsers as well as Node, so the build assumes
+		// neither.
+		platform: "neutral",
+		// Name files `.js` rather than `.mjs`, to match the `exports` map.
+		fixedExtension: false,
+		// The type declarations in `types` are written by hand, so the build
+		// must not generate its own.
+		dts: false,
+		// Shorten the code as Vite's library build did, keeping line breaks.
+		minify: {
+			compress: true,
+			mangle: true,
+			codegen: false,
+		},
+		// Drop JSDoc and licence comments as Vite's library build did, but keep
+		// the pure-call annotations that let a user's bundler remove unused
+		// code.
+		outputOptions: {
+			comments: { annotation: true, jsdoc: false, legal: false },
+		},
+		// The browsers Vite's build supported by default. Without this, the
+		// build targets the Node version in `engines.node` and can output
+		// syntax that some of these browsers cannot run.
+		target: ["chrome111", "edge111", "firefox114", "safari16.4", "ios16.4"],
+		// Users install these packages themselves, so the helpers import them
+		// rather than bundle a copy.
+		deps: {
+			neverBundle: [
 				"dayjs",
 				"dayjs/plugin/customParseFormat.js",
 				"dayjs/plugin/timezone.js",
@@ -53,11 +77,6 @@ export default defineConfig({
 				"temporal-polyfill",
 				"vue",
 			],
-			output: {
-				globals: {
-					vue: "Vue",
-				},
-			},
 		},
 	},
 });
@@ -70,34 +89,4 @@ export default defineConfig({
  */
 function getExportsCheckCommand() {
 	return "bun run check:exports";
-}
-
-/**
- * Get the paths to multiple files from their names.
- *
- * @param  {string[]}  folderNames
- *     The names of the folders to retrieve.
- *
- * @returns  {string[]}
- *     The absolute paths to the category entry files.
- */
-function getFiles(folderNames) {
-	return folderNames.map((folderName) => getFile(folderName));
-}
-
-/**
- * Get the path to a group of library helpers from a folder name.
- *
- * @param  {string}  folderName
- *     The name of the folder to retrieve.
- *
- * @returns  {string}
- *     The absolute path to the category entry file.
- */
-function getFile(folderName) {
-	if (folderName === "index") {
-		return fileURLToPath(new URL("./lib/index.js", import.meta.url));
-	}
-
-	return fileURLToPath(new URL(`./lib/${folderName}/${folderName}.js`, import.meta.url));
 }

@@ -89,7 +89,7 @@
 		"dev": "vp dev",
 		"test:unit": "vp test",
 		"test:unit:run": "vp test run",
-		"build": "vp build",
+		"build": "vp pack",
 		"preview": "vp preview",
 		"lint": "vp check",
 		"lint:fix": "vp check --fix",
