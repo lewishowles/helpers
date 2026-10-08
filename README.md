@@ -8,7 +8,7 @@ A library of gorgeous Javascript methods to make working withâ€”and validatingâ€
 npm install @lewishowles/helpers
 ```
 
-The package is ESM-only and requires Node.js 20 or newer. The Vue helpers need Vue 3, version 3.5.39 or later. Vue is an optional peer dependency, so you only need to install it if you use them.
+The package is ESM-only and requires Node.js 24 or newer. The Vue helpers need Vue 3, version 3.5.39 or later. Vue is an optional peer dependency, so you only need to install it if you use them.
 
 ## Importing
 

@@ -73,6 +73,9 @@ for (const entry of entries) {
 }
 NODE
 
+# Show which Node ran the checks, since the script uses whichever node is first on PATH.
+printf 'Checking packed imports with Node %s\n' "$(node --version)"
+
 # Install the packed package into one consumer with Vue and one without it.
 for scenario in with-vue without-vue; do  # Current consumer's optional Vue availability.
 	CONSUMER_DIR="$WORK_DIR/$scenario"  # Package root for the current consumer.
