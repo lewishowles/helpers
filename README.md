@@ -1052,11 +1052,12 @@ isDefined(undefined); // false
 Determine whether `a` and `b` are deeply equal. Primitives are compared with
 SameValueZero semantics, so `NaN` is equal to `NaN`, and `null`/`undefined`
 are not equal to each other. Arrays are equal when they share the same length
-and every element is deeply equal in order. Plain objects are equal when they
-share the same set of own-enumerable keys and every value is deeply equal,
-regardless of key order. Anything else, including a type mismatch between the
-two values, or non-plain objects such as `Date`, `Map`, `Set`, or class
-instances, is not equal unless the two values are the same reference.
+and every element is deeply equal in order. An array hole compares as
+`undefined`. Plain objects are equal when they share the same set of
+own-enumerable keys and every value is deeply equal, regardless of key order.
+Anything else, including a type mismatch between the two values, or non-plain
+objects such as `Date`, `Map`, `Set`, or class instances, is not equal unless
+the two values are the same reference.
 
 #### Parameters
 
