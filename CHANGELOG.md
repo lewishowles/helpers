@@ -10,6 +10,7 @@
 
 ### Fixes
 
+- The generated README now documents helper return values, errors, and every example.
 - `isEqual` now compares an array hole as `undefined` in both argument orders, including in nested arrays, so a hole in the first array no longer matches any value in the second.
 - `keyBy` now stores an item whose key value is `__proto__` under its own key instead of replacing the result's prototype.
 - `countBy` now counts items whose value is a built-in property name, such as `constructor`, `toString` or `__proto__`, under their own keys instead of returning incorrect counts or dropping them.

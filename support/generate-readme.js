@@ -304,7 +304,8 @@ function getDocBlockBeforeLine(lines, lineIndex) {
  *
  * @returns  {object}
  *     The parsed tags, keyed by tag name. Parameters, exceptions, and examples
- *     are lists in source order; every other tag is text.
+ *     are lists in source order. The return value and each exception have a
+ *     type and a description; every other tag is text.
  */
 export function parseTags(docBlock) {
 	// The structured tags collected from this block.
@@ -415,7 +416,34 @@ export function parseTags(docBlock) {
 		}
 	}
 
+	if (docs.returns) {
+		docs.returns = parseTypedTag(docs.returns);
+	}
+
+	docs.throws = docs.throws.map(parseTypedTag);
+
 	return docs;
+}
+
+/**
+ * Split a return or exception tag into its type and description.
+ *
+ * @param  {string}  body
+ *     The tag text after Markdown indentation is removed.
+ *
+ * @returns  {object}
+ *     The type and description, with an empty type when none is documented.
+ */
+function parseTypedTag(body) {
+	// The leading type and remaining description. The type ends at the first
+	// closing brace followed by a space or the end of the text. This keeps
+	// nested object types and braces in the description intact.
+	const match = body.match(/^\{(.+?)\}(?=\s|$)([\s\S]*)$/);
+
+	return {
+		type: match?.[1] ?? "",
+		description: (match?.[2] ?? body).trim(),
+	};
 }
 
 /**
@@ -500,21 +528,59 @@ export function renderHelperDocs(docs) {
 		parts.push(["#### Parameters", parameters].join("\n\n"));
 	}
 
+	if (docs.returns) {
+		// The return line shown under its heading.
+		const returns = formatTypedTag(docs.returns);
+
+		parts.push(["#### Returns", returns].join("\n\n"));
+	}
+
+	if (docs.throws?.length) {
+		// One bullet for each documented exception.
+		const exceptions = docs.throws.map((entry) => `- ${formatTypedTag(entry)}`).join("\n");
+
+		parts.push(["#### Throws", exceptions].join("\n\n"));
+	}
+
 	if (docs.note?.trim()) {
 		parts.push(docs.note.trim());
 	}
 
-	// The README shows only the last example of each helper.
-	const example = docs.examples?.at(-1)?.trim();
+	// The examples that have code to show, skipping empty example tags.
+	const examples = docs.examples?.map((example) => example.trim()).filter(Boolean) ?? [];
 
-	if (example) {
-		// The helper example inside a JavaScript code fence.
-		const fencedExample = ["```js", example, "```"].join("\n");
+	if (examples.length) {
+		// One JavaScript fence for each example.
+		const fences = examples.map((example) => ["```js", example, "```"].join("\n")).join("\n\n");
+		// Helpers with several examples get a plural heading.
+		const heading = examples.length === 1 ? "#### Example" : "#### Examples";
 
-		parts.push(["#### Example", fencedExample].join("\n\n"));
+		parts.push([heading, fences].join("\n\n"));
 	}
 
 	return parts.join("\n\n");
+}
+
+/**
+ * Format a documented type and description for the README.
+ *
+ * @param  {object}  entry
+ *     The parsed return or exception tag.
+ *
+ * @returns  {string}
+ *     The type in code formatting and the description after a dash, or
+ *     whichever part is documented.
+ */
+function formatTypedTag(entry) {
+	if (!entry.type) {
+		return entry.description;
+	}
+
+	if (!entry.description) {
+		return `\`{${entry.type}}\``;
+	}
+
+	return `\`{${entry.type}}\` — ${entry.description}`;
 }
 
 /**

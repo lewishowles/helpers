@@ -106,9 +106,65 @@ describe("parseTags", () => {
 		].join("\n");
 
 		expect(parseTags(docBlock).throws).toEqual([
-			"{TypeError}\nIf the input is invalid.",
-			"{RangeError}\nIf the number is outside the supported range.",
+			{ type: "TypeError", description: "If the input is invalid." },
+			{ type: "RangeError", description: "If the number is outside the supported range." },
 		]);
+	});
+
+	test("should parse a return type and description", () => {
+		const docBlock = [
+			"/**",
+			" * @returns  {string | null}",
+			" *     The matching value, or null when none exists.",
+			" */",
+		].join("\n");
+
+		expect(parseTags(docBlock).returns).toEqual({
+			type: "string | null",
+			description: "The matching value, or null when none exists.",
+		});
+	});
+
+	test("should keep braces in descriptions on the type line", () => {
+		const docBlock = [
+			"/**",
+			" * @returns  {object} Like { value: 1 }.",
+			" * @throws  {TypeError} If { value } is missing.",
+			" */",
+		].join("\n");
+
+		const docs = parseTags(docBlock);
+
+		expect(docs.returns).toEqual({ type: "object", description: "Like { value: 1 }." });
+		expect(docs.throws).toEqual([{ type: "TypeError", description: "If { value } is missing." }]);
+	});
+
+	test("should keep nested braces in an object return type", () => {
+		const docBlock = [
+			"/**",
+			" * @returns  {{ text: string, index: number }}",
+			" *     The truncated text and where it stopped.",
+			" */",
+		].join("\n");
+
+		expect(parseTags(docBlock).returns).toEqual({
+			type: "{ text: string, index: number }",
+			description: "The truncated text and where it stopped.",
+		});
+	});
+
+	test("should keep descriptions when return and exception tags have no type", () => {
+		const docBlock = [
+			"/**",
+			" * @returns The result.",
+			" * @throws If the input is invalid.",
+			" */",
+		].join("\n");
+
+		const docs = parseTags(docBlock);
+
+		expect(docs.returns).toEqual({ type: "", description: "The result." });
+		expect(docs.throws).toEqual([{ type: "", description: "If the input is invalid." }]);
 	});
 
 	test("should keep indented note paragraphs as prose", () => {
@@ -193,7 +249,7 @@ describe("renderHelperDocs", () => {
 		expect(renderHelperDocs(docs)).not.toContain("#### Parameters");
 	});
 
-	test("should render only the last example", () => {
+	test("should render every example in source order", () => {
 		const docs = {
 			signature: "example()",
 			description: "Do a thing.",
@@ -201,7 +257,91 @@ describe("renderHelperDocs", () => {
 			examples: ["const first = 1;", "const second = 2;"],
 		};
 
-		expect(renderHelperDocs(docs)).toContain("#### Example\n\n```js\nconst second = 2;\n```");
-		expect(renderHelperDocs(docs)).not.toContain("const first = 1;");
+		expect(renderHelperDocs(docs)).toContain(
+			"#### Examples\n\n```js\nconst first = 1;\n```\n\n```js\nconst second = 2;\n```",
+		);
+	});
+
+	test("should keep the singular heading for one example", () => {
+		const docs = {
+			signature: "example()",
+			description: "Do a thing.",
+			params: [],
+			examples: ["const result = example();"],
+		};
+
+		expect(renderHelperDocs(docs)).toContain(
+			"#### Example\n\n```js\nconst result = example();\n```",
+		);
+	});
+
+	test("should skip empty examples", () => {
+		const docs = {
+			signature: "example()",
+			description: "Do a thing.",
+			params: [],
+			examples: ["", "const result = example();"],
+		};
+
+		expect(renderHelperDocs(docs)).toContain(
+			"#### Example\n\n```js\nconst result = example();\n```",
+		);
+
+		expect(renderHelperDocs(docs)).not.toContain("```js\n\n```");
+	});
+
+	test("should render typed and untyped return and exception descriptions", () => {
+		const docs = {
+			signature: "example()",
+			description: "Do a thing.",
+			params: [],
+			returns: { type: "string", description: "The result." },
+			throws: [
+				{ type: "TypeError", description: "If the input is invalid." },
+				{ type: "", description: "If the operation fails." },
+			],
+		};
+
+		expect(renderHelperDocs(docs)).toContain("#### Returns\n\n`{string}` — The result.");
+
+		expect(renderHelperDocs(docs)).toContain(
+			"#### Throws\n\n- `{TypeError}` — If the input is invalid.\n- If the operation fails.",
+		);
+	});
+
+	test("should render parsed JSDoc in the reference section order", () => {
+		const docBlock = [
+			"/**",
+			" * @signature example(value)",
+			" * @description",
+			" *     Do a thing.",
+			" * @param  {number}  value",
+			" *     The input value.",
+			" * @returns  {number}",
+			" *     The result.",
+			" * @throws  {TypeError}",
+			" *     If the input has the wrong type.",
+			" * @throws  {RangeError}",
+			" *     If the input is too large.",
+			" * @note",
+			" *     Results are stable.",
+			" * @example",
+			" *     example(1);",
+			" * @example",
+			" *     example(2);",
+			" */",
+		].join("\n");
+
+		expect(renderHelperDocs(parseTags(docBlock))).toBe(
+			[
+				"### `example(value)`",
+				"Do a thing.",
+				"#### Parameters\n\n- `value` `{number}` — The input value.",
+				"#### Returns\n\n`{number}` — The result.",
+				"#### Throws\n\n- `{TypeError}` — If the input has the wrong type.\n- `{RangeError}` — If the input is too large.",
+				"Results are stable.",
+				"#### Examples\n\n```js\nexample(1);\n```\n\n```js\nexample(2);\n```",
+			].join("\n\n"),
+		);
 	});
 });

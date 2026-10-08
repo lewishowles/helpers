@@ -26,6 +26,10 @@ Determine the number of items in the given `array`.
 
 - `array` `{any[]}` — The array to measure.
 
+#### Returns
+
+`{number}` — The number of items, or zero for non-arrays.
+
 If the provided input is not an array, returns `0`.
 
 #### Example
@@ -45,6 +49,11 @@ Split an array into chunks of a specified size.
 - `array` `{any[]}` — The array to split into chunks.
 - `chunkSize` `{number}` — The number of items to include in each chunk.
 
+#### Returns
+
+`{any[][]}` — The array split into chunks, or an empty array when the size is not a
+positive whole number.
+
 #### Example
 
 ```js
@@ -62,6 +71,10 @@ Remove falsy values from the given array.
 
 - `array` `{any[]}` — The array to remove falsy values from.
 
+#### Returns
+
+`{any[]}` — A new array containing the truthy items.
+
 #### Example
 
 ```js
@@ -78,6 +91,10 @@ Supports dot-path notation for nested properties.
 
 - `array` `{object[]}` — The array of objects to count.
 - `property` `{string}` — The property path to count items by. Dot paths are supported.
+
+#### Returns
+
+`{object}` — An object mapping each resolved value to its count.
 
 Items where `property` resolves to `undefined` are counted under the key
 `"undefined"`. All keys, including built-in property names such as
@@ -104,6 +121,10 @@ Ensure that `maybeArray` is an array.
 
 - `maybeArray` `{any}` — The value to return as an array.
 
+#### Returns
+
+`{any[]}` — The original array or a new array containing the value.
+
 Arrays are returned unchanged. Any non-array value is returned as a
 single-item array.
 
@@ -129,6 +150,10 @@ Returns the first non-undefined element in `array`.
 
 - `array` `{any[]}` — The array to search.
 
+#### Returns
+
+`{any}` — The first defined item, or undefined when none exists.
+
 #### Example
 
 ```js
@@ -149,6 +174,10 @@ empty.
 - `matcher` `{function|object}` — A predicate called with `(item, index, array)` that returns a truthy
   value, or an object of key-value pairs to match with strict equality.
   Object keys support dot paths, and every pair must match.
+
+#### Returns
+
+`{any}` — The first matching item, or undefined when none matches.
 
 #### Example
 
@@ -171,6 +200,10 @@ Given a starting `index`, determine the next available index in the
 - `[options.reverse=false]` `{boolean}` — Whether to find the previous index instead of the next index.
 - `[options.wrap=false]` `{boolean}` — Whether to wrap around when moving beyond either end of the array.
 
+#### Returns
+
+`{number}` — The adjacent index, clamped or wrapped as requested.
+
 An index outside the reference array is clamped unless wrapping is requested.
 A non-whole index, or a reference that is not a non-empty array, returns `0`.
 
@@ -192,6 +225,10 @@ Group the given `array` of objects into sub-arrays keyed by the value at
 
 - `array` `{object[]}` — The array of objects to group.
 - `property` `{string}` — The property path to group items by.
+
+#### Returns
+
+`{object}` — An object mapping each resolved value to its items.
 
 Items where `property` resolves to `undefined` are grouped under the key
 `"undefined"`. All keys, including built-in property names such as
@@ -225,6 +262,10 @@ Returns the first element in `array`.
 
 - `array` `{any[]}` — The array to read from.
 
+#### Returns
+
+`{any}` — The first item, or undefined when the array is empty or invalid.
+
 #### Example
 
 ```js
@@ -241,6 +282,10 @@ item.
 
 - `variable` `{any[]}` — The value to check.
 
+#### Returns
+
+`{boolean}` — Whether the value is a non-empty array.
+
 #### Example
 
 ```js
@@ -256,6 +301,10 @@ Returns the last non-undefined element in `array`.
 #### Parameters
 
 - `array` `{any[]}` — The array to search.
+
+#### Returns
+
+`{any}` — The last defined item, or undefined when none exists.
 
 #### Example
 
@@ -275,6 +324,10 @@ original untouched.
 - `array` `{any[]}` — The array containing the item to move.
 - `fromIndex` `{number}` — The index of the item to move.
 - `toIndex` `{number}` — The index to move the item to.
+
+#### Returns
+
+`{any[]}` — A new array with the item moved, or a copy for invalid indices.
 
 `toIndex` is read after the item has been removed, matching how drag-and-drop
 libraries report a drop. `fromIndex` must point at an existing item,
@@ -298,6 +351,10 @@ Split an array into two arrays based on a predicate. Returns a tuple of
 - `array` `{any[]}` — The array to split.
 - `predicate` `{function}` — The function used to decide which output array receives each item.
 
+#### Returns
+
+`{any[][]}` — A pair containing matching items, then non-matching items.
+
 #### Example
 
 ```js
@@ -314,6 +371,10 @@ Retrieve an array of the `property` value from each of the objects found in
 
 - `array` `{any[]}` — The array of objects to read from.
 - `property` `{string}` — The direct property key to pluck from each object.
+
+#### Returns
+
+`{any[]}` — The property values from object items in their original order.
 
 Any non-objects in `array` are ignored. Objects that don't have the given
 property yield `undefined` in the result. Empty or invalid input returns
@@ -345,6 +406,10 @@ given; an explicit `step` overrides it. A zero `step` returns an empty array.
 - `end` `{number}` — The final number to include in the range.
 - `step` `{number}` — The amount to change by between each number.
 
+#### Returns
+
+`{number[]}` — The inclusive range, or an empty array for invalid inputs.
+
 #### Example
 
 ```js
@@ -372,6 +437,10 @@ comparison.
 - `criteria[].property` `{string}` — The property path to sort by.
 - `criteria[].ascending` `{boolean}` — Whether to sort from lowest to highest.
 
+#### Returns
+
+`{any[]}` — A sorted copy, or the original array for invalid criteria.
+
 #### Example
 
 ```js
@@ -397,6 +466,10 @@ Returns the last element in `array`.
 
 - `array` `{any[]}` — The array to read from.
 
+#### Returns
+
+`{any}` — The last item, or undefined when the array is empty or invalid.
+
 #### Example
 
 ```js
@@ -416,6 +489,10 @@ input returns an empty array.
 - `item` `{any}` — The item to add or remove.
 - `comparator` `{((a: any, b: any) => boolean) | string}` — The matching function or object key used to compare items.
 
+#### Returns
+
+`{any[]}` — A new array with matching items removed or the item appended.
+
 #### Example
 
 ```js
@@ -432,6 +509,10 @@ Safely reduce the provided `array` to those entries which are unique.
 #### Parameters
 
 - `array` `{any[]}` — The array to reduce to unique entries.
+
+#### Returns
+
+`{any[]}` — A new array of unique values.
 
 #### Example
 
@@ -451,6 +532,10 @@ is kept.
 
 - `array` `{object[]}` — The array of objects to reduce.
 - `property` `{string}` — The property path that identifies duplicate items.
+
+#### Returns
+
+`{object[]}` — A new array without repeated property values.
 
 Items where the resolved value is `undefined` are treated as equal, with only
 the first occurrence kept.
@@ -498,6 +583,10 @@ subtract; `0` returns an equivalent value for the same day.
 - `options` `{object}` — Per-call date helper options (passed through to `parseDate`).
 - `options.inputFormat` `{string}` — The Day.js-style token format used when parsing non-ISO strings.
 
+#### Returns
+
+`{object|null}` — A shifted Temporal date, or null when the input cannot be shifted.
+
 `Temporal.Instant` values return `null` because instants have no calendar and
 cannot accept calendar-unit arithmetic. Anchor to a timezone first if you
 need to shift an instant.
@@ -523,6 +612,10 @@ Set project-wide defaults for date parsing and formatting.
 - `config.defaultFormat` `{string}` — The named format used when formatting without a format argument.
 - `config.formats` `{object}` — The named Day.js token or Intl format options available to `formatDate`.
 
+#### Returns
+
+`{object}` — A defensive copy of the updated date helper configuration.
+
 Calling this helper with no arguments returns the current configuration.
 
 Projects can override these defaults per helper call. The default locale is
@@ -538,7 +631,20 @@ override these or add their own — `formatDate` resolves the key at call time.
 The `defaultFormat` option determines which named format is used when
 `formatDate` is called with no format argument.
 
-#### Example
+#### Examples
+
+```js
+configureDateHelpers({
+	locale: "en-US",
+	timeZone: "America/New_York",
+	inputFormat: "MM/DD/YYYY",
+	formats: {
+		shortDate: "MM/DD/YYYY",
+		fullDate: { year: "numeric", month: "long", day: "2-digit" },
+	},
+	defaultFormat: "fullDate",
+});
+```
 
 ```js
 // formatDate("22/06/2026") uses defaultFormat → "fullDate"
@@ -561,6 +667,10 @@ token string, or `Intl.DateTimeFormat` options.
 - `options.defaultFormat` `{string}` — The named format used when `format` is omitted.
 - `options.formats` `{object}` — The named Day.js token or Intl format options available by key.
 
+#### Returns
+
+`{string|null}` — The formatted date, or null for an invalid date.
+
 #### Example
 
 ```js
@@ -582,6 +692,10 @@ Show dates as `3 minutes ago` or `in 2 days`.
 - `options.timeZone` `{string}` — The timezone used when anchoring plain dates and date-times.
 - `options.inputFormat` `{string}` — The Day.js-style token format used when parsing non-ISO strings.
 
+#### Returns
+
+`{string|null}` — The relative date text, or null for an invalid date.
+
 #### Example
 
 ```js
@@ -594,6 +708,10 @@ formatRelativeDate("2026-06-22T09:59:00", "2026-06-22T10:00:00");
 Get a defensive copy of the active date helper configuration. Useful when
 building custom date helpers that should respect the same global defaults set
 via `configureDateHelpers`.
+
+#### Returns
+
+`{object}` — A deep copy of the current date helper configuration.
 
 #### Example
 
@@ -615,6 +733,10 @@ the calendar date is read.
 - `options` `{object}` — Per-call date helper options.
 - `options.timeZone` `{string}` — The timezone used when anchoring instants and zoned date-times.
 - `options.inputFormat` `{string}` — The Day.js-style token format used when parsing non-ISO strings.
+
+#### Returns
+
+`{object|null}` — The year, month and day, or null for an invalid date.
 
 Invalid or empty input returns `null`.
 
@@ -640,6 +762,10 @@ Convert two supported dates into relative date parts for use with
 - `options.timeZone` `{string}` — The timezone used when anchoring plain dates and date-times.
 - `options.inputFormat` `{string}` — The Day.js-style token format used when parsing non-ISO strings.
 
+#### Returns
+
+`{object|null}` — The signed value and relative unit, or null for an invalid date.
+
 #### Example
 
 ```js
@@ -656,6 +782,10 @@ as empty.
 #### Parameters
 
 - `parts` `{object}` — The date parts to inspect.
+
+#### Returns
+
+`{boolean}` — Whether any supported date part is filled.
 
 #### Example
 
@@ -674,6 +804,10 @@ Temporal type.
 
 - `value` `{any}` — The value to inspect.
 - `type` `{string}` — The optional Temporal type name to match.
+
+#### Returns
+
+`{boolean}` — Whether the value has a supported Temporal date tag.
 
 Recognition uses Temporal's standard string tags, so values from another
 compatible Temporal implementation or module copy are supported. This is a
@@ -698,6 +832,10 @@ date value.
 - `value` `{any}` — The date value to parse.
 - `options` `{object}` — Per-call date helper options.
 - `options.inputFormat` `{string}` — The Day.js-style token format used when parsing non-ISO strings.
+
+#### Returns
+
+`{object|null}` — A supported Temporal date value, or null for invalid input.
 
 Token strings use Day.js-style tokens such as `DD/MM/YYYY`. Invalid or empty
 values return `null`. Parts objects are rejected (not clamped) when the month
@@ -726,6 +864,10 @@ an instant is needed.
 - `parts.month` `{number|string}` — The month, `1`-indexed.
 - `parts.day` `{number|string}` — The day of the month.
 
+#### Returns
+
+`{Temporal.PlainDate|null}` — The parsed plain date, or null for invalid parts.
+
 Only a `{ year, month, day }` plain object is accepted; strings, timestamps,
 `Date` instances, and Temporal values are rejected. String parts must be
 numeric. Missing, non-numeric, or out-of-range parts return `null`.
@@ -749,6 +891,10 @@ date-times use the configured timezone.
 - `options.timeZone` `{string}` — The timezone used when anchoring plain dates and date-times.
 - `options.inputFormat` `{string}` — The Day.js-style token format used when parsing non-ISO strings.
 
+#### Returns
+
+`{number|null}` — Epoch milliseconds, or null for an invalid date.
+
 #### Example
 
 ```js
@@ -768,6 +914,11 @@ the sum total `formData`.
 - `fieldName` `{string}` — The name of the field to validate.
 - `validationRules` `{object[]}` — The rules, schemas, or validation functions to apply.
 - `formData` `{object}` — The current values of each form field.
+
+#### Returns
+
+`{Promise<object>}` — The field result: whether it is valid, its error messages, and whether
+validation ran.
 
 Returns `{ valid, errors, validated }`. If input is invalid (missing field
 name, rules, or form data), `validated` is false and the field is treated as
@@ -949,6 +1100,10 @@ each field.
 - `fields` `{object}` — A map of field names to validation rule arrays.
 - `formData` `{object}` — The current values of each form field.
 
+#### Returns
+
+`{Promise<object>}` — The combined field results and overall validation status.
+
 Returns `{ valid, validated, results }`. If input is invalid (non-object
 `fields` or `formData`), `validated` is `false` and the form is treated as
 valid — the same convention as `validateField`.
@@ -997,6 +1152,11 @@ have passed without another call before running.
 - `options.leading` `{boolean}` — Whether to run on the first call in a debounce window.
 - `options.trailing` `{boolean}` — Whether to run after calls stop.
 
+#### Returns
+
+`{Function}` — A function that delays calls, returns the most recent result when one is
+available, and exposes `.cancel()` and `.flush()`.
+
 By default `fn` runs on the trailing edge, after calls stop, using the most
 recent call's arguments and `this`. Set `options.leading` to also run on the
 first call, or `options.trailing: false` to skip the trailing run; with both
@@ -1006,7 +1166,11 @@ The returned function exposes `.cancel()` to discard a pending run and
 `.flush()` to run it immediately and return its result. A non-function `fn`
 returns a safe no-op, and an invalid `delay` is treated as `0`.
 
-#### Example
+#### Examples
+
+```js
+const search = debounce(runSearch, 300);
+```
 
 ```js
 const save = debounce(saveForm, 1000, { leading: true });
@@ -1019,6 +1183,10 @@ Convert a given `variable` into a human-readable representation of its type.
 #### Parameters
 
 - `variable` `{any}` — The value to describe.
+
+#### Returns
+
+`{string | undefined}` — A readable label, or `undefined` when no supported type matches.
 
 #### Example
 
@@ -1037,6 +1205,10 @@ values.
 #### Parameters
 
 - `value` `{any}` — The value to check.
+
+#### Returns
+
+`{boolean}` — Whether the value is defined.
 
 #### Example
 
@@ -1064,6 +1236,10 @@ the two values are the same reference.
 - `a` `{unknown}` — The first value to compare.
 - `b` `{unknown}` — The second value to compare.
 
+#### Returns
+
+`{boolean}` — Whether the values are deeply equal.
+
 #### Example
 
 ```js
@@ -1080,6 +1256,10 @@ Determines whether the given `variable` is a function.
 #### Parameters
 
 - `variable` `{any}` — The value to check.
+
+#### Returns
+
+`{boolean}` — Whether the value is a function.
 
 #### Example
 
@@ -1099,6 +1279,10 @@ returns a promise, even for synchronous inputs, for a consistent shape.
 - `promise` `{any}` — The promise or value to resolve.
 - `fallback` `{any | function}` — The fallback value, or function returning one, to use when resolution
   fails.
+
+#### Returns
+
+`{Promise<any>}` — A promise for the resolved value, or the fallback when resolution fails.
 
 This is async/value recovery, not validation — see `validateOrFallback` for
 keyword-based value checks.
@@ -1126,6 +1310,11 @@ patterns.
 
 - `promises` `{any[]}` — The promises or values to settle.
 
+#### Returns
+
+`{Promise<object>}` — The `results` for every item in order, plus the fulfilled `values` and
+rejected `errors`.
+
 Non-thenable values are treated as fulfilled and returned as-is — functions
 are never invoked. To run functions, call them first:
 `settle(items.map(item => action(item)))`.
@@ -1136,7 +1325,14 @@ useful for bulk operations where you need to know exactly which calls failed.
 `values` and `errors` exclude the other outcome's gaps, for the common
 "everything that worked / failed" patterns.
 
-#### Example
+#### Examples
+
+```js
+const { results } = await settle(ids.map((id) => api.delete(id)));
+const failedIds = results
+	.filter((result) => result.status === "rejected")
+	.map((result) => ids[result.index]);
+```
 
 ```js
 await settle([Promise.resolve(1), Promise.reject("nope")]);
@@ -1161,6 +1357,10 @@ size can be determined.
 
 - `variable` `{any}` — The value to measure.
 
+#### Returns
+
+`{number}` — The size of the value, or `0` when no size can be determined.
+
 #### Example
 
 ```js
@@ -1184,6 +1384,11 @@ milliseconds.
 - `options.leading` `{boolean}` — Whether to run at the start of a throttle window.
 - `options.trailing` `{boolean}` — Whether to run at the end of a throttle window.
 
+#### Returns
+
+`{Function}` — A function that limits calls, returns the most recent result when one is
+available, and exposes `.cancel()` and `.flush()`.
+
 By default `fn` runs immediately on the first call, then once more at the end
 of the window if further calls arrived during it, using the latest arguments
 and `this`. Set `options.leading: false` to skip the immediate run, or
@@ -1194,7 +1399,11 @@ The returned function exposes `.cancel()` to discard a pending run and
 `.flush()` to run it immediately and return its result. A non-function `fn`
 returns a safe no-op, and an invalid `delay` is treated as `0`.
 
-#### Example
+#### Examples
+
+```js
+window.addEventListener("scroll", throttle(onScroll, 100));
+```
 
 ```js
 const save = throttle(saveForm, 500, { leading: false });
@@ -1210,6 +1419,10 @@ Apply `comparison` to the provided `variable`, returning `variable` if
 - `variable` `{any}` — The value to validate.
 - `comparison` `{function | string}` — The validation function or keyword to apply.
 - `fallback` `{any}` — The value to return when validation fails.
+
+#### Returns
+
+`{any}` — The valid value, or the fallback.
 
 `comparison` can be a function, or one of the keywords:
 
@@ -1242,6 +1455,10 @@ Ensure that the provided `value` is between `minimum` and `maximum`
 - `minimum` `{number}` — The lowest allowed value.
 - `maximum` `{number}` — The highest allowed value.
 
+#### Returns
+
+`{number}` — The value within the validated bounds.
+
 A `value` that is not a number is treated as `0` before clamping.
 
 #### Example
@@ -1261,6 +1478,10 @@ Determines whether the given `variable` is a number and not NaN.
 
 - `variable` `{any}` — The value to check.
 
+#### Returns
+
+`{boolean}` — Whether the value is a number other than NaN.
+
 #### Example
 
 ```js
@@ -1277,6 +1498,10 @@ number.
 #### Parameters
 
 - `value` `{any}` — The value to check.
+
+#### Returns
+
+`{boolean}` — Whether the value can be read as a finite number.
 
 #### Example
 
@@ -1298,6 +1523,15 @@ is not provided, it defaults to 0.
 - `value` `{number}` — The number to round.
 - `decimals` `{number}` — The number of decimal places to keep.
 
+#### Returns
+
+`{number}` — The rounded number.
+
+#### Throws
+
+- `{TypeError}` — When either argument is not a number.
+- `{RangeError}` — When either argument is not finite.
+
 #### Example
 
 ```js
@@ -1316,6 +1550,10 @@ fields should be `null` rather than `0` or `NaN`.
 #### Parameters
 
 - `value` `{any}` — The value to coerce.
+
+#### Returns
+
+`{number|null}` — The converted number, or null for an absent value.
 
 #### Example
 
@@ -1337,6 +1575,10 @@ a `value` exceeding `total` will produce a percentage above 100.
 
 - `value` `{any}` — The value to convert to a percentage.
 - `total` `{any}` — The total value that represents 100%.
+
+#### Returns
+
+`{number}` — The percentage, or zero when the inputs cannot produce a finite result.
 
 #### Example
 
@@ -1361,6 +1603,10 @@ undefined or null.
 - `key` `{string}` — The property key to add.
 - `value` `{any}` — The value to set when the key is missing or empty.
 
+#### Returns
+
+`{object}` — A copy with the property added, or an empty object for an invalid input.
+
 #### Example
 
 ```js
@@ -1376,6 +1622,10 @@ Returns a deep copy of `value`. Non-objects are returned unchanged.
 #### Parameters
 
 - `value` `{any}` — The value to copy.
+
+#### Returns
+
+`{any}` — A deep copy of the value, or the original primitive or function.
 
 Uses the built-in `structuredClone` where possible, so `Date`, `Map`, `Set`,
 `RegExp`, typed arrays, and cyclic references are cloned correctly. For
@@ -1401,6 +1651,10 @@ those of earlier objects.
 - `target` `{object}` — The object to merge into.
 - `sources` `{object[]}` — The source objects to merge from.
 
+#### Returns
+
+`{object}` — The recursively merged object.
+
 #### Example
 
 ```js
@@ -1420,6 +1674,10 @@ holds an array in both the target and a source.
 - `options` `{object}` — Merge behaviour.
 - `options.arrayStrategy` `{string}` — How arrays are combined when both objects contain arrays at the same key.
 
+#### Returns
+
+`{object}` — The merged object without changing the inputs.
+
 Set `options.arrayStrategy` to `"replace"` (the default) so the source array
 wins, just like `deepMerge`; `"concatenate"` to join both arrays with target
 items first; or `"merge"` to combine arrays position by position,
@@ -1429,7 +1687,12 @@ Other values merge like `deepMerge`: objects merge recursively, class
 instances stay intact, and the inputs are not changed. Sources are passed as
 one array so `options` stays at the end.
 
-#### Example
+#### Examples
+
+```js
+deepMergeWith({ tags: ["a"] }, [{ tags: ["b"] }], { arrayStrategy: "concatenate" });
+// { tags: ["a", "b"] }
+```
 
 ```js
 deepMergeWith({ a: { b: 1 } }, [{ a: { c: 2 } }]);
@@ -1449,6 +1712,10 @@ non-empty object with a non-empty `paths` array.
 - `object` `{object}` — The object to inspect.
 - `paths` `{string[]}` — The dot-notation paths to try.
 
+#### Returns
+
+`{any}` — The first defined path value, or undefined when none exists.
+
 #### Example
 
 ```js
@@ -1467,6 +1734,10 @@ Flattens a nested object into a single-level object with dot-notation keys.
 #### Parameters
 
 - `object` `{object}` — The object to flatten.
+
+#### Returns
+
+`{object}` — An object with nested keys expressed as dot-separated paths.
 
 Arrays are preserved as leaf values — they are not flattened into indexed
 keys (e.g. `"items.0"`).
@@ -1493,6 +1764,10 @@ Retrieve the `object` property value found at `path`, or `returnValue`.
 - `path` `{string}` — The dot-notation path to retrieve.
 - `returnValue` `{any}` — The fallback value when the path cannot be resolved.
 
+#### Returns
+
+`{any}` — The path value, or the fallback when the path cannot be found.
+
 #### Example
 
 ```js
@@ -1512,6 +1787,10 @@ Determine if the given object has any of the properties at `paths`.
 - `object` `{object}` — The object to inspect.
 - `paths` `{string[]}` — The dot-notation paths to check.
 
+#### Returns
+
+`{boolean}` — Whether at least one path exists in the object.
+
 #### Example
 
 ```js
@@ -1530,6 +1809,10 @@ an array), and has at least one property.
 
 - `variable` `{any}` — The value to check.
 
+#### Returns
+
+`{boolean}` — Whether the value is an object with at least one own key.
+
 #### Example
 
 ```js
@@ -1546,6 +1829,10 @@ null.
 #### Parameters
 
 - `variable` `{any}` — The value to check.
+
+#### Returns
+
+`{boolean}` — Whether the value is a non-null object that is not an array.
 
 #### Example
 
@@ -1564,6 +1851,10 @@ instances.
 #### Parameters
 
 - `variable` `{any}` — The value to check.
+
+#### Returns
+
+`{boolean}` — Whether the value is a plain object.
 
 #### Example
 
@@ -1584,6 +1875,10 @@ in the original array is placed under the value of its given `key`.
 - `array` `{object[]}` — The objects to index.
 - `key` `{string}` — The property whose value becomes each output key.
 
+#### Returns
+
+`{object | array}` — The indexed object, or the original array when the key is invalid.
+
 Objects without the given `key` are discarded. When several objects share a
 key value, the last one is kept. Key values that match built-in property
 names, such as `__proto__` or `toString`, are stored as ordinary keys.
@@ -1601,6 +1896,10 @@ Returns an array of the keys of the given `object`.
 #### Parameters
 
 - `object` `{object}` — The object to read keys from.
+
+#### Returns
+
+`{string[]}` — The object keys, or an empty array for an invalid object.
 
 #### Example
 
@@ -1622,6 +1921,10 @@ omitted.
 - `object` `{object}` — The object to read the array from.
 - `property` `{string}` — The property holding the array to map.
 - `mapper` `{Function}` — The mapper function, forwarded as-is to `Array.prototype.map`.
+
+#### Returns
+
+`{object}` — A copy with the selected array mapped, or an empty object.
 
 #### Example
 
@@ -1648,6 +1951,10 @@ Returns true if one of the `object`'s values is `needle`. Also works when
 - `[options.caseInsensitive=true]` `{boolean}` — Whether string comparisons ignore case.
 - `[options.allowPartial=false]` `{boolean}` — Whether string comparisons allow partial matches.
 
+#### Returns
+
+`{boolean}` — Whether a matching value occurs in the object or array.
+
 String `needle`s are checked case-insensitively by default, and partial
 matches can be enabled via option.
 
@@ -1672,6 +1979,10 @@ non-objects.
 
 - `object` `{object}` — The object to count keys on.
 
+#### Returns
+
+`{number}` — The number of own keys, or zero for an invalid object.
+
 #### Example
 
 ```js
@@ -1690,6 +2001,10 @@ Returns a new object with the specified `properties` omitted from the given
 - `object` `{object}` — The object to copy from.
 - `properties` `{string[]}` — The property keys to omit.
 
+#### Returns
+
+`{object}` — A copy without the selected properties.
+
 #### Example
 
 ```js
@@ -1706,6 +2021,10 @@ Returns an object containing only `properties` properties from `object`.
 
 - `object` `{object}` — The object to copy from.
 - `properties` `{string[]}` — The property keys to keep.
+
+#### Returns
+
+`{object}` — An object containing the selected properties.
 
 Any non-string properties are ignored.
 
@@ -1728,6 +2047,10 @@ Returns a new object with keys from `mapping` whose values are resolved from
 
 - `object` `{object}` — The object to read values from.
 - `mapping` `{object}` — The output keys and source paths to use.
+
+#### Returns
+
+`{object}` — An object with the selected properties renamed by the mapping.
 
 Uses `getPathValue` so dot-notation paths are supported.
 
@@ -1754,6 +2077,10 @@ Retrieve an array of the `path` value from each of the objects found in
 - `array` `{object[]}` — The objects to read from.
 - `path` `{string}` — The dot-notation path to retrieve from each object.
 
+#### Returns
+
+`{any[]}` — The value at the path for each valid object.
+
 Any non-objects in `array` are ignored. Objects that don't have the given
 path yield `undefined` in the result. Empty or invalid input returns `[]`.
 
@@ -1776,6 +2103,10 @@ object to not modify the original.
 - `object` `{object}` — The object to remove the value from.
 - `path` `{string}` — The dot-notation path to remove.
 
+#### Returns
+
+`{object}` — A copy of the object without the selected path.
+
 #### Example
 
 ```js
@@ -1795,6 +2126,10 @@ mutated. Renaming is shallow only — nested objects are not deep-renamed.
 
 - `object` `{object}` — The object to rename keys on.
 - `mapping` `{object}` — The existing keys and replacement keys to use.
+
+#### Returns
+
+`{object}` — A copy with valid property names replaced.
 
 Use `pickAs` instead when you want to project or whitelist keys into a new
 shape; `renameProperties` renames keys in place while keeping all other keys.
@@ -1818,6 +2153,12 @@ Set an object property at `path`.
 - `object` `{object}` — The object to update.
 - `path` `{string}` — The dot-notation path to set.
 - `value` `{any}` — The value to write at the path.
+
+#### Returns
+
+`{object}` — The original input if the object or path is invalid. Otherwise, a copy
+with the value set, or an unchanged copy if the path runs into a value
+that cannot hold it.
 
 If any part of the path dot notation chain results in a non-object, no
 modifications are made.
@@ -1844,6 +2185,10 @@ retrieved.
 
 - `object` `{object}` — The object to unwrap.
 
+#### Returns
+
+`{any}` — The sole property value, or null when there is no sole value.
+
 #### Example
 
 ```js
@@ -1859,6 +2204,10 @@ Returns an array of the values of the given `object`.
 #### Parameters
 
 - `object` `{object}` — The object to read values from.
+
+#### Returns
+
+`{any[]}` — The object values, or an empty array for an invalid object.
 
 #### Example
 
@@ -1880,6 +2229,10 @@ points rather than UTF-16 code units. Returns an empty string if the provided
 #### Parameters
 
 - `value` `{any}` — The value to capitalise.
+
+#### Returns
+
+`{string}` — The resulting string.
 
 #### Example
 
@@ -1905,6 +2258,10 @@ test is performed.
 - `[options]` `{object}` — Settings for the check.
 - `[options.trim=false]` `{boolean}` — Whether to ignore surrounding whitespace.
 
+#### Returns
+
+`{boolean}` — Whether the value contains a non-empty string.
+
 #### Example
 
 ```js
@@ -1925,6 +2282,10 @@ Trim the left hand side of `string` using the provided string or RegExp
 - `string` `{string}` — The string to trim.
 - `pattern` `{string | RegExp}` — The pattern to trim from the left hand side.
 
+#### Returns
+
+`{string}` — The resulting string.
+
 #### Example
 
 ```js
@@ -1942,6 +2303,10 @@ Trim the right hand side of `string` using the provided string or RegExp
 
 - `string` `{string}` — The string to trim.
 - `pattern` `{string | RegExp}` — The pattern to trim from the right hand side.
+
+#### Returns
+
+`{string}` — The resulting string.
 
 #### Example
 
@@ -1982,6 +2347,10 @@ apiKey). Returns an empty string for non-string inputs.
 
 - `value` `{any}` — The value to convert to camelCase.
 
+#### Returns
+
+`{string}` — The resulting string.
+
 #### Example
 
 ```js
@@ -2005,6 +2374,10 @@ string for non-string inputs.
 
 - `value` `{any}` — The value to convert to kebab-case.
 
+#### Returns
+
+`{string}` — The resulting string.
+
 #### Example
 
 ```js
@@ -2027,6 +2400,10 @@ provided `string` is not a string itself.
 
 - `string` `{any}` — The string to convert.
 
+#### Returns
+
+`{string}` — The lowercase string, or an empty string when `string` is not a string.
+
 #### Example
 
 ```js
@@ -2044,6 +2421,10 @@ be `""` rather than `"null"` or `"undefined"`.
 #### Parameters
 
 - `value` `{any}` — The value to coerce to a string.
+
+#### Returns
+
+`{string}` — The resulting string.
 
 #### Example
 
@@ -2064,6 +2445,10 @@ string for non-string inputs.
 #### Parameters
 
 - `value` `{any}` — The value to convert to PascalCase.
+
+#### Returns
+
+`{string}` — The resulting string.
 
 #### Example
 
@@ -2088,6 +2473,10 @@ empty string for non-string inputs.
 
 - `value` `{any}` — The value to convert to SCREAMING_SNAKE_CASE.
 
+#### Returns
+
+`{string}` — The resulting string.
+
 #### Example
 
 ```js
@@ -2111,6 +2500,10 @@ string for non-string inputs.
 
 - `value` `{any}` — The value to convert to snake_case.
 
+#### Returns
+
+`{string}` — The resulting string.
+
 #### Example
 
 ```js
@@ -2132,6 +2525,10 @@ provided `string` is not a string itself.
 
 - `string` `{any}` — The string to convert.
 
+#### Returns
+
+`{string}` — The uppercase string, or an empty string when `string` is not a string.
+
 #### Example
 
 ```js
@@ -2149,6 +2546,10 @@ Trims whitespace by default.
 
 - `string` `{string}` — The string to trim.
 - `pattern` `{string | RegExp}` — The pattern to trim from both sides.
+
+#### Returns
+
+`{string}` — The resulting string.
 
 #### Example
 
@@ -2174,6 +2575,11 @@ truncation occurs.
 - `[options.preserveWords=false]` `{boolean}` — Whether to keep words whole.
 - `[options.strict=true]` `{boolean}` — When preserving words, whether to stay within the character budget.
 - `[options.position="end"]` `{"start" | "end" | "middle"}` — Where to remove text and show the decoration.
+
+#### Returns
+
+`{string}` — The string, shortened when it is too long, or an empty string when the
+input is not a string.
 
 If the provided variable is not a string, returns an empty string.
 
@@ -2202,6 +2608,10 @@ parameter is not present.
 
 - `parameter` `{string}` — The search parameter to retrieve.
 
+#### Returns
+
+`{string | null}` — The parameter value, or null when it is absent.
+
 #### Example
 
 ```js
@@ -2220,6 +2630,10 @@ returning `null` when the parameter is not present.
 
 - `search` `{string | URLSearchParams}` — The search string or URL search parameters to read from.
 - `parameter` `{string}` — The search parameter to retrieve.
+
+#### Returns
+
+`{string | null}` — The parameter value, or null when it is absent.
 
 #### Example
 
@@ -2253,6 +2667,10 @@ Return a search string with `parameter` removed.
 
 - `search` `{string | URLSearchParams}` — The search string or URL search parameters to update.
 - `parameter` `{string}` — The search parameter to remove.
+
+#### Returns
+
+`{string}` — The search string without the selected parameter.
 
 #### Example
 
@@ -2294,6 +2712,10 @@ the parameter is removed.
 - `parameter` `{string}` — The search parameter to update.
 - `value` `{string | null}` — The value to set, or `null` to remove the parameter.
 
+#### Returns
+
+`{string}` — The updated search string.
+
 #### Example
 
 ```js
@@ -2317,6 +2739,10 @@ exist.
 - `method` `{string}` — The method name to call.
 - `params` `{any[]}` — Additional parameters to pass to the method.
 
+#### Returns
+
+`{any}` — The method result, or undefined when it cannot be called.
+
 #### Example
 
 ```js
@@ -2338,6 +2764,10 @@ multiple children exist.
 - `options` `{object}` — Options for reading slot text.
 - `[options.props]` `{object}` — Props to pass when rendering a slot function.
 - `[options.trim=true]` `{boolean}` — Whether to trim whitespace from the returned text.
+
+#### Returns
+
+`{string}` — The text in the slot, optionally trimmed.
 
 #### Example
 
@@ -2361,6 +2791,10 @@ Determines whether the given `slotReference` contains content.
 
 - `slot` `{Function}` — The slot function to check.
 - `props` `{object}` — Props to pass when rendering the slot function.
+
+#### Returns
+
+`{boolean}` — Whether the slot contains displayable content.
 
 #### Example
 
