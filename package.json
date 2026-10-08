@@ -96,6 +96,7 @@
 		"docs:readme": "node support/generate-readme.js",
 		"check:exports": "pkg-checks exports . --config quality.config.json",
 		"check:package-size": "pkg-checks size . --config quality.config.json",
+		"check:packed-imports": "support/check-packed-imports.sh",
 		"check:readme": "support/check-readme.sh",
 		"check:runtime-deps": "pkg-checks runtime-deps . --config quality.config.json",
 		"check:test-coverage": "pkg-checks test-coverage .",

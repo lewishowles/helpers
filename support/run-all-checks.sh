@@ -23,7 +23,9 @@ CHECKS=(
 	"Package size|Package size budgets|check:package-size"
 	"Test coverage|Test coverage|check:test-coverage"
 	"Type declarations|Type declarations|check:type-declarations"
+	"Publint|Package publishing|publint"
 	"ATTW|Are the types wrong|support/check-attw.sh"
+	"Packed imports|Packed Node imports|check:packed-imports"
 )
 
 # Accumulate JSON fragments for the diagnostic report.
@@ -46,10 +48,10 @@ run_check() {
 	local output
 	local exit_code
 
-	if [[ "$command" == check:* ]]; then
-		output="$(bun run "$command" 2>&1)" && exit_code=0 || exit_code=$?
-	else
+	if [[ "$command" == support/* ]]; then
 		output="$(bash "$REPO_ROOT/$command" 2>&1)" && exit_code=0 || exit_code=$?
+	else
+		output="$(bun run --silent "$command" 2>&1)" && exit_code=0 || exit_code=$?
 	fi
 
 	local result
