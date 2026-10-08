@@ -1359,15 +1359,20 @@ const failedIds = results
 ```
 
 ```js
-await settle([Promise.resolve(1), Promise.reject("nope")]);
-// {
-//   values: [1],
-//   errors: ["nope"],
-//   results: [
-//     { status: "fulfilled", value: 1, index: 0 },
-//     { status: "rejected", reason: "nope", index: 1 },
-//   ],
-// }
+const { values, errors, results } = await settle([Promise.resolve(1), Promise.reject("nope")]);
+// values: [1]
+// errors: ["nope"]
+// results: [
+//   { status: "fulfilled", value: 1, index: 0 },
+//   { status: "rejected", reason: "nope", index: 1 },
+// ]
+```
+
+```js
+const action = () => "called";
+const { values } = await settle([7, action]); // values: [7, action]; action was not called
+await settle([]); // { values: [], errors: [], results: [] }
+await settle(null); // { values: [], errors: [], results: [] }
 ```
 
 ### `size(variable: any)`
@@ -2639,8 +2644,10 @@ truncate(["A", "B"]); // ""
 
 ### `getCurrentUrlParameter(parameter: string)`
 
-Retrieve `parameter` from the current browser URL, returning `null` if the
-parameter is not present.
+Read `parameter` from `window.location.search`, returning `null` when it is
+absent. This needs `window`, so it only runs in a browser or a browser-like
+test environment. Use `getSearchParameter` with a supplied search string on
+the server or for another URL.
 
 #### Parameters
 
@@ -2654,7 +2661,7 @@ parameter is not present.
 
 ```js
 // https://duckduckgo.com?page=2
-getCurrentUrlParameter("page"); // 2
+getCurrentUrlParameter("page"); // "2"
 // https://duckduckgo.com?page=2
 getCurrentUrlParameter("unknown"); // null
 ```
@@ -2676,13 +2683,17 @@ returning `null` when the parameter is not present.
 #### Example
 
 ```js
-getSearchParameter("?page=2", "page"); // 2
+getSearchParameter("?page=2", "page"); // "2"
 getSearchParameter("?page=2", "unknown"); // null
 ```
 
 ### `removeCurrentUrlParameter(parameter: string)`
 
-Remove `parameter` from the current browser URL if it exists.
+Remove `parameter` from the current browser URL if it exists. This reads
+`window.location` and uses `replaceState`, so it only runs in a browser or a
+browser-like test environment, and it does not add a history entry. Use
+`removeSearchParameter` with a supplied search string on the server or for
+another URL.
 
 #### Parameters
 
@@ -2719,9 +2730,11 @@ removeSearchParameter("?page=2", "page"); // ""
 
 ### `updateCurrentUrlParameter(parameter: string, value: string | null)`
 
-Update the current browser URL to set `parameter` to `value`, adding
-`parameter` if it doesn't already exist, or overwriting any current value if
-it doesn't. If `value` is `null`, the parameter is removed.
+Set `parameter` to `value` in the current browser URL, or remove it when
+`value` is `null`. This reads `window.location` and uses `replaceState`, so
+it only runs in a browser or a browser-like test environment, and it does not
+add a history entry. Use `updateSearchParameter` with a supplied search
+string on the server or for another URL.
 
 #### Parameters
 
@@ -2790,11 +2803,12 @@ callComponentMethod(component, "undefinedMethod"); // undefined
 callComponentMethod(null); // undefined
 ```
 
-### `getSlotText(slotReference)`
+### `getSlotText(slot, { props, trim = true })`
 
-Retrieve the text from the given `slotReference`. `slotReference` is a direct
-reference to a slot - for example `slots.default`. Text is concatenated when
-multiple children exist.
+Read text from a slot function, such as `slots.default`, or from a vnode
+array. Missing and empty slots return an empty string. Child text is joined
+without inserting spaces, then the complete string is trimmed unless `trim`
+is false.
 
 #### Parameters
 
@@ -2807,7 +2821,7 @@ multiple children exist.
 
 `{string}` — The text in the slot, optionally trimmed.
 
-#### Example
+#### Examples
 
 ```js
 // slots.default = () => [{ type: Text, children: "Text content" }]
@@ -2817,6 +2831,13 @@ getSlotText(slots.default); // "First textSecond text"
 // slots.default = () => [{ type: Comment }]
 getSlotText(slots.default); // ""
 getSlotText("string"); // ""
+getSlotText([]); // ""
+```
+
+```js
+const slot = ({ label }) => [{ type: Text, children: label }];
+getSlotText(slot, { props: { label: " Hello " } }); // "Hello"
+getSlotText([{ type: Text, children: " Hello " }], { trim: false }); // " Hello "
 ```
 
 ### `isNonEmptySlot(slotReference)`
