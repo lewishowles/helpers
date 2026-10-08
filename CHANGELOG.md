@@ -10,6 +10,7 @@
 
 ### Fixes
 
+- `isDefined` now narrows its argument in TypeScript and editors: after a true result, `null` and `undefined` are removed from the value's type, so `items.filter(isDefined)` returns an array without them.
 - The generated README now documents helper return values, errors, and every example.
 - `isEqual` now compares an array hole as `undefined` in both argument orders, including in nested arrays, so a hole in the first array no longer matches any value in the second.
 - `keyBy` now stores an item whose key value is `__proto__` under its own key instead of replacing the result's prototype.

@@ -24,7 +24,7 @@ export declare function debounce<T extends (...args: any[]) => any>(
 	options?: TimingOptions,
 ): ControlledFunction<T>;
 export declare function getFriendlyDisplay(variable: any): string;
-export declare function isDefined(value: any): boolean;
+export declare function isDefined<T>(value: T): value is NonNullable<T>;
 export declare function isEqual(a: unknown, b: unknown): boolean;
 export declare function isFunction(variable: any): variable is Function;
 export declare function resolveOrFallback<T, F>(
