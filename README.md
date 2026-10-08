@@ -1583,8 +1583,9 @@ in the original array is placed under the value of its given `key`.
 - `array` `{object[]}` — The objects to index.
 - `key` `{string}` — The property whose value becomes each output key.
 
-Objects without the given `key` are discarded. If an object has the same
-value `key` as a previous object, the previous object will be overwritten.
+Objects without the given `key` are discarded. When several objects share a
+key value, the last one is kept. Key values that match built-in property
+names, such as `__proto__` or `toString`, are stored as ordinary keys.
 
 #### Example
 
