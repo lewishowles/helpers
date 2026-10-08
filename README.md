@@ -77,7 +77,9 @@ chunk([1, 2, 3], 0); // []
 
 ### `compact(array: any[])`
 
-Remove falsy values from the given array.
+Remove falsy values from the given array, including `0`, `false`, `""`,
+`null`, `undefined`, and `NaN`. Use `array.filter(isDefined)` to remove only
+`null` and `undefined`.
 
 #### Parameters
 
@@ -92,6 +94,9 @@ Remove falsy values from the given array.
 ```js
 compact([0, 1, false, 2, "", 3]); // [1, 2, 3]
 compact([true, true, true]); // [true, true, true]
+const values = [0, false, "", null, undefined, NaN, "a"];
+compact(values); // ["a"]
+values.filter(isDefined); // [0, false, "", NaN, "a"]
 ```
 
 ### `countBy(array: object[], property: string)`
@@ -156,7 +161,9 @@ ensureArray(undefined); // [undefined]
 
 ### `firstDefined(array: any[])`
 
-Returns the first non-undefined element in `array`.
+Returns the first element in `array` that is not `undefined`. A `null` item
+counts as a value, so it is returned when no other value comes before it. Use
+`array.find(isDefined)` to skip `null` as well.
 
 #### Parameters
 
@@ -171,6 +178,7 @@ Returns the first non-undefined element in `array`.
 ```js
 firstDefined(["a", "b"]); // "a"
 firstDefined([undefined, undefined, "c", "d"]); // "c"
+firstDefined([undefined, null, 1]); // null
 firstDefined([]); // undefined
 ```
 
@@ -308,7 +316,9 @@ isNonEmptyArray("string"); // false
 
 ### `lastDefined(array: any[])`
 
-Returns the last non-undefined element in `array`.
+Returns the last element in `array` that is not `undefined`. A `null` item
+counts as a value, so it is returned when no other value comes after it. Use
+`array.findLast(isDefined)` to skip `null` as well.
 
 #### Parameters
 
@@ -323,6 +333,7 @@ Returns the last non-undefined element in `array`.
 ```js
 lastDefined(["a", "b"]); // "b"
 lastDefined(["a", "b", undefined, undefined]); // "b"
+lastDefined([1, null, undefined]); // null
 lastDefined([]); // undefined
 ```
 
@@ -1212,7 +1223,8 @@ getFriendlyDisplay("hello"); // hello <string>
 
 Determines whether the given `value` is neither `null` nor `undefined`.
 Unlike a falsy check, this guard treats `0`, `""`, and `false` as defined
-values.
+values. Pass it to `array.filter` or `array.find` to skip both `null` and
+`undefined`; `firstDefined` and `lastDefined` skip only `undefined`.
 
 #### Parameters
 
@@ -1484,7 +1496,9 @@ clamp(NaN); // 0
 
 ### `isNumber(variable: any)`
 
-Determines whether the given `variable` is a number and not NaN.
+Determines whether the given `variable` is a number and not NaN. `Infinity`
+and `-Infinity` count as numbers. Use `isNumeric` to check for a finite
+number, including a numeric string.
 
 #### Parameters
 
@@ -1498,14 +1512,16 @@ Determines whether the given `variable` is a number and not NaN.
 
 ```js
 isNumber(4); // true
+isNumber(Infinity); // true
 isNumber(NaN); // false
 isNumber("string"); // false
 ```
 
 ### `isNumeric(value: any)`
 
-Determines whether the given `value` is a number, or a string containing a
-number.
+Determines whether the given `value` is a finite number or a string
+containing one. Surrounding spaces are allowed, but `Infinity` is rejected
+whether it is passed as a number or a string.
 
 #### Parameters
 
@@ -1519,6 +1535,9 @@ number.
 
 ```js
 isNumeric(4); // true
+isNumeric(Infinity); // false
+isNumeric("Infinity"); // false
+isNumeric(" 12 "); // true
 isNumeric(NaN); // false
 isNumeric("string"); // false
 isNumeric("10e3"); // true
@@ -1557,7 +1576,10 @@ round(4.567, -1); // 0
 
 Coerces the given `value` to a number, returning `null` for empty string,
 `null`, or `undefined`. Useful for form round-trips where absent numeric
-fields should be `null` rather than `0` or `NaN`.
+fields should be `null` rather than `0` or `NaN`. Other values are passed to
+`Number()` without validation, so text such as `"12px"` becomes `NaN` and a
+string of spaces becomes `0`. Check the value with `isNumeric` first to
+reject invalid or infinite input.
 
 #### Parameters
 
@@ -1571,6 +1593,9 @@ fields should be `null` rather than `0` or `NaN`.
 
 ```js
 toNullableNumber("42"); // 42
+toNullableNumber("12px"); // NaN
+toNullableNumber(" "); // 0
+toNullableNumber("Infinity"); // Infinity
 toNullableNumber(""); // null
 toNullableNumber(null); // null
 toNullableNumber(undefined); // null
@@ -1717,7 +1742,8 @@ Try each dot-notation `path` in turn, returning the first defined value
 found. Values that are `null` or `undefined` are skipped, so a path that
 exists but holds `null` does not short-circuit the search. Returns
 `undefined` when no path yields a defined value, or when the input is not a
-non-empty object with a non-empty `paths` array.
+non-empty object with a non-empty `paths` array. Unlike `firstDefined` and
+`lastDefined`, this helper skips both `null` and `undefined`.
 
 #### Parameters
 
