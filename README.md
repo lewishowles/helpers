@@ -2,6 +2,16 @@
 
 A library of gorgeous Javascript methods to make working with—and validating—data quicker and less error-prone, letting the developer concentrate on the fun stuff.
 
+## Installation
+
+```sh
+npm install @lewishowles/helpers
+```
+
+The package is ESM-only and requires Node.js 20 or newer. The Vue helpers need Vue 3, version 3.5.39 or later. Vue is an optional peer dependency, so you only need to install it if you use them.
+
+## Importing
+
 Import helpers from the root package:
 
 ```
@@ -13,6 +23,8 @@ Helpers are also grouped by type when you want narrower imports:
 ```
 import { getNextIndex } from "@lewishowles/helpers/array";
 ```
+
+Category subpaths are `array`, `date`, `form`, `general`, `number`, `object`, `string`, and `url`. Import Vue helpers from `@lewishowles/helpers/vue`; they are not exported from the root package.
 
 <!-- helpers:start -->
 
