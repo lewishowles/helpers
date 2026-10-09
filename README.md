@@ -1607,12 +1607,12 @@ round(4.567, -1); // 0
 
 ### `toNullableNumber(value: any)`
 
-Coerces the given `value` to a number, returning `null` for empty string,
-`null`, or `undefined`. Useful for form round-trips where absent numeric
-fields should be `null` rather than `0` or `NaN`. Other values are passed to
-`Number()` without validation, so text such as `"12px"` becomes `NaN` and a
-string of spaces becomes `0`. Check the value with `isNumeric` first to
-reject invalid or infinite input.
+Coerces the given `value` to a number, returning `null` for an empty or
+whitespace-only string, `null`, or `undefined`. Useful for form round-trips
+where absent numeric fields should be `null` rather than `0` or `NaN`. Other
+values are passed to `Number()` without validation, so text such as `"12px"`
+becomes `NaN`. Check the value with `isNumeric` first to reject invalid or
+infinite input.
 
 #### Parameters
 
@@ -1627,7 +1627,7 @@ reject invalid or infinite input.
 ```js
 toNullableNumber("42"); // 42
 toNullableNumber("12px"); // NaN
-toNullableNumber(" "); // 0
+toNullableNumber(" "); // null
 toNullableNumber("Infinity"); // Infinity
 toNullableNumber(""); // null
 toNullableNumber(null); // null

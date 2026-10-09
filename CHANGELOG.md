@@ -4,6 +4,7 @@
 
 ### Changes
 
+- `toNullableNumber` now returns `null` for whitespace-only strings instead of `0`, so blank numeric form fields remain empty.
 - Node.js 24 or newer is now required, up from Node.js 20. This breaks consumers running older Node versions.
 
 ### New helpers
