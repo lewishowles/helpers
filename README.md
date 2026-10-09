@@ -443,6 +443,31 @@ range(5, 0); // [5, 4, 3, 2, 1, 0]
 range(5, 0, -1); // [5, 4, 3, 2, 1, 0]
 ```
 
+### `rankByMatch(array: any[], query: string, getLabel?: function): any[]`
+
+Return a new array of items with labels containing the trimmed query,
+ignoring case. Shorter labels come first, then labels with an earlier match.
+Items tied on both remain in their original order. Non-string labels are
+skipped, and an invalid array, query or label function returns an empty
+array. Accents are not folded.
+
+#### Parameters
+
+- `array` `{any[]}` — The items to search. The input array is not changed.
+- `query` `{string}` — The search text, with surrounding whitespace ignored.
+- `[getLabel]` `{function}` — Return an item's label. When omitted, the item itself is used.
+
+#### Returns
+
+`{any[]}` — The matching items in ranked order, or an empty array for invalid input.
+
+#### Example
+
+```js
+rankByMatch(["Blueberry", "Berry", "Blackberry"], "berry"); // ["Berry", "Blueberry", "Blackberry"]
+rankByMatch([{ name: "Blueberry" }, { name: "Berry" }], "berry", (item) => item.name);
+```
+
 ### `sortByProperty(array: any[], criteria: object[])`
 
 Returns a new array containing the `array` of objects, sorted by the value at

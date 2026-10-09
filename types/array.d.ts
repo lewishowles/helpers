@@ -46,6 +46,12 @@ export declare function sortByProperty<T extends object>(
 	criteria: { property: keyof T; ascending?: boolean }[],
 ): T[];
 export declare function range(start: number, end?: number, step?: number): number[];
+export declare function rankByMatch(array: string[], query: string): string[];
+export declare function rankByMatch<T>(
+	array: T[],
+	query: string,
+	getLabel: (item: T, index: number, array: T[]) => unknown,
+): T[];
 export declare function tail<T>(array: T[]): T | undefined;
 export declare function toggleItem<T>(
 	array: T[],

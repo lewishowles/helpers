@@ -8,6 +8,10 @@
 
 ### New helpers
 
+#### array
+
+- Added `rankByMatch`: filters items by a case-insensitive label match, then ranks shorter labels and earlier matches first while keeping tied items in input order.
+
 #### date
 
 - Added `isTemporalDate`: recognises supported Temporal date values across compatible module copies, with an optional type-specific check.
