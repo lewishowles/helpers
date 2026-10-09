@@ -68,6 +68,7 @@ export declare function isNonEmptyString(
 	options?: { trim?: boolean },
 ): variable is string;
 export declare function ltrim(string: string, pattern?: string | RegExp): string;
+export declare function pluralise(count: any, singular: any, plural?: any): string;
 export declare function rtrim(string: string, pattern?: string | RegExp): string;
 export declare function toKebabCase(value: any): string;
 export declare function toCamelCase(value: any): string;

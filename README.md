@@ -2388,6 +2388,40 @@ ltrim("***string***", new RegExp("\\*")); // **string***
 ltrim("***string***", new RegExp("\\*+")); // string***
 ```
 
+### `pluralise(count: number | string, singular: string, plural?: string)`
+
+Choose the singular or plural form of an English word for a count. The result
+is the word only, so callers place and format the count themselves.
+
+#### Parameters
+
+- `count` `{number | string}` — The count to choose a form for. A numeric string is read as its number.
+- `singular` `{string}` — The word to use when the count is exactly one.
+- `[plural]` `{string}` — The word to use for any other count. Defaults to the singular followed by
+  "s".
+
+#### Returns
+
+`{string}` — The singular form when the count is exactly one, otherwise the plural
+form, or an empty string when the singular is missing, empty or not a
+string.
+
+Zero, negative numbers and decimals use the plural form. A count that is not
+numeric, such as "abc", null, undefined, NaN or Infinity, also uses the
+plural form. Only English singular and plural forms are supported.
+
+#### Example
+
+```js
+pluralise(1, "item"); // "item"
+pluralise(3, "item"); // "items"
+pluralise(0, "item"); // "items"
+pluralise("1", "item"); // "item"
+pluralise(2, "person", "people"); // "people"
+pluralise(null, "item"); // "items"
+pluralise(1, ""); // ""
+```
+
 ### `rtrim(string: string, pattern: string | RegExp = "\\s")`
 
 Trim the right hand side of `string` using the provided string or RegExp

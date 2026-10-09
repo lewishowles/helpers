@@ -20,6 +20,10 @@
 
 - Added `transformProperties`: returns a shallow copy with selected own property values transformed, leaving other properties in place.
 
+#### string
+
+- Added `pluralise`: returns the singular or plural form of an English word for a count, without the count itself; an invalid count gives the plural.
+
 ### Fixes
 
 - `isDefined` now narrows its argument in TypeScript and editors: after a true result, `null` and `undefined` are removed from the value's type, so `items.filter(isDefined)` returns an array without them.
