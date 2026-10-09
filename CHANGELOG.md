@@ -26,6 +26,7 @@
 
 ### Fixes
 
+- `round` now throws a `RangeError` when `decimals` is not a whole number, such as `1.5`, instead of returning a meaningless result.
 - `isDefined` now narrows its argument in TypeScript and editors: after a true result, `null` and `undefined` are removed from the value's type, so `items.filter(isDefined)` returns an array without them.
 - The generated README now documents helper return values, errors, and every example.
 - `isEqual` now compares an array hole as `undefined` in both argument orders, including in nested arrays, so a hole in the first array no longer matches any value in the second.

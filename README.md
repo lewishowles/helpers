@@ -1582,7 +1582,8 @@ is not provided, it defaults to 0.
 #### Parameters
 
 - `value` `{number}` — The number to round.
-- `decimals` `{number}` — The number of decimal places to keep.
+- `decimals` `{number}` — A whole number of decimal places to keep. Negative values round to tens,
+  hundreds, and larger places.
 
 #### Returns
 
@@ -1592,6 +1593,7 @@ is not provided, it defaults to 0.
 
 - `{TypeError}` — When either argument is not a number.
 - `{RangeError}` — When either argument is not finite.
+- `{RangeError}` — When `decimals` is not a whole number.
 
 #### Example
 
