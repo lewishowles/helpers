@@ -26,35 +26,5 @@ jobs:
         env:
           BUN_AUTH_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
 
-      - name: Run lint
-        run: bun run lint
-
-      - name: Run tests
-        run: bun run test:unit:run
-
-      - name: Check README is current
-        run: bun run check:readme
-
-      - name: Check exports
-        run: bun run check:exports
-
-      - name: Check test files exist
-        run: bun run check:test-files
-
-      - name: Check helpers have type declarations
-        run: bun run check:type-declarations
-
-      - name: Check runtime dependencies
-        run: bun run check:runtime-deps
-
-      - name: Build package
-        run: bun run build
-
-      - name: Check package size
-        run: bun run check:package-size
-
-      - name: Check package exports
-        run: bun run publint
-
-      - name: Check types are correct
-        run: bun run attw
+      - name: Run all checks
+        run: bun run check:all
