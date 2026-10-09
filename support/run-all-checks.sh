@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Run lint, unit tests and a fresh build, then the package and support checks,
-# and render an aggregate diagnostic report.
+# Run lint, unit tests with coverage floors and a fresh build, then the package
+# and support checks, and render an aggregate diagnostic report.
 #
 # Every check runs even when an earlier one fails, and the script exits non-zero
 # if any check fails. When the build fails, the checks that read the built
@@ -25,7 +25,7 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 # package. Those checks are skipped when the build fails.
 CHECKS=(
 	"Lint|Non-mutating lint|lint"
-	"Unit tests|Unit tests|test:unit:run"
+	"Unit tests|Unit tests and coverage floors|test:coverage"
 	"Build|Fresh package build|build"
 	"README|Generated README|support/check-readme.sh"
 	"Exports|Helper exports|check:exports|build"

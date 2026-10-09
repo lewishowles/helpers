@@ -26,6 +26,13 @@ export default mergeConfig(
 				],
 				reporter: ["text-summary", "html"],
 				reportsDirectory: "coverage",
+				// The coverage run fails when total coverage drops below these
+				// percentages. `check:all` runs it, so a drop stops CI and
+				// publishing.
+				thresholds: {
+					branches: 95,
+					lines: 97,
+				},
 			},
 			include: ["lib/**/*.test.js", "support/**/*.test.js"],
 			// Tests run in plain Node by default, so a helper that relies on
