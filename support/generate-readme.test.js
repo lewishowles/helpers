@@ -87,6 +87,63 @@ describe("replaceGeneratedReference", () => {
 
 		expect(nextReadme).toBe(expectedReadme);
 	}, 20_000);
+
+	test("Rejects a duplicated start marker", () => {
+		// A README where the start marker appears twice.
+		const readme = [
+			"<!-- helpers:start -->",
+			"Old reference.",
+			"<!-- helpers:start -->",
+			"<!-- helpers:end -->",
+		].join("\n");
+
+		expect(() => replaceGeneratedReference(readme, "New reference.")).toThrow(
+			"README.md has more than one <!-- helpers:start --> marker",
+		);
+	});
+
+	test("Rejects a duplicated end marker", () => {
+		// A README where the end marker appears twice.
+		const readme = [
+			"<!-- helpers:start -->",
+			"<!-- helpers:end -->",
+			"Old reference.",
+			"<!-- helpers:end -->",
+		].join("\n");
+
+		expect(() => replaceGeneratedReference(readme, "New reference.")).toThrow(
+			"README.md has more than one <!-- helpers:end --> marker",
+		);
+	});
+
+	test("Rejects an end marker before the start marker", () => {
+		// A README with the markers in the wrong order.
+		const readme = ["<!-- helpers:end -->", "Old reference.", "<!-- helpers:start -->"].join("\n");
+
+		expect(() => replaceGeneratedReference(readme, "New reference.")).toThrow(
+			"README.md has <!-- helpers:end --> before <!-- helpers:start -->",
+		);
+	});
+
+	test("Rejects a README with only the start marker", () => {
+		// A README with an Array heading, so only the missing end marker can
+		// stop generation.
+		const readme = ["<!-- helpers:start -->", "Old reference.", "## Array"].join("\n");
+
+		expect(() => replaceGeneratedReference(readme, "New reference.")).toThrow(
+			"README.md is missing the <!-- helpers:end --> marker",
+		);
+	});
+
+	test("Rejects a README with only the end marker", () => {
+		// A README with an Array heading, so only the missing start marker can
+		// stop generation.
+		const readme = ["<!-- helpers:end -->", "Old reference.", "## Array"].join("\n");
+
+		expect(() => replaceGeneratedReference(readme, "New reference.")).toThrow(
+			"README.md is missing the <!-- helpers:start --> marker",
+		);
+	});
 });
 
 describe("parseTags", () => {

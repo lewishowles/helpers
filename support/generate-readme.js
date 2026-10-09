@@ -592,7 +592,9 @@ function formatTypedTag(entry) {
  *     The generated helper reference.
  *
  * @throws  {Error}
- *     If the README has no generated section or Array heading.
+ *     If either marker appears more than once, if only one of the two markers
+ *     is present, if the end marker comes before the start marker, or if the
+ *     README has neither marker nor an Array heading.
  *
  * @returns  {string}
  *     The README with its generated section replaced.
@@ -602,6 +604,26 @@ export function replaceGeneratedReference(readme, reference) {
 	const startIndex = readme.indexOf(readmeStartMarker);
 	// The end of the generated README section.
 	const endIndex = readme.indexOf(readmeEndMarker);
+
+	if (readme.indexOf(readmeStartMarker, startIndex + readmeStartMarker.length) !== -1) {
+		throw new Error(`README.md has more than one ${readmeStartMarker} marker`);
+	}
+
+	if (readme.indexOf(readmeEndMarker, endIndex + readmeEndMarker.length) !== -1) {
+		throw new Error(`README.md has more than one ${readmeEndMarker} marker`);
+	}
+
+	if (startIndex === -1 && endIndex !== -1) {
+		throw new Error(`README.md is missing the ${readmeStartMarker} marker`);
+	}
+
+	if (endIndex === -1 && startIndex !== -1) {
+		throw new Error(`README.md is missing the ${readmeEndMarker} marker`);
+	}
+
+	if (endIndex < startIndex) {
+		throw new Error(`README.md has ${readmeEndMarker} before ${readmeStartMarker}`);
+	}
 
 	if (startIndex !== -1 && endIndex !== -1) {
 		// The README content before the generated section.
