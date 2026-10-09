@@ -21,7 +21,7 @@ CHECKS=(
 	"Exports|Helper exports|check:exports"
 	"Runtime deps|Runtime dependencies|check:runtime-deps"
 	"Package size|Package size budgets|check:package-size"
-	"Test coverage|Test coverage|check:test-coverage"
+	"Test files|Test files exist|check:test-files"
 	"Type declarations|Type declarations|check:type-declarations"
 	"Publint|Package publishing|publint"
 	"ATTW|Are the types wrong|support/check-attw.sh"

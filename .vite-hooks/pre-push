@@ -1,6 +1,6 @@
 bun test:unit:run
 bun run check:exports
-bun run check:test-coverage
+bun run check:test-files
 bun run check:type-declarations
 ./support/check-readme.sh
 bun run check:runtime-deps
