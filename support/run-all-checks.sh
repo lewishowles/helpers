@@ -31,7 +31,7 @@ CHECKS=(
 	"Exports|Helper exports|check:exports|build"
 	"Runtime deps|Runtime dependencies|check:runtime-deps"
 	"Package size|Package size budgets|check:package-size|build"
-	"Test files|Test files exist|check:test-files"
+	"Test files exist|Every helper has a test file|check:test-files-exist"
 	"Type declarations|Type declarations|check:type-declarations"
 	"Publint|Package publishing|publint|build"
 	"ATTW|Are the types wrong|support/check-attw.sh|build"

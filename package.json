@@ -100,7 +100,7 @@
 		"check:packed-imports": "support/check-packed-imports.sh",
 		"check:readme": "support/check-readme.sh",
 		"check:runtime-deps": "pkg-checks runtime-deps . --config quality.config.json",
-		"check:test-files": "pkg-checks test-coverage .",
+		"check:test-files-exist": "pkg-checks test-coverage .",
 		"check:type-declarations": "pkg-checks type-declarations .",
 		"helpers:search": "support/search-helpers.js",
 		"publint": "publint",
