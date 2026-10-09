@@ -26,6 +26,7 @@
 
 ### Fixes
 
+- `toggleItem` now treats null and undefined items or entries as lacking the key when matching by a key, instead of throwing an error.
 - `round` now throws a `RangeError` when `decimals` is not a whole number, such as `1.5`, instead of returning a meaningless result.
 - `isDefined` now narrows its argument in TypeScript and editors: after a true result, `null` and `undefined` are removed from the value's type, so `items.filter(isDefined)` returns an array without them.
 - The generated README now documents helper return values, errors, and every example.

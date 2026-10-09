@@ -529,7 +529,8 @@ tail([]); // undefined
 
 Add an item to an array if it is not present, or remove all occurrences of it
 if it is. Returns a new array and does not mutate the original. Non-array
-input returns an empty array.
+input returns an empty array. With a key comparator, a null or undefined item
+or entry counts as lacking the key, so it matches any value without that key.
 
 #### Parameters
 
