@@ -597,7 +597,7 @@ function formatTypedTag(entry) {
  * @returns  {string}
  *     The README with its generated section replaced.
  */
-function replaceGeneratedReference(readme, reference) {
+export function replaceGeneratedReference(readme, reference) {
 	// The start of the generated README section.
 	const startIndex = readme.indexOf(readmeStartMarker);
 	// The end of the generated README section.

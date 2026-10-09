@@ -1,4 +1,10 @@
-import { formatReadme, parseParamTag, parseTags, renderHelperDocs } from "./generate-readme.js";
+import {
+	formatReadme,
+	parseParamTag,
+	parseTags,
+	renderHelperDocs,
+	replaceGeneratedReference,
+} from "./generate-readme.js";
 import { describe, expect, test } from "vite-plus/test";
 
 describe("formatReadme", () => {
@@ -10,6 +16,76 @@ describe("formatReadme", () => {
 		expect(formatReadme(readme)).toBe(
 			["# Test", "", "```js", "const items = [1, 2];", "```", ""].join("\n"),
 		);
+	}, 20_000);
+});
+
+describe("replaceGeneratedReference", () => {
+	// This test also runs the formatter, so it needs the same longer time
+	// limit as the formatReadme test.
+	test("Keeps the formatted introduction and footer when the reference is regenerated", () => {
+		// A README with hand-written text above and below an old reference.
+		const readme = [
+			"# Helpers",
+			"",
+			"Use these helpers across projects.",
+			"",
+			"- Import only what you need.",
+			"- Read the examples below.",
+			"",
+			"<!-- helpers:start -->",
+			"",
+			"## Old reference",
+			"",
+			"Old helper documentation.",
+			"",
+			"<!-- helpers:end -->",
+			"",
+			"## More guidance",
+			"",
+			"Keep this section when the reference changes.",
+			"",
+		].join("\n");
+
+		// A new reference shaped like the generated one: wrapped in both
+		// markers, with no trailing newline.
+		const reference = [
+			"<!-- helpers:start -->",
+			"",
+			"## Array",
+			"",
+			"New helper documentation.",
+			"",
+			"<!-- helpers:end -->",
+		].join("\n");
+
+		// The README with only the reference swapped and one blank line at
+		// each marker.
+		const expectedReadme = [
+			"# Helpers",
+			"",
+			"Use these helpers across projects.",
+			"",
+			"- Import only what you need.",
+			"- Read the examples below.",
+			"",
+			"<!-- helpers:start -->",
+			"",
+			"## Array",
+			"",
+			"New helper documentation.",
+			"",
+			"<!-- helpers:end -->",
+			"",
+			"## More guidance",
+			"",
+			"Keep this section when the reference changes.",
+			"",
+		].join("\n");
+
+		// The README after the same replace and format steps as generation.
+		const nextReadme = formatReadme(replaceGeneratedReference(readme, reference));
+
+		expect(nextReadme).toBe(expectedReadme);
 	}, 20_000);
 });
 
