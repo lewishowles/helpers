@@ -2954,3 +2954,11 @@ isNonEmptySlot("string"); // false
 ```
 
 <!-- helpers:end -->
+
+## Development
+
+`bun run check:all` runs every check, as CI and publishing do. It builds the package in `dist/` and writes a coverage report to `coverage/`.
+
+Run `bun run lint:fix` to fix formatting and lint issues. Run `bun run docs:readme` to rebuild the helper reference above from the JSDoc comments in `lib/`.
+
+The pre-push hook runs most of the same checks. The pre-commit hook fixes and checks the staged files, then checks the type declarations.
