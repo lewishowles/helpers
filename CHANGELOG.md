@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Added the `accepted` validation rule for must-tick checkboxes. It passes only when the field value is `true`, so an unticked or missing checkbox fails even when the field has no `required` rule.
+
 ## 2.0.0: 2026-10-10
 
 ### Breaking changes

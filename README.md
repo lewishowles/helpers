@@ -975,14 +975,23 @@ valid.
 
 Available rules and properties include:
 
-Single-field rules other than `required` pass when the field has no value.
-Combine them with `required` or `required_if` when empty values should fail.
+Single-field rules other than `required` and `accepted` pass when the field
+has no value. Combine them with `required` or `required_if` when empty values
+should fail.
 
 #### `required`
 
 `[{ rule: "required", message: "Enter your name so we know what to call you" }]`
 
 Requires a value to be set.
+
+#### `accepted`
+
+`[{ rule: "accepted", message: "Accept the terms to continue" }]`
+
+Requires a checkbox to be ticked, such as one agreeing to terms. Only the
+boolean `true` passes, so an unticked or missing checkbox fails even when the
+field has no `required` rule.
 
 #### `email`
 

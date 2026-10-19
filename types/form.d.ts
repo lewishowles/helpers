@@ -21,6 +21,7 @@ interface StandardIssue {
 
 type ValidationRule =
 	| { rule: "required"; message: string }
+	| { rule: "accepted"; message: string }
 	| { rule: "email"; message: string }
 	| { rule: "size"; size: number; message: string }
 	| { rule: "min"; min: number; message: string }
