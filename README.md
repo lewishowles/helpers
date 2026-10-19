@@ -983,7 +983,8 @@ should fail.
 
 `[{ rule: "required", message: "Enter your name so we know what to call you" }]`
 
-Requires a value to be set.
+Requires an answer. `false` counts as an answer; use `accepted` when a
+checkbox must be ticked.
 
 #### `accepted`
 
@@ -1110,10 +1111,11 @@ rules array.
 
 `[{ rule: "required_if", field: "wantsNewsletter", value: true, message: "Enter an email address to receive the newsletter" }]`
 
-Requires a value to be set, but only when another field's value meets a
-condition. When `value` is provided, the condition is met when
-`formData[field]` strictly equals it. When `value` is omitted, the condition
-is met when `formData[field]` has a value.
+Requires an answer, but only when another field's value meets a condition. As
+with `required`, `false` counts as an answer. When `value` is provided, the
+condition is met when `formData[field]` strictly equals it. When `value` is
+omitted, the condition is met when `formData[field]` has a value other than
+`false`, so an unticked checkbox does not trigger the rule.
 
 #### `same`
 

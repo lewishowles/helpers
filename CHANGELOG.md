@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Breaking changes
+
+- `required` now passes when the value is `false`, instead of failing. `required_if` does the same when it makes a field required. If a checkbox must be ticked, replace `required` with `accepted`.
+
 ### Added
 
 - Added the `accepted` validation rule for must-tick checkboxes. It passes only when the field value is `true`, so an unticked or missing checkbox fails even when the field has no `required` rule.
