@@ -675,10 +675,11 @@ The `formats` option is a map of named output formats. Each key is a name
 that can be passed to `formatDate` as the format argument, and each value is
 either a Day.js-style token string (e.g. `"DD/MM/YYYY"`) or an
 `Intl.DateTimeFormatOptions` object (e.g. `{ dateStyle: "medium" }`). The
-built-in named formats are `date`, `dateTime`, and `shortDate`. Projects can
-override these or add their own — `formatDate` resolves the key at call time.
-The `defaultFormat` option determines which named format is used when
-`formatDate` is called with no format argument.
+built-in named formats are `date`, `dateTime`, `time`, and `shortDate`.
+Projects can override these or add their own, because `formatDate` looks up
+the format name each time it is called. The `defaultFormat` option determines
+which named format is used when `formatDate` is called with no format
+argument.
 
 #### Examples
 
