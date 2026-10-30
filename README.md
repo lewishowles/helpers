@@ -1154,7 +1154,7 @@ await validateField(
 
 ### `validateForm(fields: object, formData: object): Promise<{ valid, validated, results }>`
 
-Validate multiple fields at once, delegating to `validateField` for each
+Validate multiple fields together, delegating to `validateField` for each
 field's rules. Cross-field rules (`same`, `different`, `required_if`,
 `custom`) work naturally because the full `formData` is passed through to
 each field.
@@ -1176,7 +1176,9 @@ The `results` object contains a `validateField` result for each field that
 had a non-empty rules array. Fields with empty or non-array rules are skipped
 and omitted from `results`. The overall `valid` is `false` only when a field
 has `valid: false`. Fields with `validated: false` (skipped) don't make the
-form invalid.
+form invalid. Fields run at the same time, but results remain in field order.
+Rules that change shared `formData` or call rate-limited services may affect
+each other when fields run together.
 
 #### Example
 
