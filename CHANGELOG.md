@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- `pick`, `pickAs` and `omit` now keep a `__proto__` key in their result, instead of dropping it or replacing the result's prototype.
+
 ## 3.0.0: 2026-10-19
 
 ### Breaking changes
