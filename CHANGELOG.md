@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+
+- `validateField` now runs a field's rules together and keeps error messages in rule order. Rules that change shared form data or call rate-limited services may now overlap.
+
 ### Fixed
 
 - `pick`, `pickAs` and `omit` now keep a `__proto__` key in their result, instead of dropping it or replacing the result's prototype.

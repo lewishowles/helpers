@@ -972,7 +972,10 @@ validation ran.
 
 Returns `{ valid, errors, validated }`. If input is invalid (missing field
 name, rules, or form data), `validated` is false and the field is treated as
-valid.
+valid. Rules for a field run at the same time. Errors remain in rule order,
+with each rule's messages in the order that rule returned them. Rules that
+change shared `formData` or call rate-limited services may affect each other
+when they run together.
 
 Available rules and properties include:
 
