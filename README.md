@@ -2389,7 +2389,8 @@ isNonEmptyString("  ", { trim: true }); // false
 ### `ltrim(string: string, pattern: string | RegExp = "\\s")`
 
 Trim the left hand side of `string` using the provided string or RegExp
-`pattern`. Trims whitespace by default.
+`pattern`. Removes whole repeated copies of a string pattern. Trims
+whitespace by default.
 
 #### Parameters
 
@@ -2403,7 +2404,8 @@ Trim the left hand side of `string` using the provided string or RegExp
 #### Example
 
 ```js
-ltrim("***string***", "*"); // **string***
+ltrim("***string***", "*"); // string***
+ltrim("ababXabab", "ab"); // Xabab
 ltrim("***string***", new RegExp("\\*")); // **string***
 ltrim("***string***", new RegExp("\\*+")); // string***
 ```
@@ -2445,7 +2447,8 @@ pluralise(1, ""); // ""
 ### `rtrim(string: string, pattern: string | RegExp = "\\s")`
 
 Trim the right hand side of `string` using the provided string or RegExp
-`pattern`. Trims whitespace by default.
+`pattern`. Removes whole repeated copies of a string pattern. Trims
+whitespace by default.
 
 #### Parameters
 
@@ -2459,7 +2462,8 @@ Trim the right hand side of `string` using the provided string or RegExp
 #### Example
 
 ```js
-rtrim("***string***", "*"); // ***string**
+rtrim("***string***", "*"); // ***string
+rtrim("ababXabab", "ab"); // ababX
 rtrim("***string***", new RegExp("\\*")); // ***string**
 rtrim("***string***", new RegExp("\\*+")); // ***string
 ```
@@ -2688,7 +2692,8 @@ toUpperCase(["A", "B"]); // ""
 ### `trim(string, pattern: string | RegExp = "\\s")`
 
 Trim both sides of `string` using the provided string or RegExp `pattern`.
-Trims whitespace by default.
+Removes whole repeated copies of a string pattern. Trims whitespace by
+default.
 
 #### Parameters
 
@@ -2703,7 +2708,8 @@ Trims whitespace by default.
 
 ```js
 trim("   string   "); // string
-trim("* *string* *", "*"); // *string*
+trim("***string***", "*"); // string
+trim("ababXabab", "ab"); // X
 trim("***string***", new RegExp("\\*")); // **string**
 trim("***string***", new RegExp("\\*+")); // string
 ```

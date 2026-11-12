@@ -8,6 +8,7 @@
 
 ### Fixed
 
+- `trim`, `ltrim` and `rtrim` now remove every whole copy of a string pattern longer than one character, and nothing else, so `trim("ababXabab", "ab")` gives `"X"` instead of `"abXab"`. Long runs of whitespace or of a repeated pattern before another character now trim quickly instead of stalling.
 - `pick`, `pickAs` and `omit` now keep a `__proto__` key in their result, instead of dropping it or replacing the result's prototype.
 
 ## 3.0.0: 2026-10-19
