@@ -8,6 +8,7 @@
 
 ### Changed
 
+- `formatDate` and `formatRelativeDate` now reuse one Intl formatter for each combination of locale, time zone and options instead of building a new one on every call, so formatting a long list of dates is much faster.
 - `validateField` now runs a field's rules together and keeps error messages in rule order. `validateForm` now checks fields together and keeps results in field order. Rules that change shared form data or call rate-limited services may now overlap.
 
 ### Fixed
