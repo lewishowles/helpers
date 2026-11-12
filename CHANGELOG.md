@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+
+- Added `toSentenceCase` to turn identifiers and loose text into one sentence-case label, lowercasing all words and capitalising the first letter.
+
 ### Changed
 
 - `validateField` now runs a field's rules together and keeps error messages in rule order. `validateForm` now checks fields together and keeps results in field order. Rules that change shared form data or call rate-limited services may now overlap.

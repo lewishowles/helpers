@@ -2641,6 +2641,31 @@ toScreamingSnakeCase(""); // ""
 toScreamingSnakeCase(42); // ""
 ```
 
+### `toSentenceCase(value: any)`
+
+Converts a string to sentence case. Splits camelCase, snake_case, hyphens and
+extra spaces into words, then lowercases every word, acronyms included, and
+joins them with single spaces. The value is treated as one label, so only its
+first letter is capitalised. Returns an empty string for non-string inputs.
+
+#### Parameters
+
+- `value` `{any}` — The value to convert to sentence case.
+
+#### Returns
+
+`{string}` — The resulting string.
+
+#### Example
+
+```js
+toSentenceCase("helloWorld"); // "Hello world"
+toSentenceCase("user_id"); // "User id"
+toSentenceCase("HTMLParser"); // "Html parser"
+toSentenceCase("NASA launch"); // "Nasa launch"
+toSentenceCase(42); // ""
+```
+
 ### `toSnakeCase(value: any)`
 
 Converts a string to snake_case (lowercase words joined by underscores).

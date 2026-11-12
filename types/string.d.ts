@@ -78,6 +78,7 @@ export declare function toUpperCase(variable: any): string;
 export declare function toPascalCase(value: any): string;
 export declare function toSnakeCase(value: any): string;
 export declare function toScreamingSnakeCase(value: any): string;
+export declare function toSentenceCase(value: any): string;
 export declare function trim(string: string, pattern?: string | RegExp): string;
 export declare function truncate(
 	string: string,
