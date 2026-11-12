@@ -704,7 +704,10 @@ configureDateHelpers({
 ### `formatDate(value: any, format?: string|object, options?: object)`
 
 Format supported date input using a named configured format, a Day.js-style
-token string, or `Intl.DateTimeFormat` options.
+token string, or `Intl.DateTimeFormat` options. Each Intl formatter is kept
+and reused for later calls with the same locale, time zone and options. Kept
+formatters are never released, so passing different options on every call
+keeps adding formatters.
 
 #### Parameters
 
@@ -731,7 +734,8 @@ formatDate("2026-06-22", { year: "numeric", month: "long", day: "2-digit" });
 
 ### `formatRelativeDate(value: any, relativeTo?: any, options?: object)`
 
-Show dates as `3 minutes ago` or `in 2 days`.
+Show dates as `3 minutes ago` or `in 2 days`. Each locale's Intl formatter is
+kept and reused for later calls, and is never released.
 
 #### Parameters
 
